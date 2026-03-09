@@ -1,0 +1,72 @@
+services:
+  - type: web
+    name: consensus-appraisals-api
+    runtime: node
+    plan: starter
+    region: ohio
+    repo: https://github.com/818capitalpartners/ConsensusAppraisalsAI.git
+    branch: main
+    rootDir: .
+    buildCommand: npm install && npm run db:generate && npm run build --workspace @818capital/api
+    startCommand: npm run start --workspace @818capital/api
+    healthCheckPath: /api/health
+    envVars:
+      - key: NODE_ENV
+        value: production
+      - key: DATABASE_URL
+        fromDatabase:
+          name: consensus-appraisals-db
+          property: connectionString
+      - key: OPENAI_API_KEY
+        sync: false
+      - key: MONDAY_API_KEY
+        sync: false
+      - key: MONDAY_WEB_LEADS_BOARD_ID
+        sync: false
+      - key: MONDAY_LENDER_PROFILES_BOARD_ID
+        value: "18402739985"
+      - key: SLACK_WEBHOOK_URL
+        sync: false
+      - key: ESP_API_KEY
+        sync: false
+      - key: ESP_FROM_EMAIL
+        sync: false
+      - key: CORS_ORIGIN
+        sync: false
+      - key: LENDER_APPRAISAL_MODEL_VERSION
+        value: render-initial
+      - key: LENDER_APPRAISAL_DATA_VERSION
+        value: render-initial
+
+  - type: web
+    name: consensus-appraisals-web
+    runtime: node
+    plan: starter
+    region: ohio
+    repo: https://github.com/818capitalpartners/ConsensusAppraisalsAI.git
+    branch: main
+    rootDir: .
+    buildCommand: npm install && npm run build --workspace web
+    startCommand: npm run start --workspace web
+    envVars:
+      - key: NODE_ENV
+        value: production
+      - key: NEXT_PUBLIC_API_URL
+        sync: false
+      - key: NEXT_PUBLIC_GA4_ID
+        sync: false
+      - key: NEXT_PUBLIC_GTM_ID
+        sync: false
+      - key: NEXT_PUBLIC_META_PIXEL_ID
+        sync: false
+      - key: NEXT_PUBLIC_TIKTOK_PIXEL_ID
+        sync: false
+      - key: NEXT_PUBLIC_GOOGLE_ADS_ID
+        sync: false
+
+databases:
+  - name: consensus-appraisals-db
+    plan: starter
+    region: ohio
+    databaseName: consensusappraisals
+    user: consensusappraisals
