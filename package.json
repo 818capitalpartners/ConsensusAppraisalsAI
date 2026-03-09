@@ -11,6 +11,7 @@
     "db:generate": "npm run generate -w packages/db",
     "db:migrate": "npm run migrate -w packages/db",
     "db:push": "npm run push -w packages/db",
+    "db:seed": "npm run seed -w packages/db",
     "db:studio": "npm run studio -w packages/db",
     "api:dev": "npm run dev -w packages/api",
     "api:build": "npm run build -w packages/api",
