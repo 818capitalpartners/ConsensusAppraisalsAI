@@ -1,0 +1,95 @@
+generator client {
+  provider = "prisma-client-js"
+}
+
+datasource db {
+  provider = "postgresql"
+  url      = env("DATABASE_URL")
+}
+
+enum PersonType {
+  investor
+  broker
+}
+
+enum DealScore {
+  green
+  yellow
+  red
+}
+
+model Person {
+  id        String     @id @default(uuid()) @db.Uuid
+  type      PersonType
+  firstName String     @map("first_name")
+  lastName  String     @map("last_name")
+  email     String     @unique
+  phone     String?
+  company   String?
+  deals     Deal[]
+  createdAt DateTime   @default(now()) @map("created_at")
+  updatedAt DateTime   @updatedAt @map("updated_at")
+
+  @@map("persons")
+}
+
+model Deal {
+  id             String    @id @default(uuid()) @db.Uuid
+  person         Person    @relation(fields: [personId], references: [id])
+  personId       String    @map("person_id") @db.Uuid
+  productLane    String    @map("product_lane") // dscr, flip, str, multifamily
+  leadType       String    @map("lead_type") // investor, broker
+  channel        String    @default("web") // web, referral, ad
+  utmSource      String?   @map("utm_source")
+  utmMedium      String?   @map("utm_medium")
+  utmCampaign    String?   @map("utm_campaign")
+
+  // Property
+  propertyAddress String?  @map("property_address")
+  propertyCity    String?  @map("property_city")
+  propertyState   String?  @map("property_state")
+  propertyZip     String?  @map("property_zip")
+  propertyType    String?  @map("property_type")
+  units           Int?
+
+  // Lane-specific inputs stored as JSON
+  financials     Json?     @db.JsonB
+
+  // AI triage results
+  aiTriageResult Json?     @map("ai_triage_result") @db.JsonB
+  dealScore      DealScore? @map("deal_score")
+
+  // Monday.com sync
+  mondayItemId   String?   @map("monday_item_id")
+
+  createdAt      DateTime  @default(now()) @map("created_at")
+  updatedAt      DateTime  @updatedAt @map("updated_at")
+
+  @@map("deals")
+}
+
+model Lender {
+  id            String   @id @default(uuid()) @db.Uuid
+  mondayItemId  String   @unique @map("monday_item_id") // sync tracking
+  name          String
+  productType   String?  @map("product_type")
+  minFico       Int?     @map("min_fico")
+  minDscr       Float?   @map("min_dscr")
+  maxLtv        Float?   @map("max_ltv")
+  maxLtc        Float?   @map("max_ltc")
+  minLoan       Float?   @map("min_loan")
+  maxLoan       Float?   @map("max_loan")
+  maxUnits      Int?     @map("max_units")
+  geography     Json?    @db.JsonB // { states: ["CA","TX",...] }
+  notes         String?
+  keyContact    String?  @map("key_contact")
+  contactEmail  String?  @map("contact_email")
+  rateRange     String?  @map("rate_range")
+  prepayOptions String?  @map("prepay_options")
+  uwFee         Float?   @map("uw_fee")
+  syncedAt      DateTime @default(now()) @map("synced_at")
+  createdAt     DateTime @default(now()) @map("created_at")
+  updatedAt     DateTime @updatedAt @map("updated_at")
+
+  @@map("lenders")
+}

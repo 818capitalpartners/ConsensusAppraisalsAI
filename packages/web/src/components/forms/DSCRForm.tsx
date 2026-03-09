@@ -1,0 +1,166 @@
+'use client';
+
+import { useState, FormEvent } from 'react';
+import Input from '../ui/Input';
+import Select from '../ui/Select';
+import Button from '../ui/Button';
+import ScoreCard from '../ui/ScoreCard';
+
+const API_URL = process.env.NEXT_PUBLIC_API_URL || 'http://localhost:4000';
+
+const STATES = [
+  'AL','AK','AZ','AR','CA','CO','CT','DE','FL','GA','HI','ID','IL','IN','IA','KS','KY','LA','ME','MD',
+  'MA','MI','MN','MS','MO','MT','NE','NV','NH','NJ','NM','NY','NC','ND','OH','OK','OR','PA','RI','SC',
+  'SD','TN','TX','UT','VT','VA','WA','WV','WI','WY','DC',
+].map((s) => ({ value: s, label: s }));
+
+const PROPERTY_TYPES = [
+  { value: 'single_family', label: 'Single Family' },
+  { value: 'condo', label: 'Condo / Townhome' },
+  { value: 'duplex', label: 'Duplex (2 units)' },
+  { value: 'triplex', label: 'Triplex (3 units)' },
+  { value: 'fourplex', label: 'Fourplex (4 units)' },
+];
+
+export default function DSCRForm() {
+  const [loading, setLoading] = useState(false);
+  const [result, setResult] = useState<Record<string, unknown> | null>(null);
+  const [error, setError] = useState('');
+
+  const handleSubmit = async (e: FormEvent<HTMLFormElement>) => {
+    e.preventDefault();
+    setLoading(true);
+    setError('');
+    setResult(null);
+
+    const fd = new FormData(e.currentTarget);
+
+    try {
+      const res = await fetch(`${API_URL}/api/deals`, {
+        method: 'POST',
+        headers: { 'Content-Type': 'application/json' },
+        body: JSON.stringify({
+          firstName: fd.get('firstName'),
+          lastName: fd.get('lastName'),
+          email: fd.get('email'),
+          phone: fd.get('phone'),
+          productLane: 'dscr',
+          propertyState: fd.get('state'),
+          propertyCity: fd.get('city'),
+          propertyType: fd.get('propertyType'),
+          units: Number(fd.get('units')) || 1,
+          channel: 'web',
+          financials: {
+            purchasePrice: Number(fd.get('purchasePrice')),
+            monthlyRent: Number(fd.get('monthlyRent')),
+            downPayment: Number(fd.get('downPayment')),
+            fico: Number(fd.get('fico')),
+          },
+        }),
+      });
+
+      const data = await res.json();
+      if (!res.ok) throw new Error(data.error || 'Something went wrong');
+      setResult(data);
+    } catch (err) {
+      setError(err instanceof Error ? err.message : 'Connection error');
+    } finally {
+      setLoading(false);
+    }
+  };
+
+  const triage = result?.triageResult as Record<string, unknown> | undefined;
+  const metrics = triage?.metrics as Record<string, number> | undefined;
+  const score = result?.dealScore as 'green' | 'yellow' | 'red' | undefined;
+  const narrative = triage?.narrative as { headline: string; analysis: string; strengths: string[]; risks: string[]; nextSteps: string[]; aiGenerated: boolean } | null | undefined;
+  const lenders = ((result?.matchingLenders || triage?.matchingLenders || []) as Record<string, unknown>[]).map((l) => ({
+    name: l.name as string,
+    rateRange: l.rateRange as string | undefined,
+    maxLtv: l.maxLtv as number | undefined,
+    minDscr: l.minDscr as number | undefined,
+  }));
+
+  return (
+    <div className="grid grid-cols-1 lg:grid-cols-2 gap-10">
+      {/* Form */}
+      <form onSubmit={handleSubmit} className="space-y-6">
+        {/* Contact Info */}
+        <div className="bg-slate-900/50 rounded-xl p-5 border border-slate-800 space-y-4">
+          <h3 className="text-white font-semibold text-sm uppercase tracking-wider">Your Info</h3>
+          <div className="grid grid-cols-2 gap-4">
+            <Input label="First Name" name="firstName" required placeholder="Ravi" />
+            <Input label="Last Name" name="lastName" required placeholder="Patel" />
+          </div>
+          <Input label="Email" name="email" type="email" required placeholder="ravi@example.com" />
+          <Input label="Phone" name="phone" type="tel" placeholder="(818) 555-1234" />
+        </div>
+
+        {/* Property Details */}
+        <div className="bg-slate-900/50 rounded-xl p-5 border border-slate-800 space-y-4">
+          <h3 className="text-white font-semibold text-sm uppercase tracking-wider">Property</h3>
+          <div className="grid grid-cols-2 gap-4">
+            <Select label="State" name="state" options={STATES} required />
+            <Input label="City" name="city" placeholder="Los Angeles" />
+          </div>
+          <div className="grid grid-cols-2 gap-4">
+            <Select label="Property Type" name="propertyType" options={PROPERTY_TYPES} required />
+            <Input label="Units" name="units" type="number" defaultValue="1" min="1" max="4" />
+          </div>
+        </div>
+
+        {/* Financials */}
+        <div className="bg-slate-900/50 rounded-xl p-5 border border-slate-800 space-y-4">
+          <h3 className="text-white font-semibold text-sm uppercase tracking-wider">Deal Numbers</h3>
+          <div className="grid grid-cols-2 gap-4">
+            <Input label="Purchase Price" name="purchasePrice" type="number" required prefix="$" placeholder="450000" />
+            <Input label="Monthly Rent" name="monthlyRent" type="number" required prefix="$" placeholder="3200" />
+          </div>
+          <div className="grid grid-cols-2 gap-4">
+            <Input label="Down Payment" name="downPayment" type="number" required prefix="$" placeholder="112500" hint="Typically 20-25%" />
+            <Input label="FICO Score" name="fico" type="number" required placeholder="720" min="500" max="850" />
+          </div>
+        </div>
+
+        <Button type="submit" size="lg" loading={loading} className="w-full">
+          {loading ? 'Analyzing Deal...' : 'Run DSCR Analysis →'}
+        </Button>
+
+        {error && (
+          <div className="bg-red-500/10 border border-red-500/30 rounded-lg p-3 text-red-400 text-sm">
+            {error}
+          </div>
+        )}
+      </form>
+
+      {/* Results */}
+      <div>
+        {result && score && metrics && (
+          <ScoreCard
+            score={score}
+            lane="dscr"
+            metrics={[
+              { label: 'DSCR Ratio', value: metrics.dscr, highlight: true },
+              { label: 'Loan-to-Value', value: `${metrics.ltv}%` },
+              { label: 'Loan Amount', value: metrics.loanAmount },
+              { label: 'Monthly Rent', value: metrics.monthlyRent },
+              { label: 'Est. PITI', value: metrics.estimatedPITI },
+              { label: 'Est. FICO', value: metrics.estimatedFico || metrics.fico },
+            ]}
+            lenders={lenders}
+            narrative={narrative}
+          />
+        )}
+
+        {!result && !error && (
+          <div className="bg-slate-900/30 rounded-2xl p-12 border border-slate-800/30 text-center h-full flex flex-col items-center justify-center">
+            <div className="text-6xl mb-4">📊</div>
+            <h3 className="text-white font-semibold text-lg mb-2">DSCR Analysis</h3>
+            <p className="text-slate-400 text-sm max-w-sm">
+              Enter your deal numbers and we&apos;ll instantly calculate your DSCR ratio, match you with lenders, and score the deal.
+            </p>
+          </div>
+        )}
+      </div>
+    </div>
+  );
+}

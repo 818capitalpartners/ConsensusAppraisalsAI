@@ -1,0 +1,21 @@
+{
+  "name": "818-capital",
+  "version": "1.0.0",
+  "private": true,
+  "workspaces": [
+    "packages/db",
+    "packages/api",
+    "packages/web"
+  ],
+  "scripts": {
+    "db:generate": "npm run generate -w packages/db",
+    "db:migrate": "npm run migrate -w packages/db",
+    "db:push": "npm run push -w packages/db",
+    "db:studio": "npm run studio -w packages/db",
+    "api:dev": "npm run dev -w packages/api",
+    "api:build": "npm run build -w packages/api",
+    "web:dev": "npm run dev -w packages/web",
+    "web:build": "npm run build -w packages/web",
+    "sync:lenders": "tsx packages/api/src/scripts/syncLendersNow.ts"
+  }
+}
