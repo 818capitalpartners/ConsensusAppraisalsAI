@@ -90,7 +90,7 @@ export default function DSCRCalculator() {
     <div className="bg-white rounded-lg border border-navy-100 shadow-sm overflow-hidden">
       {/* Step indicators - friendly, non-threatening */}
       <div className="bg-navy-50 px-6 py-4 flex items-center gap-2 text-xs font-sans font-semibold uppercase tracking-widest">
-        <span className={step === 'calculator' ? 'text-accent' : step !== 'calculator' ? 'text-success' : 'text-navy-400'}>
+        <span className={step === 'calculator' ? 'text-accent' : 'text-success'}>
           {step !== 'calculator' ? '✓ ' : ''}Calculate
         </span>
         <span className="text-navy-300">→</span>
