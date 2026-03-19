@@ -1,0 +1,16 @@
+{
+  "name": "818-capital",
+  "private": true,
+  "workspaces": ["frontend"],
+  "scripts": {
+    "dev": "concurrently \"npm run dev:backend\" \"npm run dev:frontend\"",
+    "dev:backend": "cd backend && uvicorn app.main:app --reload --port 3001",
+    "dev:frontend": "npm -w frontend run dev",
+    "db:up": "docker compose up -d",
+    "db:down": "docker compose down",
+    "db:seed": "cd backend && python -m app.seed"
+  },
+  "devDependencies": {
+    "concurrently": "^9.1.0"
+  }
+}
