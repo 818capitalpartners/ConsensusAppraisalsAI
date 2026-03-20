@@ -41,7 +41,7 @@ export default function RootLayout({ children }: { children: React.ReactNode }) 
   return (
     <html lang="en">
       <head>
-        <meta name="google-site-verification" content="REPLACE_WITH_GSC_VERIFICATION_CODE" />
+        <meta name="google-site-verification" content="DtiQjKepeq-tW-ojomkUZFzLxQLDE6pk7jEAbKn9jCM" />
       </head>
       <body className="min-h-screen flex flex-col">
         <Script
