@@ -1,42 +1,12 @@
 import type { Metadata } from 'next';
 import Image from 'next/image';
 import Link from 'next/link';
+import { INSIGHTS } from '@/lib/insights-data';
 
 export const metadata: Metadata = {
   title: 'Industry Insights | 818 Capital',
   description: 'Market trends, rate updates, and real estate investment analysis from 818 Capital.',
 };
-
-const INSIGHTS = [
-  {
-    title: 'DSCR Rates Are Tightening — Here\'s What That Means for Investors',
-    excerpt: 'With rates moving in Q1 2026, DSCR investors need to adjust their buy box. We break down current pricing and where deals still pencil.',
-    category: 'Rates & Markets',
-    date: 'March 2026',
-    image: 'https://images.unsplash.com/photo-1611974789855-9c2a0a7236a3?w=800&h=500&fit=crop',
-  },
-  {
-    title: 'STR Regulation Tracker: What Changed in Miami, Nashville, and Austin',
-    excerpt: 'Short-term rental regulations are evolving fast. Here\'s a snapshot of what passed, what\'s pending, and what it means for your portfolio.',
-    category: 'Regulation',
-    date: 'March 2026',
-    image: 'https://images.unsplash.com/photo-1533106497176-45ae19e68ba2?w=800&h=500&fit=crop',
-  },
-  {
-    title: 'The 70% Rule Is Dead: How to Actually Analyze a Flip in 2026',
-    excerpt: 'The classic rule of thumb doesn\'t account for today\'s carrying costs and market volatility. Here\'s a better framework.',
-    category: 'Fix & Flip',
-    date: 'February 2026',
-    image: 'https://images.unsplash.com/photo-1572120360610-d971b9d7767c?w=800&h=500&fit=crop',
-  },
-  {
-    title: 'Multifamily Cap Rates by Market: Q1 2026 Snapshot',
-    excerpt: 'Cap rate compression is slowing in some markets and expanding in others. Here\'s where the value is for apartment investors.',
-    category: 'Multifamily',
-    date: 'February 2026',
-    image: 'https://images.unsplash.com/photo-1545324418-cc1a3fa10c00?w=800&h=500&fit=crop',
-  },
-];
 
 export default function InsightsPage() {
   return (
@@ -54,7 +24,7 @@ export default function InsightsPage() {
         <div className="mx-auto max-w-content px-6">
           <div className="grid gap-8 md:grid-cols-2">
             {INSIGHTS.map((insight) => (
-              <article key={insight.title} className="group rounded-lg border border-navy-100 bg-white shadow-sm overflow-hidden hover:shadow-md transition">
+              <Link key={insight.slug} href={`/insights/${insight.slug}`} className="group rounded-lg border border-navy-100 bg-white shadow-sm overflow-hidden hover:shadow-md transition">
                 <div className="relative h-56 overflow-hidden">
                   <Image src={insight.image} alt={insight.title} fill className="object-cover transition duration-500 group-hover:scale-105" />
                   <div className="absolute top-4 left-4">
@@ -66,7 +36,7 @@ export default function InsightsPage() {
                   <h2 className="text-h4 text-navy-900 group-hover:text-accent transition mb-3">{insight.title}</h2>
                   <p className="text-sm text-navy-500 font-body leading-relaxed">{insight.excerpt}</p>
                 </div>
-              </article>
+              </Link>
             ))}
           </div>
         </div>

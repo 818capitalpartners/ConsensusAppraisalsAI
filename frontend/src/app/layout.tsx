@@ -61,8 +61,8 @@ export default function RootLayout({ children }: { children: React.ReactNode }) 
         <header className="sticky top-0 z-50 bg-white border-b border-navy-100 shadow-sm">
           <nav className="mx-auto max-w-content flex items-center justify-between px-6 py-3">
             <Link href="/" className="flex items-center gap-3">
-              <Image src="/logo.png" alt="818 Capital" width={40} height={40} className="rounded" />
-              <span className="text-xl font-sans font-bold text-navy-900 tracking-tight hidden sm:inline">
+              <Image src="/logo.png" alt="818 Capital" width={48} height={48} className="rounded" />
+              <span className="text-2xl font-sans font-bold text-navy-900 tracking-tight hidden sm:inline">
                 818<span className="text-accent"> Capital</span>
               </span>
             </Link>
@@ -151,7 +151,7 @@ export default function RootLayout({ children }: { children: React.ReactNode }) 
               {/* Brand */}
               <div className="lg:col-span-2">
                 <div className="flex items-center gap-3">
-                  <Image src="/logo.png" alt="818 Capital" width={40} height={40} className="rounded" />
+                  <Image src="/logo.png" alt="818 Capital" width={48} height={48} className="rounded" />
                   <p className="text-xl font-sans font-bold tracking-tight">
                     818<span className="text-accent-light"> Capital</span>
                   </p>
