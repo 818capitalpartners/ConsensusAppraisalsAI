@@ -2,6 +2,7 @@ import type { Metadata } from 'next';
 import Image from 'next/image';
 import Link from 'next/link';
 import './globals.css';
+import Script from 'next/script';
 
 export const metadata: Metadata = {
   title: '818 Capital | Investor & Commercial Real Estate Financing',
@@ -39,7 +40,22 @@ const SOCIALS = [
 export default function RootLayout({ children }: { children: React.ReactNode }) {
   return (
     <html lang="en">
+      <head>
+        <meta name="google-site-verification" content="REPLACE_WITH_GSC_VERIFICATION_CODE" />
+      </head>
       <body className="min-h-screen flex flex-col">
+        <Script
+          src="https://www.googletagmanager.com/gtag/js?id=REPLACE_WITH_GA4_ID"
+          strategy="afterInteractive"
+        />
+        <Script id="ga4-init" strategy="afterInteractive">
+          {`
+            window.dataLayer = window.dataLayer || [];
+            function gtag(){dataLayer.push(arguments);}
+            gtag('js', new Date());
+            gtag('config', 'REPLACE_WITH_GA4_ID');
+          `}
+        </Script>
         {/* ── Utility Bar ──────────────────────────────────── */}
         <div className="bg-navy-900 text-white text-xs">
           <div className="mx-auto max-w-content flex items-center justify-between px-6 py-2">
