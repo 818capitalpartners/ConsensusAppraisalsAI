@@ -45,7 +45,7 @@ export default function RootLayout({ children }: { children: React.ReactNode }) 
       </head>
       <body className="min-h-screen flex flex-col">
         <Script
-          src="https://www.googletagmanager.com/gtag/js?id=REPLACE_WITH_GA4_ID"
+          src="https://www.googletagmanager.com/gtag/js?id=G-7EV7DRMWJW"
           strategy="afterInteractive"
         />
         <Script id="ga4-init" strategy="afterInteractive">
@@ -53,7 +53,7 @@ export default function RootLayout({ children }: { children: React.ReactNode }) 
             window.dataLayer = window.dataLayer || [];
             function gtag(){dataLayer.push(arguments);}
             gtag('js', new Date());
-            gtag('config', 'REPLACE_WITH_GA4_ID');
+            gtag('config', 'G-7EV7DRMWJW');
           `}
         </Script>
         {/* ── Utility Bar ──────────────────────────────────── */}
