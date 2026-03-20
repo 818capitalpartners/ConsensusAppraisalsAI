@@ -145,9 +145,9 @@ export default function DSCRForm() {
           />
         )}
 
-        {result && result.dealId && (
+        {result && typeof result.dealId === 'string' && (
           <div className="mt-6">
-            <AppraisalCard dealId={result.dealId as string} lane="dscr" />
+            <AppraisalCard dealId={result.dealId} lane="dscr" />
           </div>
         )}
 

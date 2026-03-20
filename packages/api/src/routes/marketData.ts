@@ -1,20 +1,14 @@
-import { CollateralPropertyType } from '@818capital/db';
 import { Router } from 'express';
 import { z } from 'zod';
 
-import { getMarketContextForProperty } from '../services/marketDataService';
+import { getMarketContext } from '../services/marketDataService';
 
 export const marketDataRouter = Router();
 
 const requestSchema = z.object({
   state: z.string().length(2).transform((value) => value.toUpperCase()),
-  countyFips: z.string().length(5).optional(),
   zip: z.string().min(5).max(10).optional(),
-  coords: z.object({
-    latitude: z.number(),
-    longitude: z.number(),
-  }).optional(),
-  propertyType: z.nativeEnum(CollateralPropertyType),
+  propertyType: z.string().optional(),
 });
 
 marketDataRouter.post('/context', async (req, res) => {
@@ -27,6 +21,6 @@ marketDataRouter.post('/context', async (req, res) => {
     });
   }
 
-  const result = await getMarketContextForProperty(parsed.data);
+  const result = await getMarketContext(parsed.data);
   return res.json(result);
 });

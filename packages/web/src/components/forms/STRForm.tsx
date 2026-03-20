@@ -147,9 +147,9 @@ export default function STRForm() {
           />
         )}
 
-        {result && result.dealId && (
+        {result && typeof result.dealId === 'string' && (
           <div className="mt-6">
-            <AppraisalCard dealId={result.dealId as string} lane="str" />
+            <AppraisalCard dealId={result.dealId} lane="str" />
           </div>
         )}
 

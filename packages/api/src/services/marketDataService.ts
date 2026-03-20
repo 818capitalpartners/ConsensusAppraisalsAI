@@ -53,7 +53,7 @@ export async function getMarketContext(input: GetMarketContextInput): Promise<Ma
     });
   }
 
-  const comparableSales: ComparableSaleData[] = rawComps.map((c) => ({
+  const comparableSales: ComparableSaleData[] = rawComps.map((c: any) => ({
     compId: c.id,
     address: c.address,
     city: c.city,
@@ -129,7 +129,7 @@ export async function getMarketContext(input: GetMarketContextInput): Promise<Ma
   );
 
   const geographicSpread: 'tight' | 'moderate' | 'wide' =
-    input.zip && rawComps.some((c) => c.zip === input.zip) ? 'tight' :
+    input.zip && rawComps.some((c: any) => c.zip === input.zip) ? 'tight' :
     rawComps.length > 0 ? 'moderate' : 'wide';
 
   const dataQuality: DataQualityIndicator = {

@@ -1,6 +1,6 @@
 import OpenAI from 'openai';
 
-import { getMarketContextForProperty } from './marketDataService';
+import { getMarketContext } from './marketDataService';
 
 export type ChatMode =
   | 'content-script'
@@ -218,7 +218,11 @@ function handleCompetitorMonitor(payload: CompetitorMonitorPayload) {
 }
 
 async function handleMarketContext(payload: MarketContextPayload) {
-  const result = await getMarketContextForProperty(payload);
+  const result = await getMarketContext({
+    state: payload.state,
+    zip: payload.zip,
+    propertyType: payload.propertyType,
+  });
   return {
     success: true,
     mode: 'market-context' as const,

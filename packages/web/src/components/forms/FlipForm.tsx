@@ -135,9 +135,9 @@ export default function FlipForm() {
           />
         )}
 
-        {result && result.dealId && (
+        {result && typeof result.dealId === 'string' && (
           <div className="mt-6">
-            <AppraisalCard dealId={result.dealId as string} lane="flip" />
+            <AppraisalCard dealId={result.dealId} lane="flip" />
           </div>
         )}
 

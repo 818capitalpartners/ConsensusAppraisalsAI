@@ -5,7 +5,7 @@
   "scripts": {
     "dev": "npx dotenv-cli -e ../../.env -- tsx watch src/server.ts",
     "build": "tsc",
-    "start": "npx dotenv-cli -e ../../.env -- node dist/server.js"
+    "start": "node dist/server.js"
   },
   "dependencies": {
     "@818capital/db": "*",

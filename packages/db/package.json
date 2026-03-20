@@ -5,12 +5,17 @@
   "main": "./index.ts",
   "types": "./index.ts",
   "scripts": {
-    "generate": "npx dotenv-cli -e ../../.env -- prisma generate",
-    "migrate": "npx dotenv-cli -e ../../.env -- prisma migrate dev",
-    "push": "npx dotenv-cli -e ../../.env -- prisma db push",
-    "studio": "npx dotenv-cli -e ../../.env -- prisma studio",
+    "generate": "prisma generate",
+    "migrate": "prisma migrate dev",
+    "push": "prisma db push",
+    "studio": "prisma studio",
     "build": "tsc",
-    "seed": "npx dotenv-cli -e ../../.env -- tsx prisma/seed.ts"
+    "seed": "tsx prisma/seed.ts",
+    "generate:local": "npx dotenv-cli -e ../../.env -- prisma generate",
+    "migrate:local": "npx dotenv-cli -e ../../.env -- prisma migrate dev",
+    "push:local": "npx dotenv-cli -e ../../.env -- prisma db push",
+    "studio:local": "npx dotenv-cli -e ../../.env -- prisma studio",
+    "seed:local": "npx dotenv-cli -e ../../.env -- tsx prisma/seed.ts"
   },
   "dependencies": {
     "@prisma/client": "^6.6.0"

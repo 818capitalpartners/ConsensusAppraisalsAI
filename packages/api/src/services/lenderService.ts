@@ -18,7 +18,7 @@ interface LenderQuery {
 export async function queryMatchingLenders(query: LenderQuery): Promise<Lender[]> {
   const allLenders = await prisma.lender.findMany();
 
-  return allLenders.filter((lender) => {
+  return allLenders.filter((lender: any) => {
     // Product type filter
     if (query.productType && lender.productType) {
       const lenderTypes = lender.productType.toLowerCase();
