@@ -5,6 +5,7 @@ import Input from '../ui/Input';
 import Select from '../ui/Select';
 import Button from '../ui/Button';
 import ScoreCard from '../ui/ScoreCard';
+import AppraisalCard from '../ui/AppraisalCard';
 
 const API_URL = process.env.NEXT_PUBLIC_API_URL || 'http://localhost:4000';
 
@@ -65,7 +66,7 @@ export default function FlipForm() {
   const scenarios = triage?.scenarios as Array<{ label: string; profit: number; roi: number }> | undefined;
   const score = result?.dealScore as 'green' | 'yellow' | 'red' | undefined;
   const narrative = triage?.narrative as { headline: string; analysis: string; strengths: string[]; risks: string[]; nextSteps: string[]; aiGenerated: boolean } | null | undefined;
-  const lenders = ((result?.matchingLenders || triage?.matchingLenders || []) as Record<string, unknown>[]).map((l) => ({
+  const lenders = ((triage?.programs || triage?.matchingLenders || []) as Record<string, unknown>[]).map((l) => ({
     name: l.name as string,
     rateRange: l.rateRange as string | undefined,
     maxLtv: l.maxLtv as number | undefined,
@@ -75,9 +76,8 @@ export default function FlipForm() {
   return (
     <div className="grid grid-cols-1 lg:grid-cols-2 gap-10">
       <form onSubmit={handleSubmit} className="space-y-6">
-        {/* Contact Info */}
-        <div className="bg-slate-900/50 rounded-xl p-5 border border-slate-800 space-y-4">
-          <h3 className="text-white font-semibold text-sm uppercase tracking-wider">Your Info</h3>
+        <div className="bg-gray-50/50 rounded-2xl p-6 border border-gray-100 space-y-4">
+          <h3 className="text-gray-900 font-semibold text-sm uppercase tracking-wider">Your Info</h3>
           <div className="grid grid-cols-2 gap-4">
             <Input label="First Name" name="firstName" required placeholder="Ravi" />
             <Input label="Last Name" name="lastName" required placeholder="Patel" />
@@ -86,18 +86,16 @@ export default function FlipForm() {
           <Input label="Phone" name="phone" type="tel" placeholder="(818) 555-1234" />
         </div>
 
-        {/* Property */}
-        <div className="bg-slate-900/50 rounded-xl p-5 border border-slate-800 space-y-4">
-          <h3 className="text-white font-semibold text-sm uppercase tracking-wider">Property</h3>
+        <div className="bg-gray-50/50 rounded-2xl p-6 border border-gray-100 space-y-4">
+          <h3 className="text-gray-900 font-semibold text-sm uppercase tracking-wider">Property</h3>
           <div className="grid grid-cols-2 gap-4">
             <Select label="State" name="state" options={STATES} required />
             <Input label="City" name="city" placeholder="Atlanta" />
           </div>
         </div>
 
-        {/* Financials */}
-        <div className="bg-slate-900/50 rounded-xl p-5 border border-slate-800 space-y-4">
-          <h3 className="text-white font-semibold text-sm uppercase tracking-wider">Flip Numbers</h3>
+        <div className="bg-gray-50/50 rounded-2xl p-6 border border-gray-100 space-y-4">
+          <h3 className="text-gray-900 font-semibold text-sm uppercase tracking-wider">Flip Numbers</h3>
           <div className="grid grid-cols-2 gap-4">
             <Input label="Purchase Price" name="purchasePrice" type="number" required prefix="$" placeholder="200000" />
             <Input label="Rehab Budget" name="rehabBudget" type="number" required prefix="$" placeholder="50000" />
@@ -110,13 +108,11 @@ export default function FlipForm() {
         </div>
 
         <Button type="submit" size="lg" loading={loading} className="w-full">
-          {loading ? 'Running Flip Lab...' : 'Run Flip Analysis →'}
+          {loading ? 'Running Flip Lab...' : 'Run Flip Analysis'}
         </Button>
 
         {error && (
-          <div className="bg-red-500/10 border border-red-500/30 rounded-lg p-3 text-red-400 text-sm">
-            {error}
-          </div>
+          <div className="bg-red-50 border border-red-200 rounded-lg p-3 text-red-600 text-sm">{error}</div>
         )}
       </form>
 
@@ -139,12 +135,22 @@ export default function FlipForm() {
           />
         )}
 
+        {result && result.dealId && (
+          <div className="mt-6">
+            <AppraisalCard dealId={result.dealId as string} lane="flip" />
+          </div>
+        )}
+
         {!result && !error && (
-          <div className="bg-slate-900/30 rounded-2xl p-12 border border-slate-800/30 text-center h-full flex flex-col items-center justify-center">
-            <div className="text-6xl mb-4">🔨</div>
-            <h3 className="text-white font-semibold text-lg mb-2">Flip Lab</h3>
-            <p className="text-slate-400 text-sm max-w-sm">
-              Enter purchase price, rehab, and ARV. We&apos;ll run 3 profit scenarios and find the right lender for your flip.
+          <div className="bg-gray-50/50 rounded-2xl p-12 border border-gray-100 text-center h-full flex flex-col items-center justify-center">
+            <div className="w-14 h-14 rounded-2xl bg-gradient-to-br from-[#007ACC]/10 to-indigo-500/10 flex items-center justify-center mb-4">
+              <svg className="w-7 h-7 text-indigo-600" fill="none" viewBox="0 0 24 24" stroke="currentColor" strokeWidth={1.5}>
+                <path strokeLinecap="round" strokeLinejoin="round" d="M11.42 15.17L17.25 21A2.652 2.652 0 0021 17.25l-5.877-5.877M11.42 15.17l2.496-3.03c.317-.384.74-.626 1.208-.766M11.42 15.17l-4.655 5.653a2.548 2.548 0 11-3.586-3.586l6.837-5.63m5.108-.233c.55-.164 1.163-.188 1.743-.14a4.5 4.5 0 004.486-6.336l-3.276 3.277a3.004 3.004 0 01-2.25-2.25l3.276-3.276a4.5 4.5 0 00-6.336 4.486c.091 1.076-.071 2.264-.904 2.95l-.102.085" />
+              </svg>
+            </div>
+            <h3 className="text-gray-900 font-semibold text-lg mb-2">Flip Lab</h3>
+            <p className="text-gray-500 text-sm max-w-sm">
+              Enter purchase price, rehab, and ARV. We&apos;ll run 3 profit scenarios and identify the right program for your flip.
             </p>
           </div>
         )}

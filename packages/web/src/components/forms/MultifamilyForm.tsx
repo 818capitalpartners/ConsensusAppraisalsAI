@@ -5,6 +5,7 @@ import Input from '../ui/Input';
 import Select from '../ui/Select';
 import Button from '../ui/Button';
 import ScoreCard from '../ui/ScoreCard';
+import AppraisalCard from '../ui/AppraisalCard';
 
 const API_URL = process.env.NEXT_PUBLIC_API_URL || 'http://localhost:4000';
 
@@ -61,11 +62,12 @@ export default function MultifamilyForm() {
     }
   };
 
+  const dealId = result?.dealId as string | undefined;
   const triage = result?.triageResult as Record<string, unknown> | undefined;
   const metrics = triage?.metrics as Record<string, number> | undefined;
   const score = result?.dealScore as 'green' | 'yellow' | 'red' | undefined;
   const narrative = triage?.narrative as { headline: string; analysis: string; strengths: string[]; risks: string[]; nextSteps: string[]; aiGenerated: boolean } | null | undefined;
-  const lenders = ((result?.matchingLenders || triage?.matchingLenders || []) as Record<string, unknown>[]).map((l) => ({
+  const lenders = ((triage?.programs || triage?.matchingLenders || []) as Record<string, unknown>[]).map((l) => ({
     name: l.name as string,
     rateRange: l.rateRange as string | undefined,
     maxLtv: l.maxLtv as number | undefined,
@@ -75,8 +77,8 @@ export default function MultifamilyForm() {
   return (
     <div className="grid grid-cols-1 lg:grid-cols-2 gap-10">
       <form onSubmit={handleSubmit} className="space-y-6">
-        <div className="bg-slate-900/50 rounded-xl p-5 border border-slate-800 space-y-4">
-          <h3 className="text-white font-semibold text-sm uppercase tracking-wider">Your Info</h3>
+        <div className="bg-gray-50/50 rounded-2xl p-6 border border-gray-100 space-y-4">
+          <h3 className="text-gray-900 font-semibold text-sm uppercase tracking-wider">Your Info</h3>
           <div className="grid grid-cols-2 gap-4">
             <Input label="First Name" name="firstName" required placeholder="Ravi" />
             <Input label="Last Name" name="lastName" required placeholder="Patel" />
@@ -85,8 +87,8 @@ export default function MultifamilyForm() {
           <Input label="Phone" name="phone" type="tel" placeholder="(818) 555-1234" />
         </div>
 
-        <div className="bg-slate-900/50 rounded-xl p-5 border border-slate-800 space-y-4">
-          <h3 className="text-white font-semibold text-sm uppercase tracking-wider">Property</h3>
+        <div className="bg-gray-50/50 rounded-2xl p-6 border border-gray-100 space-y-4">
+          <h3 className="text-gray-900 font-semibold text-sm uppercase tracking-wider">Property</h3>
           <div className="grid grid-cols-2 gap-4">
             <Select label="State" name="state" options={STATES} required />
             <Input label="City" name="city" placeholder="Dallas" />
@@ -94,8 +96,8 @@ export default function MultifamilyForm() {
           <Input label="Number of Units" name="units" type="number" required placeholder="12" min="5" hint="5+ units for commercial multifamily" />
         </div>
 
-        <div className="bg-slate-900/50 rounded-xl p-5 border border-slate-800 space-y-4">
-          <h3 className="text-white font-semibold text-sm uppercase tracking-wider">Deal Numbers</h3>
+        <div className="bg-gray-50/50 rounded-2xl p-6 border border-gray-100 space-y-4">
+          <h3 className="text-gray-900 font-semibold text-sm uppercase tracking-wider">Deal Numbers</h3>
           <div className="grid grid-cols-2 gap-4">
             <Input label="Purchase Price" name="purchasePrice" type="number" required prefix="$" placeholder="2000000" />
             <Input label="Down Payment" name="downPayment" type="number" required prefix="$" placeholder="500000" />
@@ -108,15 +110,15 @@ export default function MultifamilyForm() {
         </div>
 
         <Button type="submit" size="lg" loading={loading} className="w-full">
-          {loading ? 'Running Sponsor Brief...' : 'Run Multifamily Analysis →'}
+          {loading ? 'Running Sponsor Brief...' : 'Run Multifamily Analysis'}
         </Button>
 
         {error && (
-          <div className="bg-red-500/10 border border-red-500/30 rounded-lg p-3 text-red-400 text-sm">{error}</div>
+          <div className="bg-red-50 border border-red-200 rounded-lg p-3 text-red-600 text-sm">{error}</div>
         )}
       </form>
 
-      <div>
+      <div className="space-y-6">
         {result && score && metrics && (
           <ScoreCard
             score={score}
@@ -134,12 +136,21 @@ export default function MultifamilyForm() {
           />
         )}
 
+        {/* AI Appraisal — appears after deal is created */}
+        {dealId && (
+          <AppraisalCard dealId={dealId} lane="multifamily" />
+        )}
+
         {!result && !error && (
-          <div className="bg-slate-900/30 rounded-2xl p-12 border border-slate-800/30 text-center h-full flex flex-col items-center justify-center">
-            <div className="text-6xl mb-4">🏢</div>
-            <h3 className="text-white font-semibold text-lg mb-2">Sponsor Brief</h3>
-            <p className="text-slate-400 text-sm max-w-sm">
-              Enter your multifamily numbers. We&apos;ll calculate NOI, cap rate, DSCR, and match you with commercial lenders.
+          <div className="bg-gray-50/50 rounded-2xl p-12 border border-gray-100 text-center h-full flex flex-col items-center justify-center">
+            <div className="w-14 h-14 rounded-2xl bg-gradient-to-br from-[#007ACC]/10 to-indigo-500/10 flex items-center justify-center mb-4">
+              <svg className="w-7 h-7 text-indigo-600" fill="none" viewBox="0 0 24 24" stroke="currentColor" strokeWidth={1.5}>
+                <path strokeLinecap="round" strokeLinejoin="round" d="M2.25 21h19.5m-18-18v18m10.5-18v18m6-13.5V21M6.75 6.75h.75m-.75 3h.75m-.75 3h.75m3-6h.75m-.75 3h.75m-.75 3h.75M6.75 21v-3.375c0-.621.504-1.125 1.125-1.125h2.25c.621 0 1.125.504 1.125 1.125V21M3 3h12m-.75 4.5H21m-3.75 3H21m-3.75 3H21" />
+              </svg>
+            </div>
+            <h3 className="text-gray-900 font-semibold text-lg mb-2">Sponsor Brief</h3>
+            <p className="text-gray-500 text-sm max-w-sm">
+              Enter your multifamily numbers. We&apos;ll calculate NOI, cap rate, DSCR, and identify qualifying commercial programs.
             </p>
           </div>
         )}

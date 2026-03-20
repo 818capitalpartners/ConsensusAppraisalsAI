@@ -5,6 +5,7 @@ import Input from '../ui/Input';
 import Select from '../ui/Select';
 import Button from '../ui/Button';
 import ScoreCard from '../ui/ScoreCard';
+import AppraisalCard from '../ui/AppraisalCard';
 
 const API_URL = process.env.NEXT_PUBLIC_API_URL || 'http://localhost:4000';
 
@@ -74,7 +75,7 @@ export default function STRForm() {
   const metrics = triage?.metrics as Record<string, number> | undefined;
   const score = result?.dealScore as 'green' | 'yellow' | 'red' | undefined;
   const narrative = triage?.narrative as { headline: string; analysis: string; strengths: string[]; risks: string[]; nextSteps: string[]; aiGenerated: boolean } | null | undefined;
-  const lenders = ((result?.matchingLenders || triage?.matchingLenders || []) as Record<string, unknown>[]).map((l) => ({
+  const lenders = ((triage?.programs || triage?.matchingLenders || []) as Record<string, unknown>[]).map((l) => ({
     name: l.name as string,
     rateRange: l.rateRange as string | undefined,
     maxLtv: l.maxLtv as number | undefined,
@@ -84,8 +85,8 @@ export default function STRForm() {
   return (
     <div className="grid grid-cols-1 lg:grid-cols-2 gap-10">
       <form onSubmit={handleSubmit} className="space-y-6">
-        <div className="bg-slate-900/50 rounded-xl p-5 border border-slate-800 space-y-4">
-          <h3 className="text-white font-semibold text-sm uppercase tracking-wider">Your Info</h3>
+        <div className="bg-gray-50/50 rounded-2xl p-6 border border-gray-100 space-y-4">
+          <h3 className="text-gray-900 font-semibold text-sm uppercase tracking-wider">Your Info</h3>
           <div className="grid grid-cols-2 gap-4">
             <Input label="First Name" name="firstName" required placeholder="Ravi" />
             <Input label="Last Name" name="lastName" required placeholder="Patel" />
@@ -94,8 +95,8 @@ export default function STRForm() {
           <Input label="Phone" name="phone" type="tel" placeholder="(818) 555-1234" />
         </div>
 
-        <div className="bg-slate-900/50 rounded-xl p-5 border border-slate-800 space-y-4">
-          <h3 className="text-white font-semibold text-sm uppercase tracking-wider">Property</h3>
+        <div className="bg-gray-50/50 rounded-2xl p-6 border border-gray-100 space-y-4">
+          <h3 className="text-gray-900 font-semibold text-sm uppercase tracking-wider">Property</h3>
           <div className="grid grid-cols-2 gap-4">
             <Select label="State" name="state" options={STATES} required />
             <Input label="City" name="city" placeholder="Nashville" />
@@ -103,8 +104,8 @@ export default function STRForm() {
           <Select label="Property Type" name="propertyType" options={PROPERTY_TYPES} required />
         </div>
 
-        <div className="bg-slate-900/50 rounded-xl p-5 border border-slate-800 space-y-4">
-          <h3 className="text-white font-semibold text-sm uppercase tracking-wider">STR Numbers</h3>
+        <div className="bg-gray-50/50 rounded-2xl p-6 border border-gray-100 space-y-4">
+          <h3 className="text-gray-900 font-semibold text-sm uppercase tracking-wider">STR Numbers</h3>
           <div className="grid grid-cols-2 gap-4">
             <Input label="Purchase Price" name="purchasePrice" type="number" required prefix="$" placeholder="500000" />
             <Input label="Down Payment" name="downPayment" type="number" required prefix="$" placeholder="125000" />
@@ -120,11 +121,11 @@ export default function STRForm() {
         </div>
 
         <Button type="submit" size="lg" loading={loading} className="w-full">
-          {loading ? 'Running STR Signal...' : 'Run STR Analysis →'}
+          {loading ? 'Running STR Signal...' : 'Run STR Analysis'}
         </Button>
 
         {error && (
-          <div className="bg-red-500/10 border border-red-500/30 rounded-lg p-3 text-red-400 text-sm">{error}</div>
+          <div className="bg-red-50 border border-red-200 rounded-lg p-3 text-red-600 text-sm">{error}</div>
         )}
       </form>
 
@@ -146,12 +147,22 @@ export default function STRForm() {
           />
         )}
 
+        {result && result.dealId && (
+          <div className="mt-6">
+            <AppraisalCard dealId={result.dealId as string} lane="str" />
+          </div>
+        )}
+
         {!result && !error && (
-          <div className="bg-slate-900/30 rounded-2xl p-12 border border-slate-800/30 text-center h-full flex flex-col items-center justify-center">
-            <div className="text-6xl mb-4">🏖️</div>
-            <h3 className="text-white font-semibold text-lg mb-2">STR Signal</h3>
-            <p className="text-slate-400 text-sm max-w-sm">
-              We normalize Airbnb/VRBO revenue into lender-ready DSCR. Enter your T12 numbers and we&apos;ll score the deal.
+          <div className="bg-gray-50/50 rounded-2xl p-12 border border-gray-100 text-center h-full flex flex-col items-center justify-center">
+            <div className="w-14 h-14 rounded-2xl bg-gradient-to-br from-[#007ACC]/10 to-indigo-500/10 flex items-center justify-center mb-4">
+              <svg className="w-7 h-7 text-indigo-600" fill="none" viewBox="0 0 24 24" stroke="currentColor" strokeWidth={1.5}>
+                <path strokeLinecap="round" strokeLinejoin="round" d="M8.25 21v-4.875c0-.621.504-1.125 1.125-1.125h2.25c.621 0 1.125.504 1.125 1.125V21m0 0h4.5V3.545M12.75 21h7.5V10.75M2.25 21h1.5m18 0h-18M2.25 9l4.5-1.636M18.75 3l-1.5.545m0 6.205l3 1m1.5.5l-1.5-.5M6.75 7.364V3h-3v18m3-13.636l10.5-3.819" />
+              </svg>
+            </div>
+            <h3 className="text-gray-900 font-semibold text-lg mb-2">STR Signal</h3>
+            <p className="text-gray-500 text-sm max-w-sm">
+              We normalize Airbnb/VRBO revenue into underwriting-ready DSCR. Enter your T12 numbers and we&apos;ll score the deal.
             </p>
           </div>
         )}

@@ -1,5 +1,6 @@
 generator client {
-  provider = "prisma-client-js"
+  provider      = "prisma-client-js"
+  binaryTargets = ["native", "debian-openssl-3.0.x"]
 }
 
 datasource db {
@@ -16,51 +17,6 @@ enum DealScore {
   green
   yellow
   red
-}
-
-enum CollateralPropertyType {
-  sfr
-  condo
-  townhome
-  multifamily_2_4
-  multifamily_5_plus
-  mixed_use
-  retail
-  office
-  industrial
-  land
-}
-
-enum GeoRegulationType {
-  zoning
-  flood
-  coastal
-  short_term_rental
-  property_tax
-  homestead
-  other
-}
-
-enum CompSourceType {
-  internal
-  vendor_a
-  vendor_b
-  county_recorder
-  mls
-  broker
-  manual
-}
-
-enum OutcomeType {
-  sale
-  refi
-  listing
-}
-
-enum DataQuality {
-  good
-  thin
-  bad
 }
 
 model Person {
@@ -82,8 +38,6 @@ model Deal {
   id             String    @id @default(uuid()) @db.Uuid
   person         Person    @relation(fields: [personId], references: [id])
   personId       String    @map("person_id") @db.Uuid
-  subjectProperty   SubjectProperty? @relation(fields: [subjectPropertyId], references: [id])
-  subjectPropertyId String?   @map("subject_property_id") @db.Uuid
   productLane    String    @map("product_lane") // dscr, flip, str, multifamily
   leadType       String    @map("lead_type") // investor, broker
   channel        String    @default("web") // web, referral, ad
@@ -111,8 +65,6 @@ model Deal {
 
   createdAt      DateTime  @default(now()) @map("created_at")
   updatedAt      DateTime  @updatedAt @map("updated_at")
-  appraisalLabels AppraisalLabel[]
-  realizedOutcomes RealizedOutcome[]
 
   @@map("deals")
 }
@@ -143,315 +95,104 @@ model Lender {
   @@map("lenders")
 }
 
-model SubjectProperty {
-  id               String                 @id @default(uuid()) @db.Uuid
-  externalId       String?                @unique @map("external_id")
-  state            String                 @db.VarChar(2)
-  countyFips       String                 @map("county_fips") @db.VarChar(5)
-  zip              String?                @db.VarChar(10)
-  latitude         Decimal?               @db.Decimal(9, 6)
-  longitude        Decimal?               @db.Decimal(9, 6)
-  propertyType     CollateralPropertyType @map("property_type")
-  addressLine1     String?                @map("address_line_1")
-  city             String?
-  censusTract      String?                @map("census_tract") @db.VarChar(11)
-  createdAt        DateTime               @default(now()) @map("created_at")
-  updatedAt        DateTime               @updatedAt @map("updated_at")
-  deals            Deal[]
-  appraisalLabels  AppraisalLabel[]
-  realizedOutcomes RealizedOutcome[]
+// ─── Market Data Models (AI Appraisal Cloud) ──────────
 
-  @@index([state, countyFips, zip, propertyType])
-  @@map("subject_properties")
+model County {
+  id           String   @id @default(uuid()) @db.Uuid
+  fips         String   @unique // 5-digit FIPS code
+  name         String
+  state        String   @db.VarChar(2)
+  geography    Json?    @db.JsonB // { centroid, boundingBox }
+  population   Int?
+  medianIncome Float?   @map("median_income")
+
+  marketSnapshots MarketDataSnapshot[]
+  comparableSales ComparableSale[]
+  marketBands     MarketBand[]
+
+  createdAt    DateTime @default(now()) @map("created_at")
+  updatedAt    DateTime @updatedAt @map("updated_at")
+
+  @@index([state])
+  @@map("counties")
 }
 
-model GeoCounty {
-  id                    String                    @id @default(uuid()) @db.Uuid
-  countyFips            String                    @unique @map("county_fips") @db.VarChar(5)
-  countyName            String                    @map("county_name")
-  state                 String                    @db.VarChar(2)
-  stateFips             String?                   @map("state_fips") @db.VarChar(2)
-  msaCode               String?                   @map("msa_code") @db.VarChar(5)
-  timezone              String?
-  isCoastal             Boolean                   @default(false) @map("is_coastal")
-  defaultFloodRiskLevel String?                   @map("default_flood_risk_level")
-  taxRegimeCode         String?                   @map("tax_regime_code")
-  homesteadRuleSummary  String?                   @map("homestead_rule_summary")
-  shapeGeoJson          Json?                     @map("shape_geo_json") @db.JsonB
-  metadata              Json?                     @db.JsonB
-  createdAt             DateTime                  @default(now()) @map("created_at")
-  updatedAt             DateTime                  @updatedAt @map("updated_at")
-  submarkets            GeoSubmarket[]
-  regulations           GeoRegulation[]
-  rentComps             MarketRentComp[]
-  saleComps             MarketSaleComp[]
-  capRateBands          MarketCapRateBand[]
-  ppsfBands             MarketPpsfBand[]
-  calibrationSnapshots  ModelCalibrationSnapshot[]
+model MarketDataSnapshot {
+  id              String   @id @default(uuid()) @db.Uuid
+  county          County   @relation(fields: [countyId], references: [id])
+  countyId        String   @map("county_id") @db.Uuid
+  propertyType    String   @map("property_type")
+  snapshotDate    DateTime @map("snapshot_date") @db.Date
+  medianSalePrice Float?   @map("median_sale_price")
+  medianPriceSqFt Float?   @map("median_price_sqft")
+  medianRent      Float?   @map("median_rent")
+  medianDom       Int?     @map("median_dom")
+  inventoryMonths Float?   @map("inventory_months")
+  yoyAppreciation Float?   @map("yoy_appreciation")
+  activeListings  Int?     @map("active_listings")
+  closedSales     Int?     @map("closed_sales")
+  rawPayload      Json?    @map("raw_payload") @db.JsonB
+  source          String?
 
-  @@index([state, countyFips])
-  @@map("geo_counties")
+  createdAt       DateTime @default(now()) @map("created_at")
+  updatedAt       DateTime @updatedAt @map("updated_at")
+
+  @@index([countyId, propertyType, snapshotDate])
+  @@map("market_data_snapshots")
 }
 
-model GeoSubmarket {
-  id             String            @id @default(uuid()) @db.Uuid
-  geoCounty      GeoCounty         @relation(fields: [geoCountyId], references: [id], onDelete: Cascade)
-  geoCountyId    String            @map("geo_county_id") @db.Uuid
-  countyFips     String            @map("county_fips") @db.VarChar(5)
-  state          String            @db.VarChar(2)
-  name           String
-  slug           String
-  censusTract    String?           @map("census_tract") @db.VarChar(11)
-  zip            String?           @db.VarChar(10)
-  city           String?
-  neighborhood   String?
-  shapeGeoJson   Json?             @map("shape_geo_json") @db.JsonB
-  metadata       Json?             @db.JsonB
-  createdAt      DateTime          @default(now()) @map("created_at")
-  updatedAt      DateTime          @updatedAt @map("updated_at")
-  regulations    GeoRegulation[]
-  rentComps      MarketRentComp[]
-  saleComps      MarketSaleComp[]
-  capRateBands   MarketCapRateBand[]
-  ppsfBands      MarketPpsfBand[]
+model ComparableSale {
+  id           String   @id @default(uuid()) @db.Uuid
+  county       County   @relation(fields: [countyId], references: [id])
+  countyId     String   @map("county_id") @db.Uuid
+  address      String
+  city         String?
+  state        String?  @db.VarChar(2)
+  zip          String?
+  propertyType String   @map("property_type")
+  units        Int?
+  bedrooms     Int?
+  bathrooms    Float?
+  squareFeet   Int?     @map("square_feet")
+  yearBuilt    Int?     @map("year_built")
+  lotSize      Float?   @map("lot_size")
+  salePrice    Float    @map("sale_price")
+  saleDate     DateTime @map("sale_date") @db.Date
+  pricePerSqFt Float?   @map("price_per_sqft")
+  daysOnMarket Int?     @map("days_on_market")
+  listPrice    Float?   @map("list_price")
+  source       String?
+  sourceId     String?  @map("source_id")
+  latitude     Float?
+  longitude    Float?
+  rawPayload   Json?    @map("raw_payload") @db.JsonB
 
-  @@unique([geoCountyId, slug])
-  @@index([state, countyFips, zip])
-  @@index([censusTract])
-  @@map("geo_submarkets")
+  createdAt    DateTime @default(now()) @map("created_at")
+  updatedAt    DateTime @updatedAt @map("updated_at")
+
+  @@index([countyId, propertyType, saleDate])
+  @@index([zip])
+  @@index([state, city])
+  @@map("comparable_sales")
 }
 
-model GeoRegulation {
-  id               String            @id @default(uuid()) @db.Uuid
-  geoCounty        GeoCounty         @relation(fields: [geoCountyId], references: [id], onDelete: Cascade)
-  geoCountyId      String            @map("geo_county_id") @db.Uuid
-  geoSubmarket     GeoSubmarket?     @relation(fields: [geoSubmarketId], references: [id], onDelete: SetNull)
-  geoSubmarketId   String?           @map("geo_submarket_id") @db.Uuid
-  countyFips       String            @map("county_fips") @db.VarChar(5)
-  state            String            @db.VarChar(2)
-  zip              String?           @db.VarChar(10)
-  regulationType   GeoRegulationType @map("regulation_type")
-  jurisdictionName String            @map("jurisdiction_name")
-  code             String?
-  title            String
-  summary          String
-  notes            String?
-  zoningCategory   String?           @map("zoning_category")
-  floodZone        String?           @map("flood_zone")
-  coastalRiskFlag  Boolean           @default(false) @map("coastal_risk_flag")
-  strAllowed       Boolean?          @map("str_allowed")
-  strMinNightStay  Int?              @map("str_min_night_stay")
-  taxRuleJson      Json?             @map("tax_rule_json") @db.JsonB
-  sourceName       String?           @map("source_name")
-  sourceUrl        String?           @map("source_url")
-  effectiveDate    DateTime          @map("effective_date")
-  expiresAt        DateTime?         @map("expires_at")
-  createdAt        DateTime          @default(now()) @map("created_at")
-  updatedAt        DateTime          @updatedAt @map("updated_at")
+model MarketBand {
+  id              String   @id @default(uuid()) @db.Uuid
+  county          County   @relation(fields: [countyId], references: [id])
+  countyId        String   @map("county_id") @db.Uuid
+  propertyType    String   @map("property_type")
+  bandType        String   @map("band_type") // price, rent, cap_rate, price_per_sqft
+  lowValue        Float    @map("low_value")
+  midValue        Float    @map("mid_value")
+  highValue       Float    @map("high_value")
+  confidenceLevel String   @map("confidence_level") @default("moderate")
+  sampleSize      Int?     @map("sample_size")
+  asOfDate        DateTime @map("as_of_date") @db.Date
+  source          String?
 
-  @@index([state, countyFips, zip, effectiveDate])
-  @@index([regulationType, effectiveDate])
-  @@map("geo_regulations")
-}
+  createdAt       DateTime @default(now()) @map("created_at")
+  updatedAt       DateTime @updatedAt @map("updated_at")
 
-model MarketRentComp {
-  id              String                 @id @default(uuid()) @db.Uuid
-  geoCounty       GeoCounty              @relation(fields: [geoCountyId], references: [id], onDelete: Cascade)
-  geoCountyId     String                 @map("geo_county_id") @db.Uuid
-  geoSubmarket    GeoSubmarket?          @relation(fields: [geoSubmarketId], references: [id], onDelete: SetNull)
-  geoSubmarketId  String?                @map("geo_submarket_id") @db.Uuid
-  countyFips      String                 @map("county_fips") @db.VarChar(5)
-  state           String                 @db.VarChar(2)
-  zip             String?                @db.VarChar(10)
-  propertyType    CollateralPropertyType @map("property_type")
-  source          CompSourceType
-  vendorListingId String?                @map("vendor_listing_id")
-  addressLine1    String?                @map("address_line_1")
-  city            String?
-  latitude        Decimal?               @db.Decimal(9, 6)
-  longitude       Decimal?               @db.Decimal(9, 6)
-  beds            Int?
-  baths           Decimal?               @db.Decimal(3, 1)
-  buildingSqft    Int?                   @map("building_sqft")
-  lotSqft         Int?                   @map("lot_sqft")
-  yearBuilt       Int?                   @map("year_built")
-  askingRent      Decimal                @map("asking_rent") @db.Decimal(12, 2)
-  rentPerSqft     Decimal?               @map("rent_per_sqft") @db.Decimal(10, 4)
-  leaseTermMonths Int?                   @map("lease_term_months")
-  daysOnMarket    Int?                   @map("days_on_market")
-  distanceMiles   Decimal?               @map("distance_miles") @db.Decimal(8, 3)
-  effectiveDate   DateTime               @map("effective_date")
-  observedAt      DateTime               @default(now()) @map("observed_at")
-  sourceUrl       String?                @map("source_url")
-  rawPayload      Json?                  @map("raw_payload") @db.JsonB
-
-  @@index([state, countyFips, zip, propertyType, effectiveDate])
-  @@index([vendorListingId])
-  @@map("market_rent_comps")
-}
-
-model MarketSaleComp {
-  id             String                 @id @default(uuid()) @db.Uuid
-  geoCounty      GeoCounty              @relation(fields: [geoCountyId], references: [id], onDelete: Cascade)
-  geoCountyId    String                 @map("geo_county_id") @db.Uuid
-  geoSubmarket   GeoSubmarket?          @relation(fields: [geoSubmarketId], references: [id], onDelete: SetNull)
-  geoSubmarketId String?                @map("geo_submarket_id") @db.Uuid
-  countyFips     String                 @map("county_fips") @db.VarChar(5)
-  state          String                 @db.VarChar(2)
-  zip            String?                @db.VarChar(10)
-  propertyType   CollateralPropertyType @map("property_type")
-  source         CompSourceType
-  vendorSaleId   String?                @map("vendor_sale_id")
-  addressLine1   String?                @map("address_line_1")
-  city           String?
-  latitude       Decimal?               @db.Decimal(9, 6)
-  longitude      Decimal?               @db.Decimal(9, 6)
-  beds           Int?
-  baths          Decimal?               @db.Decimal(3, 1)
-  buildingSqft   Int?                   @map("building_sqft")
-  lotSqft        Int?                   @map("lot_sqft")
-  yearBuilt      Int?                   @map("year_built")
-  salePrice      Decimal                @map("sale_price") @db.Decimal(14, 2)
-  pricePerSqft   Decimal?               @map("price_per_sqft") @db.Decimal(12, 4)
-  capRate        Decimal?               @map("cap_rate") @db.Decimal(6, 4)
-  noi            Decimal?               @db.Decimal(14, 2)
-  distanceMiles  Decimal?               @map("distance_miles") @db.Decimal(8, 3)
-  saleDate       DateTime               @map("sale_date")
-  effectiveDate  DateTime               @map("effective_date")
-  observedAt     DateTime               @default(now()) @map("observed_at")
-  sourceUrl      String?                @map("source_url")
-  rawPayload     Json?                  @map("raw_payload") @db.JsonB
-
-  @@index([state, countyFips, zip, propertyType, effectiveDate])
-  @@index([saleDate])
-  @@index([vendorSaleId])
-  @@map("market_sale_comps")
-}
-
-model MarketCapRateBand {
-  id             String                 @id @default(uuid()) @db.Uuid
-  geoCounty      GeoCounty              @relation(fields: [geoCountyId], references: [id], onDelete: Cascade)
-  geoCountyId    String                 @map("geo_county_id") @db.Uuid
-  geoSubmarket   GeoSubmarket?          @relation(fields: [geoSubmarketId], references: [id], onDelete: SetNull)
-  geoSubmarketId String?                @map("geo_submarket_id") @db.Uuid
-  countyFips     String                 @map("county_fips") @db.VarChar(5)
-  state          String                 @db.VarChar(2)
-  zip            String?                @db.VarChar(10)
-  propertyType   CollateralPropertyType @map("property_type")
-  effectiveDate  DateTime               @map("effective_date")
-  lowRate        Decimal                @map("low_rate") @db.Decimal(6, 4)
-  medianRate     Decimal                @map("median_rate") @db.Decimal(6, 4)
-  highRate       Decimal                @map("high_rate") @db.Decimal(6, 4)
-  sampleSize     Int                    @default(0) @map("sample_size")
-  dataQuality    DataQuality            @default(thin) @map("data_quality")
-  methodology    String?
-  rawPayload     Json?                  @map("raw_payload") @db.JsonB
-  createdAt      DateTime               @default(now()) @map("created_at")
-  updatedAt      DateTime               @updatedAt @map("updated_at")
-
-  @@index([state, countyFips, zip, propertyType, effectiveDate])
-  @@map("market_cap_rate_bands")
-}
-
-model MarketPpsfBand {
-  id             String                 @id @default(uuid()) @db.Uuid
-  geoCounty      GeoCounty              @relation(fields: [geoCountyId], references: [id], onDelete: Cascade)
-  geoCountyId    String                 @map("geo_county_id") @db.Uuid
-  geoSubmarket   GeoSubmarket?          @relation(fields: [geoSubmarketId], references: [id], onDelete: SetNull)
-  geoSubmarketId String?                @map("geo_submarket_id") @db.Uuid
-  countyFips     String                 @map("county_fips") @db.VarChar(5)
-  state          String                 @db.VarChar(2)
-  zip            String?                @db.VarChar(10)
-  propertyType   CollateralPropertyType @map("property_type")
-  effectiveDate  DateTime               @map("effective_date")
-  lowPpsf        Decimal                @map("low_ppsf") @db.Decimal(12, 2)
-  medianPpsf     Decimal                @map("median_ppsf") @db.Decimal(12, 2)
-  highPpsf       Decimal                @map("high_ppsf") @db.Decimal(12, 2)
-  sampleSize     Int                    @default(0) @map("sample_size")
-  dataQuality    DataQuality            @default(thin) @map("data_quality")
-  methodology    String?
-  rawPayload     Json?                  @map("raw_payload") @db.JsonB
-  createdAt      DateTime               @default(now()) @map("created_at")
-  updatedAt      DateTime               @updatedAt @map("updated_at")
-
-  @@index([state, countyFips, zip, propertyType, effectiveDate])
-  @@map("market_ppsf_bands")
-}
-
-model AppraisalLabel {
-  id                String                 @id @default(uuid()) @db.Uuid
-  deal              Deal?                  @relation(fields: [dealId], references: [id], onDelete: SetNull)
-  dealId            String?                @map("deal_id") @db.Uuid
-  subjectProperty   SubjectProperty?       @relation(fields: [subjectPropertyId], references: [id], onDelete: SetNull)
-  subjectPropertyId String?                @map("subject_property_id") @db.Uuid
-  countyFips        String                 @map("county_fips") @db.VarChar(5)
-  state             String                 @db.VarChar(2)
-  zip               String?                @db.VarChar(10)
-  propertyType      CollateralPropertyType @map("property_type")
-  appraiserName     String?                @map("appraiser_name")
-  appraiserLicense  String?                @map("appraiser_license")
-  appraisedValue    Decimal                @map("appraised_value") @db.Decimal(14, 2)
-  effectiveDate     DateTime               @map("effective_date")
-  reportDate        DateTime?              @map("report_date")
-  adjustmentsJson   Json?                  @map("adjustments_json") @db.JsonB
-  sourceDocRef      String?                @map("source_doc_ref")
-  createdAt         DateTime               @default(now()) @map("created_at")
-  updatedAt         DateTime               @updatedAt @map("updated_at")
-
-  @@index([dealId])
-  @@index([subjectPropertyId])
-  @@index([state, countyFips, zip, propertyType, effectiveDate])
-  @@map("appraisal_labels")
-}
-
-model RealizedOutcome {
-  id                String                 @id @default(uuid()) @db.Uuid
-  deal              Deal?                  @relation(fields: [dealId], references: [id], onDelete: SetNull)
-  dealId            String?                @map("deal_id") @db.Uuid
-  subjectProperty   SubjectProperty?       @relation(fields: [subjectPropertyId], references: [id], onDelete: SetNull)
-  subjectPropertyId String?                @map("subject_property_id") @db.Uuid
-  countyFips        String                 @map("county_fips") @db.VarChar(5)
-  state             String                 @db.VarChar(2)
-  zip               String?                @db.VarChar(10)
-  propertyType      CollateralPropertyType @map("property_type")
-  outcomeType       OutcomeType            @map("outcome_type")
-  amount            Decimal                @db.Decimal(14, 2)
-  outcomeDate       DateTime               @map("outcome_date")
-  effectiveDate     DateTime               @map("effective_date")
-  sourceName        String?                @map("source_name")
-  sourceRef         String?                @map("source_ref")
-  notes             String?
-  createdAt         DateTime               @default(now()) @map("created_at")
-  updatedAt         DateTime               @updatedAt @map("updated_at")
-
-  @@index([dealId])
-  @@index([subjectPropertyId])
-  @@index([state, countyFips, zip, propertyType, effectiveDate])
-  @@map("realized_outcomes")
-}
-
-model ModelCalibrationSnapshot {
-  id                          String                 @id @default(uuid()) @db.Uuid
-  geoCounty                   GeoCounty              @relation(fields: [geoCountyId], references: [id], onDelete: Cascade)
-  geoCountyId                 String                 @map("geo_county_id") @db.Uuid
-  countyFips                  String                 @map("county_fips") @db.VarChar(5)
-  state                       String                 @db.VarChar(2)
-  zip                         String?                @db.VarChar(10)
-  propertyType                CollateralPropertyType @map("property_type")
-  productType                 String                 @map("product_type")
-  effectiveDate               DateTime               @map("effective_date")
-  sampleSize                  Int                    @default(0) @map("sample_size")
-  medianModelToHumanGapPct    Decimal?               @map("median_model_to_human_gap_pct") @db.Decimal(8, 4)
-  medianModelToRealizedGapPct Decimal?               @map("median_model_to_realized_gap_pct") @db.Decimal(8, 4)
-  p90AbsModelGapPct           Decimal?               @map("p90_abs_model_gap_pct") @db.Decimal(8, 4)
-  confidenceScore             Decimal?               @map("confidence_score") @db.Decimal(5, 4)
-  volatilityFlag              Boolean                @default(false) @map("volatility_flag")
-  notes                       String?
-  rawPayload                  Json?                  @map("raw_payload") @db.JsonB
-  createdAt                   DateTime               @default(now()) @map("created_at")
-  updatedAt                   DateTime               @updatedAt @map("updated_at")
-
-  @@unique([geoCountyId, propertyType, productType, effectiveDate])
-  @@index([state, countyFips, zip, propertyType, effectiveDate])
-  @@map("model_calibration_snapshots")
+  @@index([countyId, propertyType, bandType])
+  @@map("market_bands")
 }

@@ -1,324 +1,178 @@
-import { CollateralPropertyType, prisma } from '@818capital/db';
+import { prisma } from '@818capital/db';
+import type {
+  MarketContext,
+  ComparableSaleData,
+  MarketBandData,
+  DataQualityIndicator,
+} from './valuationTypes';
 
-import { validateMarketData } from './dataValidation';
+/**
+ * Market Data Service — fetches county-level market context for the AI Appraisal pipeline.
+ * Uses County, ComparableSale, MarketBand, and MarketDataSnapshot Prisma models.
+ */
 
-export interface MarketContextInput {
+interface GetMarketContextInput {
   state: string;
-  countyFips?: string;
   zip?: string;
-  coords?: {
-    latitude: number;
-    longitude: number;
+  propertyType?: string;
+  subjectPrice?: number;
+}
+
+export async function getMarketContext(input: GetMarketContextInput): Promise<MarketContext> {
+  // 1. Find county by state (and optionally zip via comparable sales)
+  const county = await prisma.county.findFirst({
+    where: { state: input.state.toUpperCase() },
+    orderBy: { name: 'asc' },
+  });
+
+  if (!county) {
+    return emptyMarketContext(['No county data found for state: ' + input.state]);
+  }
+
+  // 2. Fetch comparable sales
+  const compWhere: Record<string, unknown> = {
+    countyId: county.id,
   };
-  propertyType: CollateralPropertyType;
-}
+  if (input.propertyType) compWhere.propertyType = input.propertyType;
+  if (input.zip) compWhere.zip = input.zip;
 
-export interface MarketDataResponse {
-  marketData: {
-    county: {
-      countyFips: string;
-      countyName: string;
-      state: string;
-      isCoastal: boolean;
-      defaultFloodRiskLevel?: string | null;
-    } | null;
-    rentComps: Array<Record<string, unknown>>;
-    saleComps: Array<Record<string, unknown>>;
-    marketCapRateRange: Record<string, unknown> | null;
-    marketPricePerSqftRange: Record<string, unknown> | null;
-    regulatoryNotes: Array<Record<string, unknown>>;
-    derivedFeatures: {
-      rentMedian?: number;
-      saleMedian?: number;
-      ppsfMedian?: number;
-      capRateMedian?: number;
-      rentCompCount: number;
-      saleCompCount: number;
-      volatilityFlag: boolean;
-    };
-    dataQuality: 'good' | 'thin' | 'bad';
-    dataQualityReasons: string[];
+  let rawComps = await prisma.comparableSale.findMany({
+    where: compWhere,
+    orderBy: { saleDate: 'desc' },
+    take: 15,
+  });
+
+  // If zip filter yielded too few, broaden to county-level
+  if (rawComps.length < 3 && input.zip) {
+    const broader: Record<string, unknown> = { countyId: county.id };
+    if (input.propertyType) broader.propertyType = input.propertyType;
+    rawComps = await prisma.comparableSale.findMany({
+      where: broader,
+      orderBy: { saleDate: 'desc' },
+      take: 15,
+    });
+  }
+
+  const comparableSales: ComparableSaleData[] = rawComps.map((c) => ({
+    compId: c.id,
+    address: c.address,
+    city: c.city,
+    state: c.state,
+    zip: c.zip,
+    salePrice: c.salePrice,
+    saleDate: c.saleDate.toISOString().split('T')[0],
+    squareFeet: c.squareFeet,
+    pricePerSqFt: c.pricePerSqFt,
+    units: c.units,
+    distanceMiles: null,
+    daysOnMarket: c.daysOnMarket,
+    adjustedValue: null,
+    adjustments: {},
+    source: c.source,
+    similarityScore: null,
+  }));
+
+  // 3. Fetch market bands
+  const rawBands = await prisma.marketBand.findMany({
+    where: {
+      countyId: county.id,
+      ...(input.propertyType ? { propertyType: input.propertyType } : {}),
+    },
+    orderBy: { asOfDate: 'desc' },
+  });
+
+  // Deduplicate by bandType (keep most recent)
+  const seenBandTypes = new Set<string>();
+  const marketBands: MarketBandData[] = [];
+  for (const b of rawBands) {
+    if (seenBandTypes.has(b.bandType)) continue;
+    seenBandTypes.add(b.bandType);
+    marketBands.push({
+      bandType: b.bandType,
+      lowValue: b.lowValue,
+      midValue: b.midValue,
+      highValue: b.highValue,
+      confidenceLevel: b.confidenceLevel as 'high' | 'moderate' | 'low',
+      sampleSize: b.sampleSize,
+    });
+  }
+
+  // 4. Fetch latest market snapshot for aggregate metrics
+  const snapshot = await prisma.marketDataSnapshot.findFirst({
+    where: {
+      countyId: county.id,
+      ...(input.propertyType ? { propertyType: input.propertyType } : {}),
+    },
+    orderBy: { snapshotDate: 'desc' },
+  });
+
+  // 5. Calculate data quality
+  const now = Date.now();
+  const mostRecentCompDate = rawComps.length > 0
+    ? rawComps[0].saleDate.getTime()
+    : 0;
+  const recencyDays = mostRecentCompDate > 0
+    ? Math.floor((now - mostRecentCompDate) / (1000 * 60 * 60 * 24))
+    : 999;
+
+  const flags: string[] = [];
+  if (rawComps.length === 0) flags.push('No comparable sales found.');
+  if (rawComps.length > 0 && rawComps.length < 3) flags.push(`Only ${rawComps.length} comparable sale(s) found.`);
+  if (recencyDays > 180) flags.push(`Most recent comp is ${recencyDays} days old.`);
+  if (marketBands.length === 0) flags.push('No market band data available.');
+
+  const baseScore = Math.min(100,
+    (rawComps.length >= 5 ? 40 : rawComps.length * 8) +
+    (recencyDays < 90 ? 25 : recencyDays < 180 ? 15 : 5) +
+    (marketBands.length > 0 ? 20 : 0) +
+    (snapshot ? 15 : 0),
+  );
+
+  const geographicSpread: 'tight' | 'moderate' | 'wide' =
+    input.zip && rawComps.some((c) => c.zip === input.zip) ? 'tight' :
+    rawComps.length > 0 ? 'moderate' : 'wide';
+
+  const dataQuality: DataQualityIndicator = {
+    compCount: rawComps.length,
+    recencyDays,
+    geographicSpread,
+    score: baseScore,
+    flags,
   };
-}
-
-function decimalToNumber(value: unknown): number | null {
-  if (value == null) {
-    return null;
-  }
-
-  if (typeof value === 'number') {
-    return value;
-  }
-
-  if (typeof value === 'string') {
-    const parsed = Number(value);
-    return Number.isFinite(parsed) ? parsed : null;
-  }
-
-  if (
-    typeof value === 'object' &&
-    value !== null &&
-    'toNumber' in value &&
-    typeof (value as { toNumber: () => number }).toNumber === 'function'
-  ) {
-    return (value as { toNumber: () => number }).toNumber();
-  }
-
-  const coerced = Number(value);
-  return Number.isFinite(coerced) ? coerced : null;
-}
-
-function median(values: number[]): number | undefined {
-  if (values.length === 0) {
-    return undefined;
-  }
-
-  const sorted = [...values].sort((a, b) => a - b);
-  const middle = Math.floor(sorted.length / 2);
-
-  if (sorted.length % 2 === 0) {
-    return Number(((sorted[middle - 1] + sorted[middle]) / 2).toFixed(4));
-  }
-
-  return Number(sorted[middle].toFixed(4));
-}
-
-export async function getMarketContextForProperty(
-  input: MarketContextInput,
-): Promise<MarketDataResponse> {
-  const county = input.countyFips
-    ? await prisma.geoCounty.findUnique({
-        where: { countyFips: input.countyFips },
-      })
-    : await prisma.geoCounty.findFirst({
-        where: {
-          state: input.state,
-          ...(input.zip ? { submarkets: { some: { zip: input.zip } } } : {}),
-        },
-        orderBy: { countyName: 'asc' },
-      });
-
-  const countyFips = input.countyFips ?? county?.countyFips;
-
-  const submarket = countyFips
-    ? await prisma.geoSubmarket.findFirst({
-        where: {
-          countyFips,
-          state: input.state,
-          ...(input.zip ? { zip: input.zip } : {}),
-        },
-        orderBy: { updatedAt: 'desc' },
-      })
-    : null;
-
-  const bandFilters: Array<Record<string, unknown>> = [
-    { state: input.state },
-    { propertyType: input.propertyType },
-    ...(countyFips ? [{ countyFips }] : []),
-    ...(input.zip ? [{ OR: [{ zip: input.zip }, { zip: null }] }] : []),
-    ...(submarket ? [{ OR: [{ geoSubmarketId: submarket.id }, { geoSubmarketId: null }] }] : []),
-  ];
-
-  const regulationFilters: Array<Record<string, unknown>> = [
-    { state: input.state },
-    ...(countyFips ? [{ countyFips }] : []),
-    ...(input.zip ? [{ OR: [{ zip: input.zip }, { zip: null }] }] : []),
-  ];
-
-  const rentCompRows = await prisma.marketRentComp.findMany({
-    where: {
-      state: input.state,
-      propertyType: input.propertyType,
-      ...(countyFips ? { countyFips } : {}),
-      ...(input.zip ? { zip: input.zip } : {}),
-    },
-    orderBy: [{ effectiveDate: 'desc' }, { observedAt: 'desc' }],
-    take: 12,
-  });
-
-  const saleCompRows = await prisma.marketSaleComp.findMany({
-    where: {
-      state: input.state,
-      propertyType: input.propertyType,
-      ...(countyFips ? { countyFips } : {}),
-      ...(input.zip ? { zip: input.zip } : {}),
-    },
-    orderBy: [{ effectiveDate: 'desc' }, { saleDate: 'desc' }],
-    take: 12,
-  });
-
-  const [capRateBandRow, ppsfBandRow, regulationRows, calibrationSnapshot] = await Promise.all([
-    prisma.marketCapRateBand.findFirst({
-      where: { AND: bandFilters },
-      orderBy: [{ geoSubmarketId: 'desc' }, { effectiveDate: 'desc' }],
-    }),
-    prisma.marketPpsfBand.findFirst({
-      where: { AND: bandFilters },
-      orderBy: [{ geoSubmarketId: 'desc' }, { effectiveDate: 'desc' }],
-    }),
-    prisma.geoRegulation.findMany({
-      where: { AND: regulationFilters },
-      orderBy: [{ effectiveDate: 'desc' }, { updatedAt: 'desc' }],
-      take: 20,
-    }),
-    countyFips
-      ? prisma.modelCalibrationSnapshot.findFirst({
-          where: {
-            state: input.state,
-            countyFips,
-            propertyType: input.propertyType,
-          },
-          orderBy: { effectiveDate: 'desc' },
-        })
-      : Promise.resolve(null),
-  ]);
-
-  const rentComps = rentCompRows.map((row) => ({
-    id: row.id,
-    source: row.source,
-    addressLine1: row.addressLine1,
-    city: row.city,
-    zip: row.zip,
-    beds: row.beds,
-    baths: decimalToNumber(row.baths),
-    buildingSqft: row.buildingSqft,
-    askingRent: decimalToNumber(row.askingRent) ?? 0,
-    rentPerSqft: decimalToNumber(row.rentPerSqft),
-    distanceMiles: decimalToNumber(row.distanceMiles),
-    effectiveDate: row.effectiveDate.toISOString(),
-  }));
-
-  const saleComps = saleCompRows.map((row) => ({
-    id: row.id,
-    source: row.source,
-    addressLine1: row.addressLine1,
-    city: row.city,
-    zip: row.zip,
-    buildingSqft: row.buildingSqft,
-    salePrice: decimalToNumber(row.salePrice) ?? 0,
-    pricePerSqft: decimalToNumber(row.pricePerSqft),
-    capRate: decimalToNumber(row.capRate),
-    distanceMiles: decimalToNumber(row.distanceMiles),
-    saleDate: row.saleDate.toISOString(),
-    effectiveDate: row.effectiveDate.toISOString(),
-  }));
-
-  const marketCapRateRange = capRateBandRow
-    ? {
-        low: decimalToNumber(capRateBandRow.lowRate) ?? 0,
-        median: decimalToNumber(capRateBandRow.medianRate) ?? 0,
-        high: decimalToNumber(capRateBandRow.highRate) ?? 0,
-        sampleSize: capRateBandRow.sampleSize,
-        effectiveDate: capRateBandRow.effectiveDate.toISOString(),
-        source: capRateBandRow.geoSubmarketId ? 'submarket' : 'county',
-      }
-    : null;
-
-  const marketPricePerSqftRange = ppsfBandRow
-    ? {
-        low: decimalToNumber(ppsfBandRow.lowPpsf) ?? 0,
-        median: decimalToNumber(ppsfBandRow.medianPpsf) ?? 0,
-        high: decimalToNumber(ppsfBandRow.highPpsf) ?? 0,
-        sampleSize: ppsfBandRow.sampleSize,
-        effectiveDate: ppsfBandRow.effectiveDate.toISOString(),
-        source: ppsfBandRow.geoSubmarketId ? 'submarket' : 'county',
-      }
-    : null;
-
-  const regulatoryNotes = regulationRows.map((row) => ({
-    regulationType: row.regulationType,
-    jurisdictionName: row.jurisdictionName,
-    title: row.title,
-    summary: row.summary,
-    notes: row.notes,
-    effectiveDate: row.effectiveDate.toISOString(),
-    zoningCategory: row.zoningCategory,
-    floodZone: row.floodZone,
-    coastalRiskFlag: row.coastalRiskFlag,
-    strAllowed: row.strAllowed,
-    strMinNightStay: row.strMinNightStay,
-  }));
-
-  const validation = validateMarketData({
-    rentComps: rentComps.map((comp) => ({
-      id: comp.id as string,
-      askingRent: comp.askingRent as number,
-      rentPerSqft: comp.rentPerSqft as number | null,
-      buildingSqft: comp.buildingSqft as number | null,
-      distanceMiles: comp.distanceMiles as number | null,
-      effectiveDate: comp.effectiveDate as string,
-    })),
-    saleComps: saleComps.map((comp) => ({
-      id: comp.id as string,
-      salePrice: comp.salePrice as number,
-      pricePerSqft: comp.pricePerSqft as number | null,
-      capRate: comp.capRate as number | null,
-      buildingSqft: comp.buildingSqft as number | null,
-      distanceMiles: comp.distanceMiles as number | null,
-      effectiveDate: comp.effectiveDate as string,
-      saleDate: comp.saleDate as string,
-    })),
-    marketCapRateRange: marketCapRateRange
-      ? {
-          low: marketCapRateRange.low,
-          median: marketCapRateRange.median,
-          high: marketCapRateRange.high,
-          sampleSize: marketCapRateRange.sampleSize,
-        }
-      : null,
-    marketPricePerSqftRange: marketPricePerSqftRange
-      ? {
-          low: marketPricePerSqftRange.low,
-          median: marketPricePerSqftRange.median,
-          high: marketPricePerSqftRange.high,
-          sampleSize: marketPricePerSqftRange.sampleSize,
-        }
-      : null,
-  });
-
-  const rentMedian = median(rentComps.map((comp) => comp.askingRent as number));
-  const saleMedian = median(saleComps.map((comp) => comp.salePrice as number));
-  const ppsfMedian = median(
-    saleComps
-      .map((comp) => comp.pricePerSqft)
-      .filter((value): value is number => typeof value === 'number'),
-  );
-  const capRateMedian = median(
-    saleComps
-      .map((comp) => comp.capRate)
-      .filter((value): value is number => typeof value === 'number'),
-  );
 
   return {
-    marketData: {
-      county: county
-        ? {
-            countyFips: county.countyFips,
-            countyName: county.countyName,
-            state: county.state,
-            isCoastal: county.isCoastal,
-            defaultFloodRiskLevel: county.defaultFloodRiskLevel,
-          }
-        : null,
-      rentComps,
-      saleComps,
-      marketCapRateRange,
-      marketPricePerSqftRange,
-      regulatoryNotes,
-      derivedFeatures: {
-        rentMedian,
-        saleMedian,
-        ppsfMedian: marketPricePerSqftRange?.median ?? ppsfMedian,
-        capRateMedian: marketCapRateRange?.median ?? capRateMedian,
-        rentCompCount: rentComps.length,
-        saleCompCount: saleComps.length,
-        volatilityFlag: calibrationSnapshot?.volatilityFlag ?? validation.dataQuality !== 'good',
-      },
-      dataQuality: validation.dataQuality,
-      dataQualityReasons: [
-        ...validation.reasons,
-        ...(calibrationSnapshot?.volatilityFlag ? ['Latest county calibration snapshot is marked volatile.'] : []),
-      ],
+    countyFips: county.fips,
+    countyName: county.name,
+    medianSalePrice: snapshot?.medianSalePrice ?? null,
+    medianPricePerSqFt: snapshot?.medianPriceSqFt ?? null,
+    medianRent: snapshot?.medianRent ?? null,
+    medianDaysOnMarket: snapshot?.medianDom ?? null,
+    inventoryMonths: snapshot?.inventoryMonths ?? null,
+    yearOverYearAppreciation: snapshot?.yoyAppreciation ?? null,
+    comparableSales,
+    marketBands,
+    dataQuality,
+  };
+}
+
+function emptyMarketContext(flags: string[]): MarketContext {
+  return {
+    countyFips: null,
+    countyName: null,
+    medianSalePrice: null,
+    medianPricePerSqFt: null,
+    medianRent: null,
+    medianDaysOnMarket: null,
+    inventoryMonths: null,
+    yearOverYearAppreciation: null,
+    comparableSales: [],
+    marketBands: [],
+    dataQuality: {
+      compCount: 0,
+      recencyDays: 0,
+      geographicSpread: 'wide',
+      score: 0,
+      flags,
     },
   };
 }

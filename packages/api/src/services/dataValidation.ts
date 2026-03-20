@@ -55,6 +55,47 @@ function hasBadRange(range?: RangeRecord | null): boolean {
   return range.low <= 0 || range.median <= 0 || range.high <= 0 || !(range.low <= range.median && range.median <= range.high);
 }
 
+// ─── Property Input Normalizer ──────────────────────────
+
+interface PropertyInput {
+  address?: string | null;
+  city?: string | null;
+  state?: string | null;
+  zip?: string | null;
+  propertyType?: string | null;
+  units?: number | null;
+  squareFeet?: number;
+  yearBuilt?: number;
+  purchasePrice?: number;
+}
+
+interface NormalizedProperty {
+  address: string | null;
+  city: string | null;
+  state: string | null;
+  zip: string | null;
+  propertyType: string | null;
+  units: number | null;
+  squareFeet: number | null;
+  yearBuilt: number | null;
+}
+
+export function validateAndNormalize(input: PropertyInput): NormalizedProperty {
+  return {
+    address: input.address?.trim() || null,
+    city: input.city?.trim() || null,
+    state: input.state?.trim().toUpperCase().slice(0, 2) || null,
+    zip: input.zip?.trim().replace(/[^0-9]/g, '').slice(0, 5) || null,
+    propertyType: input.propertyType?.trim() || null,
+    units: input.units != null && input.units > 0 ? input.units : null,
+    squareFeet: input.squareFeet != null && input.squareFeet > 0 ? input.squareFeet : null,
+    yearBuilt: input.yearBuilt != null && input.yearBuilt > 1800 && input.yearBuilt <= new Date().getFullYear() + 2
+      ? input.yearBuilt : null,
+  };
+}
+
+// ─── Market Data Validator ──────────────────────────────
+
 export function validateMarketData(input: MarketDataValidationInput): MarketDataValidationResult {
   const reasons: string[] = [];
 

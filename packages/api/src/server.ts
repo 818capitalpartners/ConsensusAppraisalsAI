@@ -5,8 +5,7 @@ import { dealsRouter } from './routes/deals';
 import { healthRouter } from './routes/health';
 import { contactsRouter } from './routes/contacts';
 import { aiRouter } from './routes/ai';
-import { chatRouter } from './routes/chat';
-import { marketDataRouter } from './routes/marketData';
+import { appraisalsRouter } from './routes/appraisals';
 import { startCronJobs } from './cron';
 
 const app = express();
@@ -20,8 +19,7 @@ app.use('/api/health', healthRouter);
 app.use('/api/deals', dealsRouter);
 app.use('/api/contacts', contactsRouter);
 app.use('/api/ai', aiRouter);
-app.use('/api/chat', chatRouter);
-app.use('/api/market-data', marketDataRouter);
+app.use('/api/appraisals', appraisalsRouter);
 
 // Start cron jobs
 startCronJobs();
