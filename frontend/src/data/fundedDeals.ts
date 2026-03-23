@@ -34,7 +34,7 @@ const FUNDED_DEALS: FundedDeal[] = [
   {
     id: 6, city: 'Washington', state: 'DC', propertyType: 'SFR', loanType: 'Fix & Flip',
     program: '12-Mo Bridge IO — 90% LTC / 100% Rehab', ltv: '90% LTC / 100% Rehab', rate: '9.5%', dealValue: '$490,000',
-    image: 'https://images.unsplash.com/photo-1558618666-fcd25c85f82e?w=800&q=80',
+    image: 'https://images.unsplash.com/photo-1576941089067-2de3c901e126?w=800&q=80',
     analysis: `Second DC-area flip — repeat borrower scaling in the same market. Proven comps and contractor relationships reduce execution risk.\n\nRepeat deals improve margins. Projected profit: $55K–$90K. IO structure keeps monthly carry under $4K. Cumulative ROI across DC deals: 70–100%+.`,
   },
   {
@@ -64,7 +64,7 @@ const FUNDED_DEALS: FundedDeal[] = [
   {
     id: 11, city: 'White Settlement', state: 'TX', propertyType: 'Commercial / Industrial Flex', loanType: 'Commercial Refi',
     program: 'Life Co / CMBS', ltv: 'N/A', rate: '5.26–5.66%', dealValue: '$1,850,000',
-    image: 'https://images.unsplash.com/photo-V2GZeHNwP5w?w=800&q=80',
+    image: 'https://images.unsplash.com/photo-1565610222536-ef125c59da2e?w=800&q=80',
     analysis: `Commercial retail refi via Life Company or CMBS — the lowest rates in commercial lending. At 5.26–5.66%, the borrower locks in institutional-grade pricing.\n\nLife Co/CMBS terms offer 10–25 year fixed-rate stability. DFW retail corridor. Projected cash-on-cash: 10–14%.`,
   },
   {
@@ -82,7 +82,7 @@ const FUNDED_DEALS: FundedDeal[] = [
   {
     id: 14, city: 'Seneca Falls', state: 'NY', propertyType: '2-Unit', loanType: 'DSCR Cash-Out',
     program: '30-Yr DSCR — Cash-Out Refi', ltv: '75%', rate: 'N/A', dealValue: '$185,000',
-    image: 'https://images.unsplash.com/photo-T2i9_B0OeuE?w=800&q=80',
+    image: 'https://images.unsplash.com/photo-1597211833712-5e41faa202ea?w=800&q=80',
     analysis: `2-unit duplex cash-out refi in upstate NY's Finger Lakes region. At 75% LTV, the borrower extracts equity while maintaining solid coverage.\n\nDual-unit income provides built-in vacancy protection. Projected cash-on-cash after refi: 10–15%. Classic BRRRR execution.`,
   },
   {
@@ -94,7 +94,7 @@ const FUNDED_DEALS: FundedDeal[] = [
   {
     id: 16, city: 'Seneca Falls', state: 'NY', propertyType: '3-Unit', loanType: 'DSCR Purchase',
     program: '30-Yr DSCR — Purchase', ltv: '70%', rate: 'N/A', dealValue: '$225,000',
-    image: 'https://images.unsplash.com/photo-1CHyP92Oc04?w=800&q=80',
+    image: 'https://images.unsplash.com/photo-1572120360610-d971b9d7767c?w=800&q=80',
     analysis: `3-unit triplex purchase at 70% LTV — conservative leverage with three income streams. More units per property = better expense ratios and vacancy protection.\n\nThree units at $900–$1,100/mo each provide $2,700–$3,300 gross monthly. DSCR: 1.4–1.7x. Cash-on-cash: 11–16%.`,
   },
   {
@@ -148,7 +148,7 @@ const FUNDED_DEALS: FundedDeal[] = [
   {
     id: 25, city: 'Portland', state: 'ME', propertyType: 'SFR', loanType: 'DSCR',
     program: '30-Yr DSCR', ltv: 'N/A', rate: 'N/A', dealValue: '$365,000',
-    image: 'https://images.unsplash.com/photo-qXLsS8IYgtA?w=800&q=80',
+    image: 'https://images.unsplash.com/photo-1600047509807-ba8f99d2cdde?w=800&q=80',
     analysis: `Maine SFR — Portland's tourism and food scene create dual rental strategies: long-term tenants in winter, premium STR rates in summer.\n\nBlended gross yield: 8–12%. Limited housing supply and Boston remote worker demand support 4–6% YoY appreciation. Cash-on-cash: 7–10%.`,
   },
   {
@@ -160,7 +160,7 @@ const FUNDED_DEALS: FundedDeal[] = [
   {
     id: 27, city: 'Syosset', state: 'NY', propertyType: '2-Family', loanType: 'DSCR Purchase',
     program: '30-Yr DSCR — Purchase', ltv: '60%', rate: 'N/A', dealValue: '$825,000',
-    image: 'https://images.unsplash.com/photo-I1HGlFg-bKs?w=800&q=80',
+    image: 'https://images.unsplash.com/photo-1600566753190-17f0baa2a6c3?w=800&q=80',
     analysis: `Long Island 2-family in Nassau County — one of the most supply-constrained rental markets in the Northeast. Syosset's top-rated schools and LIRR access drive premium demand.\n\nAt 60% LTV, significant equity protection. Dual-unit income of $3,000–$4,500/mo combined. Cash-on-cash: 6–9%.`,
   },
 ];
