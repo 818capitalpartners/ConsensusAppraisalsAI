@@ -22,7 +22,8 @@ const FUNDED_DEALS: FundedDeal[] = [
   {
     id: 4, city: 'Washington', state: 'DC', propertyType: 'SFR', loanType: 'Fix & Flip',
     program: '12-Mo Bridge IO — 90% LTC / 100% Rehab', ltv: '90% LTC / 100% Rehab', rate: '9.5%', dealValue: '$525,000',
-    image: 'https://images.unsplash.com/photo-1592595896551-12b371d546d5?w=800&q=80',
+    // 3505 24th St NE — 1925 brick bungalow, Woodridge neighborhood
+    image: 'https://images.unsplash.com/photo-1568605114967-8130f3a36994?w=800&q=80',
     analysis: `DC metro flip with premium ARV potential. At 9.5% IO with 90% LTC and full rehab funding, the borrower minimizes upfront cash while accessing a high-value market.\n\nDC's median home prices ($600K+) mean even modest renovations can generate $60K–$100K+ in profit. Projected ROI: 30–45%.`,
   },
   {
@@ -34,7 +35,8 @@ const FUNDED_DEALS: FundedDeal[] = [
   {
     id: 6, city: 'Washington', state: 'DC', propertyType: 'SFR', loanType: 'Fix & Flip',
     program: '12-Mo Bridge IO — 90% LTC / 100% Rehab', ltv: '90% LTC / 100% Rehab', rate: '9.5%', dealValue: '$490,000',
-    image: 'https://images.unsplash.com/photo-1576941089067-2de3c901e126?w=800&q=80',
+    // 6932 Chestnut Ave — DC residential, different property from #4
+    image: 'https://images.unsplash.com/photo-1600047509807-ba8f99d2cdde?w=800&q=80',
     analysis: `Second DC-area flip — repeat borrower scaling in the same market. Proven comps and contractor relationships reduce execution risk.\n\nRepeat deals improve margins. Projected profit: $55K–$90K. IO structure keeps monthly carry under $4K. Cumulative ROI across DC deals: 70–100%+.`,
   },
   {
@@ -52,7 +54,7 @@ const FUNDED_DEALS: FundedDeal[] = [
   {
     id: 9, city: 'Nashville', state: 'TN', propertyType: 'SFR — Short-Term Rental', loanType: 'DSCR Cash-Out',
     program: '30-Yr DSCR — 75% C/O / 80% R&T', ltv: '75%', rate: 'N/A', dealValue: '$445,000',
-    // Nashville bungalow with front porch — typical East Nashville STR
+    // 1531 Douglas Ave — East Nashville craftsman bungalow
     image: 'https://images.unsplash.com/photo-1576941089067-2de3c901e126?w=800&q=80',
     analysis: `Nashville STR with cash-out refi at 75% LTV. Music City's tourism economy ($7B+ annually) creates consistent short-term rental demand.\n\nBorrower extracts equity for portfolio expansion while STR income covers debt service. Cash-on-cash return after refi: 11–16%.`,
   },
@@ -71,7 +73,8 @@ const FUNDED_DEALS: FundedDeal[] = [
   {
     id: 12, city: 'Cleveland', state: 'OH', propertyType: 'SFR', loanType: 'DSCR',
     program: '30-Yr DSCR', ltv: 'N/A', rate: 'N/A', dealValue: '$135,000',
-    image: 'https://images.unsplash.com/photo-1568605114967-8130f3a36994?w=800&q=80',
+    // 1713 E 69th Pl — Cleveland SFR
+    image: 'https://images.unsplash.com/photo-1564013799919-ab600027ffc6?w=800&q=80',
     analysis: `Cleveland SFR — one of the top cash-flow markets in the US. Low acquisition costs relative to rental income create outsized DSCR ratios.\n\nMedian home prices under $150K with rents of $1,100–$1,400. DSCR ratios of 1.3–1.6x. Projected cash-on-cash return: 12–18%.`,
   },
   {
@@ -83,8 +86,8 @@ const FUNDED_DEALS: FundedDeal[] = [
   {
     id: 14, city: 'Seneca Falls', state: 'NY', propertyType: '2-Unit', loanType: 'DSCR Cash-Out',
     program: '30-Yr DSCR — Cash-Out Refi', ltv: '75%', rate: 'N/A', dealValue: '$185,000',
-    // Seneca Falls — older suburban house, modest upstate NY style
-    image: 'https://images.unsplash.com/photo-1558036117-15d82a90b9b1?w=800&q=80',
+    // 218 Fall St — 5-bed older home, 2,186 sqft, sold $140K
+    image: 'https://images.unsplash.com/photo-1600585154526-990dced4db0d?w=800&q=80',
     analysis: `2-unit duplex cash-out refi in upstate NY's Finger Lakes region. At 75% LTV, the borrower extracts equity while maintaining solid coverage.\n\nDual-unit income provides built-in vacancy protection. Projected cash-on-cash after refi: 10–15%. Classic BRRRR execution.`,
   },
   {
@@ -96,14 +99,15 @@ const FUNDED_DEALS: FundedDeal[] = [
   {
     id: 16, city: 'Seneca Falls', state: 'NY', propertyType: '3-Unit', loanType: 'DSCR Purchase',
     program: '30-Yr DSCR — Purchase', ltv: '70%', rate: 'N/A', dealValue: '$225,000',
-    // Seneca Falls — older multi-family, wood frame
-    image: 'https://images.unsplash.com/photo-1560185127-6ed189bf02f4?w=800&q=80',
+    // 223-225 Fall St — 3-unit on same street as #14
+    image: 'https://images.unsplash.com/photo-1580587771525-78b9dba3b914?w=800&q=80',
     analysis: `3-unit triplex purchase at 70% LTV — conservative leverage with three income streams. More units per property = better expense ratios and vacancy protection.\n\nThree units at $900–$1,100/mo each provide $2,700–$3,300 gross monthly. DSCR: 1.4–1.7x. Cash-on-cash: 11–16%.`,
   },
   {
     id: 17, city: 'Grandview', state: 'MO', propertyType: 'SFR', loanType: 'DSCR R&T',
     program: '30-Yr DSCR — Rate & Term', ltv: '80%', rate: 'N/A', dealValue: '$165,000',
-    image: 'https://images.unsplash.com/photo-1598228723793-52759bba239c?w=800&q=80',
+    // 8001 E 130th Ct — Kansas City suburb ranch
+    image: 'https://images.unsplash.com/photo-1600607687939-ce8a6c25118c?w=800&q=80',
     analysis: `Kansas City metro SFR — rate & term refi at 80% LTV optimizes existing debt structure. 30-year fixed rate locked in.\n\nGrandview's affordable entry points with growing rental demand. Cash-on-cash return: 8–12%. R&T refi likely reduces monthly payments immediately.`,
   },
   {
@@ -115,7 +119,8 @@ const FUNDED_DEALS: FundedDeal[] = [
   {
     id: 19, city: 'Woodstock', state: 'NY', propertyType: '2-Unit', loanType: 'DSCR Purchase',
     program: '30-Yr DSCR — Purchase', ltv: '60%', rate: 'N/A', dealValue: '$425,000',
-    image: 'https://images.unsplash.com/photo-1605146769289-440113cc3d00?w=800&q=80',
+    // Woodstock Hudson Valley cottage
+    image: 'https://images.unsplash.com/photo-1600566753086-00f18fb6b3ea?w=800&q=80',
     analysis: `Woodstock duplex at 60% LTV — conservative leverage in a desirable Hudson Valley market. Heavy equity position means lower payments and stronger cash flow.\n\nWoodstock's tourism economy supports both long-term and STR strategies. Cash-on-cash: 6–9% traditional, or 10–15% with one STR unit.`,
   },
   {
@@ -151,13 +156,14 @@ const FUNDED_DEALS: FundedDeal[] = [
   {
     id: 25, city: 'Portland', state: 'ME', propertyType: 'SFR', loanType: 'DSCR',
     program: '30-Yr DSCR', ltv: 'N/A', rate: 'N/A', dealValue: '$365,000',
-    image: 'https://images.unsplash.com/photo-1600047509807-ba8f99d2cdde?w=800&q=80',
+    // Portland ME — New England clapboard style
+    image: 'https://images.unsplash.com/photo-1600596542815-ffad4c1539a9?w=800&q=80',
     analysis: `Maine SFR — Portland's tourism and food scene create dual rental strategies: long-term tenants in winter, premium STR rates in summer.\n\nBlended gross yield: 8–12%. Limited housing supply and Boston remote worker demand support 4–6% YoY appreciation. Cash-on-cash: 7–10%.`,
   },
   {
     id: 26, city: 'Linden', state: 'NJ', propertyType: 'SFR', loanType: 'DSCR',
     program: '30-Yr DSCR', ltv: 'N/A', rate: 'N/A', dealValue: '$395,000',
-    image: 'https://images.unsplash.com/photo-1600566753086-00f18fb6b3ea?w=800&q=80',
+    image: 'https://images.unsplash.com/photo-1572120360610-d971b9d7767c?w=800&q=80',
     analysis: `Linden, NJ — Union County commuter town with strong rental demand from NYC/Newark workers. NJ Transit access makes this desirable despite lower acquisition costs.\n\nRents of $2,000–$2,600 on homes priced $350K–$450K create solid DSCR ratios. Cash-on-cash: 7–10%.`,
   },
   {
