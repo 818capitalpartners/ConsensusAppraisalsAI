@@ -10,7 +10,7 @@ const FUNDED_DEALS: FundedDeal[] = [
     program: '12-Mo Bridge IO',
     ltv: 'N/A',
     rate: '10.49%',
-    image: 'https://images.unsplash.com/photo-1600585154340-be6161a56a0c?w=800&q=80',
+    image: 'https://images.unsplash.com/photo-1564013799919-ab600027ffc6?w=800&q=80',
     analysis: `12-month interest-only bridge loan for a Pensacola flip. IO structure keeps monthly carry costs low during the rehab period.\n\nAt 10.49%, the rate reflects a fast-close, low-doc execution. Pensacola's coastal market is seeing 4–6% YoY appreciation. Projected flip profit after carry and closing: $30K–$50K. ROI on invested capital: 25–40%.`,
   },
   {
@@ -22,7 +22,7 @@ const FUNDED_DEALS: FundedDeal[] = [
     program: 'Bridge — 90% LTC / 100% Rehab',
     ltv: '90% LTC / 100% Rehab',
     rate: 'N/A',
-    image: 'https://images.unsplash.com/photo-1583608205776-bfd35f0d9f83?w=800&q=80',
+    image: 'https://images.unsplash.com/photo-1558036117-15d82a90b9b1?w=800&q=80',
     analysis: `Maximum leverage: 90% of acquisition plus 100% of rehab financed. Borrower brings minimal cash to close — ideal for scaling a flip portfolio.\n\nBurleson (DFW suburb) benefits from metro spillover demand. Strong buyer pool for renovated homes in the $250K–$350K range. Projected net profit: $35K–$55K. ROI on cash invested: 50–80%.`,
   },
   {
@@ -46,7 +46,7 @@ const FUNDED_DEALS: FundedDeal[] = [
     program: '12-Mo Bridge IO — 90% LTC / 100% Rehab',
     ltv: '90% LTC / 100% Rehab',
     rate: '9.5%',
-    image: 'https://images.unsplash.com/photo-1600607687939-ce8a6c25118c?w=800&q=80',
+    image: 'https://images.unsplash.com/photo-1625602812206-5ec545ca1231?w=800&q=80',
     analysis: `DC metro flip with premium ARV potential. At 9.5% IO with 90% LTC and full rehab funding, the borrower minimizes upfront cash while accessing a high-value market.\n\nDC's median home prices ($600K+) mean even modest renovations can generate $60K–$100K+ in profit. Projected ROI: 30–45% on invested capital over 8–10 months.`,
   },
   {
@@ -58,7 +58,7 @@ const FUNDED_DEALS: FundedDeal[] = [
     program: '12-Mo Bridge IO — 90% LTC / 100% Rehab',
     ltv: '90% LTC / 100% Rehab',
     rate: '9.5%',
-    image: 'https://images.unsplash.com/photo-1572120360610-d971b9d7767c?w=800&q=80',
+    image: 'https://images.unsplash.com/photo-1600047509807-ba8f99d2cdde?w=800&q=80',
     analysis: `Silver Spring — DC suburb with strong demand from government and private-sector workers. 90% LTC with 100% rehab means the borrower deploys minimal equity.\n\nMontgomery County's high median income supports premium renovated-home pricing. Projected net profit: $50K–$80K. Cash-on-cash ROI: 35–55%.`,
   },
   {
@@ -70,7 +70,7 @@ const FUNDED_DEALS: FundedDeal[] = [
     program: '12-Mo Bridge IO — 90% LTC / 100% Rehab',
     ltv: '90% LTC / 100% Rehab',
     rate: '9.5%',
-    image: 'https://images.unsplash.com/photo-1570129477492-45c003edd2be?w=800&q=80',
+    image: 'https://images.unsplash.com/photo-1576941089067-2de3c901e126?w=800&q=80',
     analysis: `Second DC-area flip — repeat borrower scaling in the same market. Proven comps and contractor relationships reduce execution risk.\n\nRepeat deals allow the borrower to refine their playbook and improve margins. Projected profit: $55K–$90K. The IO structure keeps monthly carry under $4K. Cumulative ROI across DC deals: 70–100%+.`,
   },
   {
@@ -82,8 +82,8 @@ const FUNDED_DEALS: FundedDeal[] = [
     program: '30-Yr DSCR IO — Cash-Out Refi',
     ltv: '60%',
     rate: 'N/A',
-    image: 'https://images.unsplash.com/photo-1460317442991-0ec209397118?w=800&q=80',
-    analysis: `Cash-out refi on a 4-unit at 60% LTV — conservative leverage with strong equity retention. IO period maximizes cash flow during initial years.\n\nFour units provide income diversification. St. Pete's rental market growing 5–7% YoY. Projected cash-on-cash with IO: 10–14%. Cash-out proceeds fund additional acquisitions — a portfolio scaling strategy.`,
+    image: 'https://images.unsplash.com/photo-1574362848149-11496d93a7c7?w=800&q=80',
+    analysis: `Cash-out refi on a 4-unit at 60% LTV — conservative leverage with strong equity retention. IO period maximizes cash flow during initial years.\n\nFour units provide income diversification. St. Pete's rental market growing 5–7% YoY. Projected cash-on-cash with IO: 10–14%. Cash-out proceeds fund additional acquisitions.`,
   },
   {
     id: 8,
@@ -94,7 +94,7 @@ const FUNDED_DEALS: FundedDeal[] = [
     program: '30-Yr DSCR — 70% C/O / 75% R&T',
     ltv: '70%',
     rate: 'N/A',
-    image: 'https://images.unsplash.com/photo-1449158743715-0a90ebb6d2d8?w=800&q=80',
+    image: 'https://images.unsplash.com/photo-1510798831971-661eb04b3739?w=800&q=80',
     analysis: `Smoky Mountains STR — one of the top vacation rental markets in the US. Pigeon Forge sees 12M+ visitors annually, driving year-round occupancy.\n\nSTR income typically 2–3x long-term rents. Projected gross yield: 15–22%. After management and expenses, net cash-on-cash: 10–15%. The Smokies market has proven recession-resistant.`,
   },
   {
@@ -106,7 +106,7 @@ const FUNDED_DEALS: FundedDeal[] = [
     program: '30-Yr DSCR — 75% C/O / 80% R&T',
     ltv: '75%',
     rate: 'N/A',
-    image: 'https://images.unsplash.com/photo-1524758631624-e2822e304c36?w=800&q=80',
+    image: 'https://images.unsplash.com/photo-1600596542815-ffad4c1539a9?w=800&q=80',
     analysis: `Nashville STR with cash-out refi at 75% LTV. Music City's tourism economy ($7B+ annually) creates consistent short-term rental demand.\n\nBorrower extracts equity for portfolio expansion while STR income covers debt service. Average Nashville STR occupancy: 65–75%. Cash-on-cash return after refi: 11–16%.`,
   },
   {
@@ -118,8 +118,8 @@ const FUNDED_DEALS: FundedDeal[] = [
     program: 'Agency Bridge — 80% of Cost Basis',
     ltv: '80% of cost basis',
     rate: 'N/A',
-    image: 'https://images.unsplash.com/photo-1574362848149-11496d93a7c7?w=800&q=80',
-    analysis: `33-unit multifamily — institutional-grade asset at 80% of cost basis via agency bridge. Stabilize, then convert to permanent agency debt at lower rates.\n\nFort Myers' population growth (top 5 nationally) drives strong rental demand. Projected stabilized NOI: $280K–$340K. Projected equity multiple: 2.0–2.5x over 5 years. Total ROI: 100–150%.`,
+    image: 'https://images.unsplash.com/photo-1460317442991-0ec209397118?w=800&q=80',
+    analysis: `33-unit multifamily — institutional-grade asset at 80% of cost basis via agency bridge. Stabilize, then convert to permanent agency debt at lower rates.\n\nFort Myers' population growth (top 5 nationally) drives strong rental demand. Projected stabilized NOI: $280K–$340K. Total ROI: 100–150% over 5 years.`,
   },
   {
     id: 11,
@@ -131,7 +131,7 @@ const FUNDED_DEALS: FundedDeal[] = [
     ltv: 'N/A',
     rate: '5.26–5.66%',
     image: 'https://images.unsplash.com/photo-1486406146926-c627a92ad1ab?w=800&q=80',
-    analysis: `Commercial retail refi via Life Company or CMBS — the lowest rates available in commercial lending. At 5.26–5.66%, the borrower locks in institutional-grade pricing.\n\nLife Co/CMBS terms offer 10–25 year fixed-rate stability. DFW retail corridor benefits from population density. Projected cash-on-cash: 10–14%. Long-term hold with predictable income.`,
+    analysis: `Commercial retail refi via Life Company or CMBS — the lowest rates in commercial lending. At 5.26–5.66%, the borrower locks in institutional-grade pricing.\n\nLife Co/CMBS terms offer 10–25 year fixed-rate stability. DFW retail corridor benefits from population density. Projected cash-on-cash: 10–14%.`,
   },
   {
     id: 12,
@@ -143,7 +143,7 @@ const FUNDED_DEALS: FundedDeal[] = [
     ltv: 'N/A',
     rate: 'N/A',
     image: 'https://images.unsplash.com/photo-1568605114967-8130f3a36994?w=800&q=80',
-    analysis: `Cleveland SFR — one of the top cash-flow markets in the US. Low acquisition costs relative to rental income create outsized DSCR ratios.\n\nMedian home prices under $150K with rents of $1,100–$1,400 mean DSCR ratios of 1.3–1.6x are common. Projected cash-on-cash return: 12–18%. Ideal for building a cash-flow-focused portfolio.`,
+    analysis: `Cleveland SFR — one of the top cash-flow markets in the US. Low acquisition costs relative to rental income create outsized DSCR ratios.\n\nMedian home prices under $150K with rents of $1,100–$1,400 mean DSCR ratios of 1.3–1.6x are common. Projected cash-on-cash return: 12–18%.`,
   },
   {
     id: 13,
@@ -166,8 +166,8 @@ const FUNDED_DEALS: FundedDeal[] = [
     program: '30-Yr DSCR — Cash-Out Refi',
     ltv: '75%',
     rate: 'N/A',
-    image: 'https://images.unsplash.com/photo-1600047509807-ba8f99d2cdde?w=800&q=80',
-    analysis: `2-unit duplex cash-out refi in upstate NY's Finger Lakes region. At 75% LTV, the borrower extracts equity while maintaining solid coverage.\n\nDual-unit income provides built-in vacancy protection. Affordable price points mean high rent-to-price ratios. Projected cash-on-cash after refi: 10–15%. Classic BRRRR execution.`,
+    image: 'https://images.unsplash.com/photo-1605276374104-dee2a0ed3cd6?w=800&q=80',
+    analysis: `2-unit duplex cash-out refi in upstate NY's Finger Lakes region. At 75% LTV, the borrower extracts equity while maintaining solid coverage.\n\nDual-unit income provides built-in vacancy protection. Affordable price points mean high rent-to-price ratios. Projected cash-on-cash after refi: 10–15%.`,
   },
   {
     id: 15,
@@ -179,7 +179,7 @@ const FUNDED_DEALS: FundedDeal[] = [
     ltv: '80%',
     rate: 'N/A',
     image: 'https://images.unsplash.com/photo-1560185127-6ed189bf02f4?w=800&q=80',
-    analysis: `North Jersey duplex purchase at 80% LTV — strong leverage in a high-rent market. Bergen County's proximity to NYC drives premium rents of $1,800–$2,400/unit.\n\nNJ's landlord-friendly rental market supports consistent NOI. Projected cash-on-cash: 7–10%. NYC commuter demand ensures low vacancy. 5-year equity build: 35–50%.`,
+    analysis: `North Jersey duplex purchase at 80% LTV — strong leverage in a high-rent market. Bergen County's proximity to NYC drives premium rents of $1,800–$2,400/unit.\n\nNJ's rental market supports consistent NOI. Projected cash-on-cash: 7–10%. NYC commuter demand ensures low vacancy. 5-year equity build: 35–50%.`,
   },
   {
     id: 16,
@@ -214,8 +214,8 @@ const FUNDED_DEALS: FundedDeal[] = [
     program: '30-Yr DSCR — Cash-Out Refi',
     ltv: '75%',
     rate: 'N/A',
-    image: 'https://images.unsplash.com/photo-1588880331179-bc9b93a8cb5e?w=800&q=80',
-    analysis: `Tulsa cash-out refi at 75% LTV — harvests equity from an appreciated property while maintaining positive cash flow. Oklahoma's landlord-friendly laws add efficiency.\n\nMedian home prices $180K–$220K with rents of $1,100–$1,400 create strong DSCR ratios. Cash-out proceeds fund the next acquisition. Cash-on-cash after refi: 9–13%.`,
+    image: 'https://images.unsplash.com/photo-1570129477492-45c003edd2be?w=800&q=80',
+    analysis: `Tulsa cash-out refi at 75% LTV — harvests equity from an appreciated property while maintaining positive cash flow. Oklahoma's landlord-friendly laws add efficiency.\n\nMedian home prices $180K–$220K with rents of $1,100–$1,400 create strong DSCR ratios. Cash-on-cash after refi: 9–13%.`,
   },
   {
     id: 19,
@@ -227,7 +227,7 @@ const FUNDED_DEALS: FundedDeal[] = [
     ltv: '60%',
     rate: 'N/A',
     image: 'https://images.unsplash.com/photo-1605146769289-440113cc3d00?w=800&q=80',
-    analysis: `Woodstock duplex at 60% LTV — very conservative leverage in a desirable Hudson Valley market. Heavy equity position means lower payments and stronger cash flow.\n\nWoodstock's tourism-driven economy supports both long-term and STR strategies. Cash-on-cash: 6–9% traditional, or 10–15% with one STR unit. Low risk, stable income.`,
+    analysis: `Woodstock duplex at 60% LTV — very conservative leverage in a desirable Hudson Valley market. Heavy equity position means lower payments and stronger cash flow.\n\nWoodstock's tourism-driven economy supports both long-term and STR strategies. Cash-on-cash: 6–9% traditional, or 10–15% with one STR unit.`,
   },
   {
     id: 20,
@@ -239,7 +239,7 @@ const FUNDED_DEALS: FundedDeal[] = [
     ltv: '75%',
     rate: 'N/A',
     image: 'https://images.unsplash.com/photo-1609766857041-ed402ea8069a?w=800&q=80',
-    analysis: `Second Woodstock duplex — higher leverage at 75% LTV preserves capital for additional deals. Combined with the 60% LTV property, portfolio averages ~68% LTV.\n\nScaling in the same market reduces management friction. Combined 4-unit income provides meaningful monthly cash flow. Blended cash-on-cash: 8–12%. Hudson Valley popularity with remote workers supports rent growth.`,
+    analysis: `Second Woodstock duplex — higher leverage at 75% LTV preserves capital for additional deals. Combined with the 60% LTV property, portfolio averages ~68% LTV.\n\nScaling in the same market reduces management friction. Blended cash-on-cash: 8–12%. Hudson Valley popularity with remote workers supports rent growth.`,
   },
   {
     id: 21,
@@ -250,8 +250,8 @@ const FUNDED_DEALS: FundedDeal[] = [
     program: '30-Yr DSCR — Cash-Out IO',
     ltv: '50%',
     rate: 'N/A',
-    image: 'https://images.unsplash.com/photo-1600566753190-17f0baa2a6c3?w=800&q=80',
-    analysis: `Ultra-conservative 50% LTV cash-out with interest-only payments. IO structure maximizes cash flow while low leverage provides maximum downside protection.\n\nLawrenceville (Gwinnett County, Atlanta metro) is one of the fastest-growing suburbs in the Southeast. IO payments boost cash-on-cash to 12–18%. Very low risk profile.`,
+    image: 'https://images.unsplash.com/photo-1583608205776-bfd35f0d9f83?w=800&q=80',
+    analysis: `Ultra-conservative 50% LTV cash-out with interest-only payments. IO structure maximizes cash flow while low leverage provides maximum downside protection.\n\nLawrenceville (Gwinnett County, Atlanta metro) is one of the fastest-growing suburbs in the Southeast. IO payments boost cash-on-cash to 12–18%.`,
   },
   {
     id: 22,
@@ -262,8 +262,8 @@ const FUNDED_DEALS: FundedDeal[] = [
     program: '30-Yr DSCR',
     ltv: 'N/A',
     rate: 'N/A',
-    image: 'https://images.unsplash.com/photo-1558036117-15d82a90b9b1?w=800&q=80',
-    analysis: `New Mexico SFR — an emerging cash-flow market with low entry costs and solid rental demand. Growing tech and healthcare sectors drive consistent tenant demand.\n\nMedian home prices $280K–$320K with rents of $1,300–$1,700. The 30-year fixed DSCR product provides long-term stability. Cash-on-cash: 8–12%. Low property taxes enhance net returns.`,
+    image: 'https://images.unsplash.com/photo-1600585154340-be6161a56a0c?w=800&q=80',
+    analysis: `New Mexico SFR — an emerging cash-flow market with low entry costs and solid rental demand. Growing tech and healthcare sectors drive consistent tenant demand.\n\nMedian home prices $280K–$320K with rents of $1,300–$1,700. Cash-on-cash: 8–12%. Low property taxes enhance net returns.`,
   },
   {
     id: 23,
@@ -275,7 +275,7 @@ const FUNDED_DEALS: FundedDeal[] = [
     ltv: 'N/A',
     rate: 'N/A',
     image: 'https://images.unsplash.com/photo-1600573472592-401b489a3cdc?w=800&q=80',
-    analysis: `Rio Grande Valley SFR — one of the most affordable markets in Texas with strong rental demand from border trade and healthcare employment.\n\nLow acquisition costs ($150K–$200K) and rents of $1,100–$1,400 create excellent rent-to-price ratios. DSCR: 1.3–1.5x. Cash-on-cash: 10–15%. No state income tax adds to returns.`,
+    analysis: `Rio Grande Valley SFR — one of the most affordable markets in Texas with strong rental demand from border trade and healthcare employment.\n\nLow acquisition costs ($150K–$200K) and rents of $1,100–$1,400 create excellent rent-to-price ratios. DSCR: 1.3–1.5x. Cash-on-cash: 10–15%.`,
   },
   {
     id: 24,
@@ -287,7 +287,7 @@ const FUNDED_DEALS: FundedDeal[] = [
     ltv: 'N/A',
     rate: 'N/A',
     image: 'https://images.unsplash.com/photo-1600585154526-990dced4db0d?w=800&q=80',
-    analysis: `Bay Area SFR — premium market with strong long-term appreciation potential. Oakland's revitalization and proximity to tech employment drive rental demand.\n\nHigher acquisition costs offset by premium rents ($2,500–$3,500+). Cash-on-cash moderate (5–8%), but appreciation 6–10% YoY. Total 5-year ROI: 50–80%. A wealth-building play.`,
+    analysis: `Bay Area SFR — premium market with strong long-term appreciation potential. Oakland's revitalization and proximity to tech employment drive rental demand.\n\nHigher acquisition costs offset by premium rents ($2,500–$3,500+). Appreciation 6–10% YoY. Total 5-year ROI: 50–80%. A wealth-building play.`,
   },
   {
     id: 25,
@@ -299,7 +299,7 @@ const FUNDED_DEALS: FundedDeal[] = [
     ltv: 'N/A',
     rate: 'N/A',
     image: 'https://images.unsplash.com/photo-1582268611958-ebfd161ef9cf?w=800&q=80',
-    analysis: `Maine SFR — Portland's tourism and food scene create dual rental strategies: long-term tenants in winter, premium STR rates in summer.\n\nBlended gross yield: 8–12%. Limited housing supply and Boston remote worker demand support 4–6% YoY appreciation. Cash-on-cash: 7–10% long-term, 10–14% with seasonal STR strategy.`,
+    analysis: `Maine SFR — Portland's tourism and food scene create dual rental strategies: long-term tenants in winter, premium STR rates in summer.\n\nBlended gross yield: 8–12%. Limited housing supply and Boston remote worker demand support 4–6% YoY appreciation. Cash-on-cash: 7–10%.`,
   },
   {
     id: 26,
@@ -311,11 +311,11 @@ const FUNDED_DEALS: FundedDeal[] = [
     ltv: 'N/A',
     rate: 'N/A',
     image: 'https://images.unsplash.com/photo-1600566753086-00f18fb6b3ea?w=800&q=80',
-    analysis: `Linden, NJ — Union County commuter town with strong rental demand from NYC/Newark workers. NJ Transit access makes this desirable despite lower acquisition costs.\n\nRents of $2,000–$2,600 on homes priced $350K–$450K create solid DSCR ratios. Cash-on-cash: 7–10%. Dense population and limited supply support consistent occupancy.`,
+    analysis: `Linden, NJ — Union County commuter town with strong rental demand from NYC/Newark workers. NJ Transit access makes this desirable despite lower acquisition costs.\n\nRents of $2,000–$2,600 on homes priced $350K–$450K create solid DSCR ratios. Cash-on-cash: 7–10%. Dense population supports consistent occupancy.`,
   },
   {
     id: 27,
-    city: 'Hempstead',
+    city: 'Syosset',
     state: 'NY',
     propertyType: '2-Family',
     loanType: 'DSCR Purchase',
@@ -323,7 +323,7 @@ const FUNDED_DEALS: FundedDeal[] = [
     ltv: '60%',
     rate: 'N/A',
     image: 'https://images.unsplash.com/photo-1600047509358-9dc75507daeb?w=800&q=80',
-    analysis: `Long Island 2-family in Nassau County — one of the most supply-constrained rental markets in the Northeast. Hempstead's central location provides easy LIRR access to NYC.\n\nAt 60% LTV, significant equity protection in a market with extreme housing scarcity. Dual-unit income of $3,000–$4,500/mo combined. Cash-on-cash: 6–9%. Strong downside protection.`,
+    analysis: `Long Island 2-family in Nassau County — one of the most supply-constrained rental markets in the Northeast. Syosset's top-rated schools and LIRR access drive premium demand.\n\nAt 60% LTV, significant equity protection in a market with extreme housing scarcity. Dual-unit income of $3,000–$4,500/mo combined. Cash-on-cash: 6–9%.`,
   },
 ];
 

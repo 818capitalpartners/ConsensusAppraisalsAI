@@ -6,22 +6,24 @@ import FUNDED_DEALS from '@/data/fundedDeals';
 
 const INITIAL_SHOW = 6;
 
-export default function FundedDealsSection() {
-  const [showAll, setShowAll] = useState(false);
+export default function FundedDealsSection({ showAll: initialShowAll = false, hideHeader = false }: { showAll?: boolean; hideHeader?: boolean }) {
+  const [showAll, setShowAll] = useState(initialShowAll);
   const visibleDeals = showAll ? FUNDED_DEALS : FUNDED_DEALS.slice(0, INITIAL_SHOW);
 
   return (
     <section className="bg-navy-50/50 py-20">
       <div className="mx-auto max-w-content px-6">
-        <div className="text-center mb-14">
-          <p className="text-xs font-sans font-semibold uppercase tracking-[0.2em] text-accent mb-3">
-            {FUNDED_DEALS.length} Deals Closed
-          </p>
-          <h2 className="section-heading">Recently Funded</h2>
-          <p className="section-subheading mx-auto mt-4">
-            Real deals closed by 818 Capital Partners. Hover any deal for an AI-powered borrower ROI analysis.
-          </p>
-        </div>
+        {!hideHeader && (
+          <div className="text-center mb-14">
+            <p className="text-xs font-sans font-semibold uppercase tracking-[0.2em] text-accent mb-3">
+              {FUNDED_DEALS.length} Deals Closed
+            </p>
+            <h2 className="section-heading">Recently Funded</h2>
+            <p className="section-subheading mx-auto mt-4">
+              Real deals closed by 818 Capital Partners. Hover any deal for an AI-powered borrower ROI analysis.
+            </p>
+          </div>
+        )}
 
         <div className="grid gap-6 md:grid-cols-2 lg:grid-cols-3">
           {visibleDeals.map((deal) => (
