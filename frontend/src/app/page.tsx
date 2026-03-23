@@ -34,7 +34,7 @@ const LANES = [
 ];
 
 const STATS = [
-  { value: '27+', label: 'Deals Funded Q1' },
+  { value: '27+', label: 'Deals Funded' },
   { value: '14-21', label: 'Days to Close' },
   { value: '12+', label: 'Capital Programs' },
   { value: '4', label: 'Product Lanes' },

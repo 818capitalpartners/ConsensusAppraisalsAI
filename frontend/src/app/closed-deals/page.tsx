@@ -52,7 +52,7 @@ export default function ClosedDealsPage() {
         <div className="absolute inset-0 bg-gradient-to-r from-navy-900/95 via-navy-900/85 to-navy-900/60" />
         <div className="relative mx-auto max-w-content px-6 py-16 md:py-20">
           <p className="text-xs font-sans font-semibold uppercase tracking-[0.2em] text-accent-light mb-4">Track Record</p>
-          <h1 className="text-h1 text-white max-w-2xl">Closed Deals</h1>
+          <h1 className="text-h1 text-white max-w-2xl">Recently Closed Deals</h1>
           <p className="mt-4 text-lg text-navy-200 font-body font-light max-w-xl leading-relaxed">
             Real transactions funded by 818 Capital Partners across DSCR, Fix &amp; Flip, STR, and Multifamily programs. Hover any deal for an AI-powered borrower analysis.
           </p>
