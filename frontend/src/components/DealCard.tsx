@@ -12,6 +12,7 @@ export interface FundedDeal {
   program: string;
   ltv: string;
   rate: string;
+  dealValue: string;
   image: string;
   analysis: string;
 }
@@ -67,7 +68,8 @@ export default function DealCard({ deal }: { deal: FundedDeal }) {
             <span className="text-sm font-sans font-bold text-navy-900">{deal.rate}</span>
           )}
         </div>
-        <div className="text-sm font-sans font-semibold text-navy-900 mb-1">{deal.propertyType}</div>
+        <div className="text-lg font-sans font-bold text-navy-900 mb-0.5">{deal.dealValue}</div>
+        <div className="text-sm font-sans font-semibold text-navy-700 mb-1">{deal.propertyType}</div>
         <div className="text-xs text-navy-500 font-body mb-2">{deal.program}</div>
         {deal.ltv !== 'N/A' && (
           <div className="inline-flex items-center gap-1.5 text-xs text-navy-400 bg-navy-50 px-2.5 py-1 rounded font-body">
