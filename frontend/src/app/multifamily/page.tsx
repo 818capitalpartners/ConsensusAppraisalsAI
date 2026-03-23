@@ -8,9 +8,37 @@ export const metadata: Metadata = {
   description: '5+ unit apartment buildings and small commercial financing. AI-powered Sponsor Brief underwriting in 24 hours.',
 };
 
+const MARKET_STATS = [
+  { value: '5.8%', label: 'Avg Cap Rate', trend: 'down', detail: 'Compressed 40bps YoY' },
+  { value: '$182K', label: 'Avg Price/Unit', trend: 'up', detail: 'Up 6.2% nationally' },
+  { value: '94.2%', label: 'Occupancy Rate', trend: 'stable', detail: 'Stable across top 50 MSAs' },
+  { value: '3.1%', label: 'Rent Growth', trend: 'up', detail: 'Trailing 12-mo avg' },
+];
+
+const PROGRAM_TIERS = [
+  { name: 'Agency (Fannie/Freddie)', units: '5–500+', ltv: 'Up to 80%', term: '5–35yr', best: 'Stabilized assets with strong NOI' },
+  { name: 'Bridge / Value-Add', units: '5–200+', ltv: 'Up to 80% LTC', term: '12–36mo IO', best: 'Renovation, lease-up, repositioning' },
+  { name: 'CMBS / Life Company', units: '20+', ltv: 'Up to 75%', term: '5–25yr fixed', best: 'Long-term hold, institutional quality' },
+  { name: 'DSCR Multifamily', units: '5–20', ltv: 'Up to 80%', term: '30yr fixed', best: 'Small multifamily, no tax returns' },
+];
+
+const TOP_MARKETS = [
+  { market: 'Dallas-Fort Worth', units: '28K+', occ: '92%', growth: '+4.1%', image: 'https://images.unsplash.com/photo-1545194445-dddb8f4487c6?w=400&q=80' },
+  { market: 'Phoenix', units: '22K+', occ: '94%', growth: '+3.8%', image: 'https://images.unsplash.com/photo-1558645836-e44122a743ee?w=400&q=80' },
+  { market: 'Atlanta', units: '19K+', occ: '93%', growth: '+3.5%', image: 'https://images.unsplash.com/photo-1575917649111-0c4d35e0391a?w=400&q=80' },
+  { market: 'Nashville', units: '12K+', occ: '91%', growth: '+4.7%', image: 'https://images.unsplash.com/photo-1545419913-775e3e0e2fc4?w=400&q=80' },
+];
+
+function TrendIcon({ trend }: { trend: string }) {
+  if (trend === 'up') return <span className="text-success text-sm">&#9650;</span>;
+  if (trend === 'down') return <span className="text-red-500 text-sm">&#9660;</span>;
+  return <span className="text-navy-400 text-sm">&#9644;</span>;
+}
+
 export default function MultifamilyPage() {
   return (
     <>
+      {/* Hero */}
       <section className="relative min-h-[400px] flex items-center overflow-hidden">
         <Image
           src="https://images.unsplash.com/photo-1545324418-cc1a3fa10c00?w=1920&h=600&fit=crop"
@@ -29,39 +57,65 @@ export default function MultifamilyPage() {
         </div>
       </section>
 
+      {/* National Market Snapshot */}
       <section className="bg-white py-16">
         <div className="mx-auto max-w-content px-6">
-          <div className="grid gap-16 lg:grid-cols-2">
-            <div>
-              <h2 className="section-heading">Commercial Lending, Demystified</h2>
-              <p className="mt-4 text-navy-500 font-body leading-relaxed">
-                Multifamily and commercial loans are underwritten on the property&apos;s Net Operating Income. We analyze DSCR, cap rate, debt yield, and leverage to find the best financing path — agency, CMBS, bank, or bridge.
-              </p>
-              <div className="mt-8 grid grid-cols-1 sm:grid-cols-2 gap-4">
-                {['5+ units, apartments, mixed-use', 'Agency, CMBS, bank & bridge', 'Up to 80% LTV', 'Non-recourse available', '$500K to $10M+', 'Value-add and stabilized'].map((item) => (
-                  <div key={item} className="flex items-start gap-2">
-                    <svg className="w-5 h-5 text-accent flex-shrink-0 mt-0.5" fill="none" viewBox="0 0 24 24" stroke="currentColor"><path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M5 13l4 4L19 7" /></svg>
-                    <span className="text-sm text-navy-700 font-body">{item}</span>
-                  </div>
-                ))}
-              </div>
-            </div>
-            <div className="bg-navy-50 rounded-lg p-8">
-              <p className="text-xs font-sans font-semibold uppercase tracking-widest text-navy-400 mb-4">Example Scenario</p>
-              <div className="space-y-3">
-                {[['Property', '12-unit building'], ['Purchase Price', '$1,500,000'], ['NOI', '$120,000'], ['Loan (75% LTV)', '$1,125,000'], ['Cap Rate', '8.0%']].map(([l, v]) => (
-                  <div key={l} className="flex justify-between items-center py-2 border-b border-navy-100 last:border-0">
-                    <span className="text-sm text-navy-500 font-body">{l}</span>
-                    <span className="text-sm font-sans font-semibold text-navy-900">{v}</span>
-                  </div>
-                ))}
-                <div className="flex justify-between items-center py-3 bg-white rounded px-4 mt-2">
-                  <span className="text-sm font-sans font-semibold text-navy-900">DSCR</span>
-                  <span className="text-lg font-sans font-bold text-success">1.52</span>
+          <div className="flex items-center gap-3 mb-2">
+            <h2 className="section-heading">National Market Snapshot</h2>
+            <span className="text-[10px] font-sans font-semibold text-navy-400 bg-navy-50 px-2.5 py-1 rounded uppercase tracking-wider">Q1 2026</span>
+          </div>
+          <p className="text-sm text-navy-500 font-body mb-8">Source: Northmarq, CBRE, CoStar — national multifamily averages</p>
+
+          <div className="grid grid-cols-2 lg:grid-cols-4 gap-4 mb-14">
+            {MARKET_STATS.map((stat, i) => (
+              <div key={i} className="card text-center p-6">
+                <div className="flex items-center justify-center gap-1.5 mb-1">
+                  <span className="text-3xl font-sans font-bold text-navy-900">{stat.value}</span>
+                  <TrendIcon trend={stat.trend} />
                 </div>
-                <p className="text-sm font-sans font-medium text-success mt-2">Strong deal. Agency or bank best path.</p>
+                <div className="text-sm font-sans font-semibold text-navy-700 mb-1">{stat.label}</div>
+                <div className="text-xs text-navy-400 font-body">{stat.detail}</div>
               </div>
-            </div>
+            ))}
+          </div>
+
+          {/* Top Markets */}
+          <h3 className="text-h4 text-navy-900 mb-2">Top Performing Markets</h3>
+          <p className="text-sm text-navy-500 font-body mb-6">Where we&apos;re actively funding multifamily deals</p>
+          <div className="grid grid-cols-2 lg:grid-cols-4 gap-4 mb-14">
+            {TOP_MARKETS.map((m, i) => (
+              <div key={i} className="group relative rounded-lg overflow-hidden shadow-sm hover:shadow-md transition h-52">
+                <Image src={m.image} alt={m.market} fill className="object-cover group-hover:scale-105 transition-transform duration-500" sizes="(max-width: 640px) 50vw, 25vw" />
+                <div className="absolute inset-0 bg-gradient-to-t from-navy-900/80 via-navy-900/30 to-transparent" />
+                <div className="absolute bottom-0 left-0 right-0 p-4">
+                  <div className="text-white font-sans font-semibold text-sm mb-2">{m.market}</div>
+                  <div className="flex gap-3 text-[11px] font-body">
+                    <div><span className="text-navy-300">Units</span><div className="text-white font-semibold">{m.units}</div></div>
+                    <div><span className="text-navy-300">Occ.</span><div className="text-accent-light font-semibold">{m.occ}</div></div>
+                    <div><span className="text-navy-300">Rent</span><div className="text-accent-light font-semibold">{m.growth}</div></div>
+                  </div>
+                </div>
+              </div>
+            ))}
+          </div>
+
+          {/* Program Tiers */}
+          <h3 className="text-h4 text-navy-900 mb-2">Financing Programs</h3>
+          <p className="text-sm text-navy-500 font-body mb-6">Matched to your deal profile, sponsor experience, and exit strategy</p>
+          <div className="grid grid-cols-1 sm:grid-cols-2 gap-4">
+            {PROGRAM_TIERS.map((tier, i) => (
+              <div key={i} className="card p-6">
+                <h4 className="text-h4 text-navy-900 mb-3">{tier.name}</h4>
+                <div className="grid grid-cols-2 gap-x-4 gap-y-2 text-sm font-body mb-4">
+                  <div><span className="text-navy-400">Units:</span> <span className="font-semibold text-navy-700">{tier.units}</span></div>
+                  <div><span className="text-navy-400">LTV:</span> <span className="font-semibold text-navy-700">{tier.ltv}</span></div>
+                  <div className="col-span-2"><span className="text-navy-400">Term:</span> <span className="font-semibold text-navy-700">{tier.term}</span></div>
+                </div>
+                <div className="text-xs text-navy-500 font-body bg-navy-50 px-3 py-2 rounded">
+                  Best for: {tier.best}
+                </div>
+              </div>
+            ))}
           </div>
         </div>
       </section>
@@ -69,6 +123,7 @@ export default function MultifamilyPage() {
       {/* AI Appraisal Pre-Check */}
       <AppraisalPreCheck />
 
+      {/* Form */}
       <section className="bg-navy-50/50 py-16" id="form">
         <div className="mx-auto max-w-2xl px-6">
           <div className="text-center mb-10">

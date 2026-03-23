@@ -1,5 +1,6 @@
 import Image from 'next/image';
 import Link from 'next/link';
+import FundedDealsSection from '@/components/FundedDealsSection';
 
 const LANES = [
   {
@@ -33,7 +34,7 @@ const LANES = [
 ];
 
 const STATS = [
-  { value: '24hr', label: 'Term Sheet Turnaround' },
+  { value: '27+', label: 'Deals Funded Q1' },
   { value: '14-21', label: 'Days to Close' },
   { value: '12+', label: 'Capital Programs' },
   { value: '4', label: 'Product Lanes' },
@@ -192,6 +193,9 @@ export default function HomePage() {
           </div>
         </div>
       </section>
+
+      {/* ── Recently Funded Deals ─────────────────────────── */}
+      <FundedDealsSection />
 
       {/* ── Why 818 with image ────────────────────────────── */}
       <section className="bg-navy-50/50 py-20">
