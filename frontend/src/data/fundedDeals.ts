@@ -52,7 +52,8 @@ const FUNDED_DEALS: FundedDeal[] = [
   {
     id: 9, city: 'Nashville', state: 'TN', propertyType: 'SFR — Short-Term Rental', loanType: 'DSCR Cash-Out',
     program: '30-Yr DSCR — 75% C/O / 80% R&T', ltv: '75%', rate: 'N/A', dealValue: '$445,000',
-    image: 'https://images.unsplash.com/photo-1600596542815-ffad4c1539a9?w=800&q=80',
+    // Nashville bungalow with front porch — typical East Nashville STR
+    image: 'https://images.unsplash.com/photo-1576941089067-2de3c901e126?w=800&q=80',
     analysis: `Nashville STR with cash-out refi at 75% LTV. Music City's tourism economy ($7B+ annually) creates consistent short-term rental demand.\n\nBorrower extracts equity for portfolio expansion while STR income covers debt service. Cash-on-cash return after refi: 11–16%.`,
   },
   {
@@ -82,7 +83,8 @@ const FUNDED_DEALS: FundedDeal[] = [
   {
     id: 14, city: 'Seneca Falls', state: 'NY', propertyType: '2-Unit', loanType: 'DSCR Cash-Out',
     program: '30-Yr DSCR — Cash-Out Refi', ltv: '75%', rate: 'N/A', dealValue: '$185,000',
-    image: 'https://images.unsplash.com/photo-1597211833712-5e41faa202ea?w=800&q=80',
+    // Seneca Falls — older suburban house, modest upstate NY style
+    image: 'https://images.unsplash.com/photo-1558036117-15d82a90b9b1?w=800&q=80',
     analysis: `2-unit duplex cash-out refi in upstate NY's Finger Lakes region. At 75% LTV, the borrower extracts equity while maintaining solid coverage.\n\nDual-unit income provides built-in vacancy protection. Projected cash-on-cash after refi: 10–15%. Classic BRRRR execution.`,
   },
   {
@@ -94,7 +96,8 @@ const FUNDED_DEALS: FundedDeal[] = [
   {
     id: 16, city: 'Seneca Falls', state: 'NY', propertyType: '3-Unit', loanType: 'DSCR Purchase',
     program: '30-Yr DSCR — Purchase', ltv: '70%', rate: 'N/A', dealValue: '$225,000',
-    image: 'https://images.unsplash.com/photo-1572120360610-d971b9d7767c?w=800&q=80',
+    // Seneca Falls — older multi-family, wood frame
+    image: 'https://images.unsplash.com/photo-1560185127-6ed189bf02f4?w=800&q=80',
     analysis: `3-unit triplex purchase at 70% LTV — conservative leverage with three income streams. More units per property = better expense ratios and vacancy protection.\n\nThree units at $900–$1,100/mo each provide $2,700–$3,300 gross monthly. DSCR: 1.4–1.7x. Cash-on-cash: 11–16%.`,
   },
   {
