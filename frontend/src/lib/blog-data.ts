@@ -11,6 +11,371 @@ export interface BlogPost {
 
 export const POSTS: BlogPost[] = [
   {
+    slug: '2026-dscr-investor-playbook',
+    title: 'The 2026 DSCR Investor Playbook: Requirements, Rates & Strategies',
+    excerpt: 'The most comprehensive DSCR guide for real estate investors in 2026. Qualification tiers, rate matrices, no-ratio programs, STR income rules, portfolio scaling, entity structuring, and real deal breakdowns.',
+    category: 'DSCR',
+    date: 'March 24, 2026',
+    readTime: '12 min read',
+    image: 'https://images.unsplash.com/photo-1560518883-ce09059eeffa?w=1200&h=600&fit=crop',
+    content: `## What Is DSCR and Why It Matters in 2026
+
+**DSCR = Monthly Rental Income / Monthly PITI**
+
+That one ratio determines whether your investment property qualifies for a loan without you ever showing a tax return, W-2, or pay stub. The property either pays for itself or it doesn't.
+
+In 2026, DSCR lending is more competitive than it has been in three years. Here is why that matters to you:
+
+- **Rates are compressing.** More capital partners are entering the DSCR space, which means better pricing for borrowers. We are seeing 50-75 basis point improvements over 2025 on equivalent profiles.
+- **Programs are expanding.** No-ratio, sub-1.0, interest-only, and 40-year terms are now available from multiple lenders — not just one or two niche shops.
+- **STR income acceptance is widening.** More lenders now accept AirDNA and actual booking revenue for DSCR qualification, opening up short-term rental strategies that were previously limited to conventional docs.
+- **Portfolio programs are maturing.** Blanket loans for 5-10 and 10+ property portfolios are more accessible, with better rate tiers for scaled investors.
+
+If you have been waiting for a better window to acquire, refinance, or scale — 2026 is the year to move.
+
+## 2026 DSCR Qualification Requirements
+
+### Credit Score Tiers
+
+Your credit score is the single biggest lever on your rate and available programs. Here is how lenders tier it in 2026:
+
+- **740+** — Best-in-class pricing. Access to the lowest rates, highest LTV (up to 80%), and every program type including interest-only and no-ratio. This is where you want to be.
+- **720–739** — Still strong. Minor rate bump of 12.5-25 bps over 740+. Full access to most programs. Some lenders treat this the same as 740+.
+- **700–719** — Middle tier. Rates move up another 25-50 bps. Still qualify for 80% LTV at most lenders. Some interest-only programs start dropping off.
+- **660–699** — Workable but limited. Max LTV drops to 75% at most lenders. Rate premium of 75-125 bps over top tier. Fewer program options — no-ratio and sub-1.0 may not be available.
+- **620–659** — Entry level. Not all lenders will go here. Max LTV typically 70%. Rates 150-200+ bps over top tier. Expect higher reserve requirements (9-12 months). Limited to standard DSCR programs.
+
+### LTV Tiers and Rate Impact
+
+Every 5% step in LTV changes your rate. Here is the general structure:
+
+- **65% LTV** — Lowest risk for the lender, best rates available. Typical rate discount of 25-50 bps below 75% LTV pricing.
+- **70% LTV** — Sweet spot for many borrowers. Still competitive pricing with meaningful leverage.
+- **75% LTV** — Standard. This is where most DSCR loans land. Good balance of leverage and rate.
+- **80% LTV** — Maximum at most lenders. Requires 720+ credit and 1.0+ DSCR at most shops. Rate premium of 25-50 bps over 75% LTV.
+- **85% LTV** — Rare. A handful of lenders offer this for exceptional profiles (740+ credit, 1.25+ DSCR, strong reserves). Expect 50-75 bps premium over 75% LTV.
+
+### Property Types
+
+DSCR loans cover more property types than most investors realize:
+
+- **Single-family residences (SFR)** — The bread and butter. Every DSCR lender does these. Best pricing and highest LTV available.
+- **2-4 unit properties** — Duplexes, triplexes, fourplexes. Most lenders treat these the same as SFR, though some add a small rate bump for 3-4 units.
+- **Condos (warrantable)** — Widely available. The condo project needs to meet basic warrantability standards (owner-occupancy ratio, single-entity concentration, HOA financials).
+- **Condos (non-warrantable)** — Available from some lenders. Expect 25-50 bps rate premium and possibly lower max LTV.
+- **Townhomes** — Treated like SFR by most lenders if fee-simple ownership. PUD townhomes may have condo-like overlays.
+- **5+ unit (small multifamily)** — Some DSCR lenders now offer 5-8 unit products. These bridge the gap between residential DSCR and commercial multifamily. Rates are typically 50-100 bps higher than SFR DSCR.
+- **Manufactured housing** — Limited but growing. A few lenders will do DSCR on manufactured homes with permanent foundations. Higher rates and lower LTV (65-70% max).
+
+### Entity Requirements
+
+- **LLC** — Most common and most preferred by lenders. Almost every DSCR lender allows LLC vesting. Some require the borrower to personally guarantee.
+- **Land trust** — Accepted by some lenders. Privacy benefits are real, but not all programs allow it. Ask before you structure.
+- **Individual (personal name)** — Always available. Some investors prefer this for simplicity, but you lose liability protection.
+- **Revocable living trust** — Widely accepted. Useful for estate planning. Most lenders treat this the same as individual.
+
+### Minimum DSCR Thresholds by Program
+
+- **Standard DSCR (most lenders):** 1.0 minimum, 1.25+ for best pricing
+- **Sub-1.0 programs:** 0.75 minimum, requires 25-30% down and 700+ credit at most lenders
+- **No-ratio programs:** DSCR is not calculated. Qualification based on credit, LTV, and reserves. Typically requires 720+ credit and 25%+ down.
+- **Interest-only DSCR:** Usually requires 1.0+ DSCR calculated on the I/O payment (not fully amortizing). Can significantly improve your qualifying DSCR.
+
+### Reserve Requirements
+
+Reserves are liquid assets you need to show after closing:
+
+- **3 months PITI** — Minimum at some lenders for strong profiles (740+ credit, 1.25+ DSCR, 75% LTV or less)
+- **6 months PITI** — Standard requirement for most DSCR programs
+- **9 months PITI** — Required for lower credit tiers (660-699) or higher LTV (80%+)
+- **12 months PITI** — Required for sub-1.0 DSCR, no-ratio programs, or lower credit + high LTV combos
+
+Reserves can typically be held in checking, savings, investment accounts (stocks/bonds at 70-80% value), or retirement accounts (60-70% value).
+
+## Rate Comparison Matrix
+
+### Rates by DSCR Ratio (740+ credit, 75% LTV baseline)
+
+The DSCR ratio itself impacts your rate. Lenders reward properties that cash flow strongly:
+
+- **1.50+ DSCR** — Best rates available. Some lenders offer an additional 12.5-25 bps discount over 1.25 DSCR pricing.
+- **1.25 – 1.49 DSCR** — Standard best pricing. This is the benchmark tier that most rate sheets are built around. Expect 6.75% – 7.50% range for top credit.
+- **1.00 – 1.24 DSCR** — Slight premium. Rates typically 12.5-37.5 bps above the 1.25+ tier.
+- **0.75 – 0.99 DSCR** — Significant premium. Rates 50-100+ bps above 1.25+ pricing. Not all lenders offer this tier.
+- **No-ratio** — Premium varies by lender. Typically 50-75 bps above standard DSCR pricing for equivalent credit and LTV.
+
+### Rates by LTV (740+ credit, 1.25+ DSCR baseline)
+
+- **65% LTV** — 6.50% – 7.25%
+- **70% LTV** — 6.75% – 7.50%
+- **75% LTV** — 7.00% – 7.75%
+- **80% LTV** — 7.25% – 8.00%
+
+### Rates by Credit Score (75% LTV, 1.25+ DSCR baseline)
+
+- **740+** — 6.75% – 7.50%
+- **720–739** — 7.00% – 7.75%
+- **700–719** — 7.25% – 8.00%
+- **660–699** — 7.75% – 8.50%
+- **620–659** — 8.25% – 9.25%
+
+### Rate Buydowns: When Paying Points Makes Sense
+
+Most DSCR lenders offer rate buydown options. The typical cost is 1 point (1% of loan amount) for a 25 bps rate reduction.
+
+When paying points makes sense:
+
+- **Long hold period.** If you plan to hold the property 5+ years, the breakeven on paid points is usually 2-3 years. After that, you save every month.
+- **Cash flow optimization.** If a 25 bps reduction moves your DSCR from 0.95 to 1.05, that one point could qualify you for a better program entirely.
+- **Marginal deals.** When the cash-on-cash return is tight, buying down the rate can make the deal pencil.
+
+When paying points does NOT make sense:
+
+- **Short hold (under 3 years).** You will not recoup the upfront cost.
+- **Refinance likely.** If rates drop and you plan to refi in 12-18 months, do not pay for a rate you will not keep.
+- **Cash-constrained.** If paying points means depleting your reserves below lender minimums, take the higher rate.
+
+### ARM vs Fixed: When to Use Each
+
+- **30-year fixed** — Default choice for buy-and-hold investors. Rate certainty for the life of the loan. Slightly higher rate than ARMs but no reset risk.
+- **5/1 ARM** — Fixed for 5 years, then adjusts annually. Typically 50-75 bps below 30-year fixed. Best for investors who plan to sell or refi within 5 years.
+- **7/1 ARM** — Fixed for 7 years, adjusts annually. 25-50 bps below 30-year fixed. Good middle ground between rate savings and reset protection.
+- **Interest-only (I/O)** — Available on both fixed and ARM products. I/O period is typically 5 or 10 years. Maximizes cash flow but does not build equity through amortization.
+
+## No-Ratio and Sub-1.0 DSCR Programs
+
+### What "No-Ratio" Means
+
+In a no-ratio DSCR program, the lender does not calculate the DSCR at all. There is no appraisal rent schedule, no income analysis, no comparison of rent to PITI. Qualification is based entirely on:
+
+- Credit score (typically 720+ minimum)
+- LTV (typically 75% max, some lenders 70%)
+- Reserves (9-12 months minimum)
+- Property type and condition
+
+No-ratio works best for properties where the market rent does not support a 1.0 DSCR but the investment thesis is sound — appreciation markets, value-add plays where rents will increase after renovation, or properties being converted from owner-occupied to rental.
+
+### Sub-1.0 Programs: The Tradeoffs
+
+Sub-1.0 DSCR means the property's rent does not fully cover the mortgage payment. You are covering the shortfall out of pocket each month. Lenders that offer these programs require compensating factors:
+
+- Higher down payment (25-30% typical, some require 35%)
+- Higher credit score (700+ at most lenders)
+- Higher reserves (9-12 months)
+- Higher interest rate (50-100+ bps premium)
+
+### When Negative Cash Flow Makes Strategic Sense
+
+Not every investment needs to cash flow from day one. Sub-1.0 DSCR can be strategic in these situations:
+
+- **Appreciation markets.** In markets where property values are growing 8-12% annually, a modest monthly shortfall of $200-400 can be a reasonable cost of holding an appreciating asset.
+- **Value-add plays.** If you are buying a property that rents for $1,800 but will rent for $2,400 after cosmetic upgrades, the sub-1.0 DSCR at purchase becomes a 1.2+ DSCR after stabilization.
+- **STR conversion.** A property that shows a 0.9 DSCR on long-term rent comps might produce a 1.5+ DSCR as a short-term rental. Some lenders will use projected STR income; others will use LTR comps for qualification — meaning you take the sub-1.0 at closing but operate profitably.
+- **Tax strategy.** The monthly shortfall may be offset by depreciation, interest deductions, and other tax benefits that make the total return positive even when cash flow is negative.
+
+## STR Income for DSCR Qualification
+
+### How Lenders Calculate STR Income
+
+Short-term rental income qualification has evolved significantly. Here is how different lenders approach it:
+
+- **AirDNA / market data approach.** The lender uses third-party data (AirDNA, Mashvisor, or similar) to estimate the property's STR income potential based on comparable listings in the area. This is the most common approach for purchases where you do not have operating history.
+- **Actual revenue approach.** If you already operate the property as an STR, lenders may use your actual Airbnb/VRBO income. They typically want 12 months of booking history, though some accept as few as 3 months.
+- **Lease comp approach (conservative).** Some lenders ignore STR potential entirely and use long-term rental comps. This is the most conservative method and may not reflect the property's true earning power.
+
+### 12-Month vs 3-Month Income Lookback
+
+For properties with operating history, the lookback period matters:
+
+- **12-month average** — Most common. Smooths out seasonality and gives the most accurate picture of annual performance. This is what most lenders prefer.
+- **3-month trailing average** — Some lenders will accept this for recently acquired properties or new STR conversions. Can be more favorable in peak season but risky if income is seasonal.
+- **Gross vs net.** Most lenders use gross booking revenue minus platform fees and cleaning costs. Some lenders use gross revenue only. Clarify this before you model your deal.
+
+### Occupancy Rate Assumptions
+
+When using projected STR income (not actual history), lenders apply occupancy assumptions:
+
+- **Conservative lenders:** 65-70% annual occupancy assumed
+- **Moderate lenders:** 70-75% annual occupancy assumed
+- **Aggressive lenders:** 75-80% annual occupancy assumed
+
+The assumed occupancy rate has a massive impact on qualifying income. A property that grosses $4,000/month at 80% occupancy only grosses $3,250/month at 65% occupancy — which can mean the difference between a 1.25 DSCR and a 0.95 DSCR.
+
+### Markets Where STR DSCR Works Best
+
+STR DSCR loans perform best in markets where:
+
+- The spread between STR and LTR income is significant (2x or more)
+- Occupancy rates are consistently above 70%
+- Local regulations support short-term rentals
+- The property type is suited to vacation/business travel
+
+Strong STR DSCR markets in 2026 include resort/mountain towns, beach communities, cities with strong business travel demand, and suburban markets near major metro areas.
+
+## Portfolio Scaling Strategies
+
+### 1-4 Properties: Individual DSCR Loans
+
+When you are building your first four properties, individual DSCR loans are the right tool. Each property gets its own loan, its own underwriting, and its own terms.
+
+Advantages: Simple structure, property-specific terms, easy to sell one property without affecting the others.
+
+Strategy: Focus on properties with 1.25+ DSCR and strong fundamentals. Build a track record of performing assets that you can reference for better terms later.
+
+### 5-10 Properties: Blanket Loans and Portfolio Programs
+
+Once you hit 5+ properties, new options open up:
+
+- **Blanket loans** — One loan secured by multiple properties. Single closing, single payment, single set of terms. Rates are often 25-50 bps better than individual DSCR loans because the lender has cross-collateralization.
+- **Portfolio DSCR programs** — Some lenders offer portfolio-specific products that evaluate the aggregate DSCR across all properties. A weak property (0.85 DSCR) can be offset by a strong one (1.5 DSCR) when evaluated as a group.
+
+Key consideration: Blanket loans create cross-collateralization. If you default on one property, the lender can pursue all properties in the blanket. Release clauses can mitigate this — negotiate them upfront.
+
+### 10+ Properties: Portfolio Lines and Aggregation
+
+At scale, you start accessing institutional-adjacent products:
+
+- **DSCR portfolio lines** — Revolving credit facilities secured by your portfolio. Draw down to acquire, pay down as properties stabilize. Lower rates than individual loans.
+- **Aggregation strategies** — Pool properties into an entity, present the portfolio to a single lender for bulk pricing. Rates can be 75-150 bps below individual retail DSCR.
+- **Fund structures** — For 20+ property portfolios, fund-level financing becomes viable. This is where DSCR lending meets commercial real estate finance.
+
+### The "Waterfall" Strategy
+
+The most effective portfolio investors ladder their DSCR products. Here is the pattern:
+
+1. **Acquire** with an individual DSCR loan at 75% LTV
+2. **Stabilize** the property (rehab, tenant placement, 6-12 months seasoning)
+3. **Refinance** into a blanket loan with 4-5 other stabilized properties at better terms
+4. **Extract equity** from the blanket refi to fund the next acquisition
+5. **Repeat** — each cycle improves your average cost of capital and builds portfolio equity
+
+This waterfall works because lenders reward stabilized, performing portfolios with better pricing than individual acquisitions.
+
+## Entity Structuring
+
+### LLC: The Standard
+
+Most DSCR borrowers close in an LLC, and for good reason:
+
+- **Liability protection.** If a tenant sues, the claim is against the LLC's assets, not your personal assets (assuming proper corporate maintenance).
+- **Tax flexibility.** LLCs can elect to be taxed as sole proprietor, partnership, S-corp, or C-corp depending on your situation.
+- **Transferability.** Membership interests in an LLC can be transferred without triggering the due-on-sale clause in most DSCR notes (verify with your lender).
+
+Rate impact: None. LLCs are standard for DSCR lending.
+
+### Land Trust
+
+Land trusts provide anonymity — the trust holds title, and the beneficial owner is not part of public record. This is primarily a privacy tool.
+
+- Accepted by some DSCR lenders, not all
+- The beneficiary typically needs to personally guarantee
+- No rate impact when accepted, but fewer program options
+- Most useful in states with strong land trust statutes (Florida, Illinois, Virginia)
+
+### S-Corp / C-Corp
+
+Corporate structures are uncommon for DSCR loans but occasionally useful:
+
+- **S-Corp** — Some investors use S-Corps for active real estate businesses. DSCR loans can sometimes be vested in an S-Corp, but many lenders restrict this.
+- **C-Corp** — Rare for individual investors. More relevant for institutional buyers or foreign nationals.
+
+Rate impact: May see 12.5-25 bps premium. Fewer lender options.
+
+### Series LLC
+
+A Series LLC creates multiple "series" within a single LLC, each with its own assets and liabilities. Available in some states (Texas, Delaware, Nevada, Illinois).
+
+- **Advantage:** Each property in its own series with isolated liability, without the cost and complexity of multiple LLCs.
+- **Challenge:** Not all lenders understand or accept Series LLCs. You may need to educate the lender or use a different structure.
+- **Recommendation:** Works well in states that support it, but have a backup structure ready if the lender pushes back.
+
+## Exit Strategy Planning
+
+### When to Refinance
+
+Refinancing makes sense when:
+
+- **Rates drop 75+ bps** below your current rate. The closing costs of a refi (1-2% of loan amount) need to be recouped through monthly savings. At 75+ bps, the breakeven is typically 12-18 months.
+- **Equity has built up.** If your property has appreciated or you have paid down the loan, a cash-out refi lets you extract equity for the next deal.
+- **Seasoning requirements are met.** Most lenders require 6-12 months seasoning from the acquisition date before allowing a rate-term or cash-out refinance. Cash-out refi typically requires 12 months.
+- **ARM reset is approaching.** If you are in a 5/1 or 7/1 ARM and the reset date is within 12 months, start shopping the refi now.
+
+### When to Sell
+
+Consider selling when:
+
+- **1031 exchange timing works.** If you have a replacement property identified, selling and exchanging lets you defer capital gains and upgrade your portfolio.
+- **The market is at a cycle peak.** If cap rates are compressed and prices are elevated relative to rents, selling and redeploying into better-yielding assets can be smart.
+- **The property requires major capex.** If a roof, HVAC, or foundation issue is looming, selling before those costs hit can preserve your returns.
+- **Cash flow has deteriorated.** If rent growth has stalled, taxes have increased, or insurance costs have spiked, the property may no longer fit your portfolio thesis.
+
+### When to Hold
+
+Hold when:
+
+- **Cash flow is positive and stable.** If the property generates consistent monthly cash flow after all expenses, there is no reason to sell.
+- **Tax benefits are significant.** Depreciation, interest deductions, and other tax benefits can make a marginally cash-flowing property highly attractive on an after-tax basis.
+- **Appreciation trajectory is strong.** In markets with strong demand fundamentals (population growth, job growth, supply constraints), holding captures long-term appreciation.
+- **Refinancing is available.** If you can extract equity through a refi without selling, you get liquidity without triggering a taxable event.
+
+### Seasoning Requirements by Lender Type
+
+- **3 months** — Some DSCR lenders allow rate-term refinances after 90 days. Limited options.
+- **6 months** — Standard for rate-term refinance. Most DSCR lenders will do a new loan at this point.
+- **12 months** — Required for most cash-out refinances. The lender wants to see the property perform for a full year.
+- **No seasoning** — A few lenders offer "no seasoning" cash-out programs. These come with higher rates (50-75 bps premium) but can be valuable for BRRRR investors who need to recycle capital quickly.
+
+## Real Deal Examples
+
+### Example 1: The Suburban SFR Cash Flow Play
+
+An investor acquired a single-family rental in a growing suburban market for $310,000. The property rented for $2,650/month. With a 75% LTV DSCR loan at 7.25%, the monthly PITI came to $2,100.
+
+- DSCR: 1.26
+- Cash-on-cash return: 9.2%
+- Monthly net cash flow: $550 (before reserves and capex)
+
+This deal qualified easily at the standard DSCR tier. The investor's 720 credit score and 6 months reserves made underwriting straightforward. Close in 17 days.
+
+### Example 2: The STR Conversion
+
+A borrower purchased a condo near a resort area for $425,000. Long-term rent comps showed $2,200/month — which would produce a 0.88 DSCR at 75% LTV. The deal did not work on paper.
+
+However, comparable Airbnb listings in the same complex were generating $4,500-5,500/month in peak season and $2,800-3,200/month off-peak, averaging $3,800/month annually.
+
+The lender accepted AirDNA projections showing $3,600/month at 70% occupancy. That produced a 1.44 DSCR and the deal closed at 75% LTV with standard pricing.
+
+Key takeaway: The STR income approach turned a non-qualifying deal into a well-qualifying one.
+
+### Example 3: The Portfolio Blanket Refinance
+
+An investor with 7 individual DSCR loans (acquired over 18 months) was paying an average rate of 7.75% across the portfolio. Total monthly payments: $14,800. Total monthly rent: $19,200. Portfolio DSCR: 1.30.
+
+By consolidating into a blanket loan at 7.125%, the monthly payment dropped to $13,600 — saving $1,200/month and improving the portfolio DSCR to 1.41. The refi also extracted $120,000 in equity that funded the next two acquisitions.
+
+### Example 4: The Sub-1.0 Value-Add
+
+A property in an appreciating market was listed at $275,000. Current rent was $1,600/month. At 75% LTV, the DSCR was 0.91 — below the standard 1.0 threshold.
+
+The investor used a sub-1.0 DSCR program with 30% down (70% LTV). Rate: 8.125%. The plan was to invest $25,000 in cosmetic upgrades and raise rent to $2,100/month within 12 months.
+
+After stabilization, the property appraised at $315,000, rent was $2,100/month, and the investor refinanced into a standard DSCR loan at 75% LTV and 7.25%. The new DSCR: 1.22. Monthly cash flow went from negative $140 to positive $380.
+
+## How to Get Started
+
+This playbook gives you the framework. Now it is time to put it to work.
+
+**Step 1:** Run your numbers using our [DSCR Calculator](/dscr-loans#form). Plug in the property details, rent estimate, and purchase price. The calculator will tell you the DSCR, estimated rate range, and whether the deal works.
+
+**Step 2:** Submit your scenario to the [818 Capital Scenario Desk](/dscr-loans#form). Our AI analyzes your deal against 12+ capital programs and returns a match with specific terms — not a generic quote.
+
+**Step 3:** Talk to our team. We do not just originate loans — we advise on deal structure, entity setup, and portfolio strategy. If the deal does not work, we will tell you why and what would need to change.
+
+For the downloadable PDF version of this guide with additional lender comparison charts and rate matrices, visit our [DSCR Playbook page](/dscr-playbook-2026).
+
+No fluff. No runaround. Just capital.`,
+  },
+  {
     slug: 'what-is-dscr-loan',
     title: 'What Is a DSCR Loan and How Does It Work?',
     excerpt: 'DSCR loans let investors qualify based on rental income, not personal income. Here\'s everything you need to know about how they work, who qualifies, and when to use one.',
