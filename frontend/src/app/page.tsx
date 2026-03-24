@@ -1,6 +1,9 @@
 import Image from 'next/image';
 import Link from 'next/link';
 import FundedDealsSection from '@/components/FundedDealsSection';
+import TrustBar from '@/components/TrustBar';
+import TestimonialsSection from '@/components/TestimonialsSection';
+import InlineLeadCapture from '@/components/InlineLeadCapture';
 
 const LANES = [
   {
@@ -34,10 +37,10 @@ const LANES = [
 ];
 
 const STATS = [
-  { value: '27+', label: 'Deals Funded' },
-  { value: '14-21', label: 'Days to Close' },
-  { value: '12+', label: 'Capital Programs' },
-  { value: '4', label: 'Product Lanes' },
+  { value: '$14.5M+', label: 'Funded to Date' },
+  { value: '18 Days', label: 'Avg Time to Close' },
+  { value: '48 States', label: 'Lending Coverage' },
+  { value: '95%+', label: 'Scenario Approval Rate' },
 ];
 
 const STEPS = [
@@ -57,14 +60,17 @@ export default function HomePage() {
             {/* Left: Copy */}
             <div>
               <h1 className="text-4xl md:text-5xl lg:text-display font-sans font-bold text-navy-900 leading-tight">
-                Investment real estate<br />financing made simple.
+                Fund your next deal<br />in 14 days.
               </h1>
               <p className="mt-6 text-lg text-navy-500 font-body leading-relaxed max-w-lg">
-                818 Capital provides investment property financing — helping investors execute profitable DSCR rentals, fix-and-flip, short-term rental, and multifamily deals with speed, certainty, and AI-powered analysis.
+                818 Capital is a direct investment property lender. We fund DSCR rentals, fix-and-flip, short-term rental, and multifamily deals with speed, certainty, and AI-powered underwriting — no middlemen, no runaround.
+              </p>
+              <p className="mt-4 text-base text-navy-700 font-body italic leading-relaxed max-w-lg">
+                The question isn&apos;t how many deals you&apos;ve done — it&apos;s how many you could do, with the right partner.
               </p>
 
               <p className="mt-8 text-xs font-sans font-semibold uppercase tracking-[0.2em] text-accent">
-                4 Core Loan Programs
+                Direct Lender. 4 Programs. One Call.
               </p>
               <div className="mt-3 flex flex-wrap items-center gap-2 text-lg font-sans font-bold text-navy-900">
                 <Link href="/dscr-loans" className="hover:text-accent transition">DSCR</Link>
@@ -122,6 +128,9 @@ export default function HomePage() {
           </div>
         </div>
       </section>
+
+      {/* ── Trust Bar ──────────────────────────────────────── */}
+      <TrustBar />
 
       {/* ── Stats Bar ─────────────────────────────────────── */}
       <section className="bg-white border-b border-navy-100">
@@ -194,6 +203,9 @@ export default function HomePage() {
         </div>
       </section>
 
+      {/* ── Testimonials ──────────────────────────────────── */}
+      <TestimonialsSection />
+
       {/* ── Recently Funded Deals ─────────────────────────── */}
       <FundedDealsSection />
 
@@ -241,6 +253,13 @@ export default function HomePage() {
               </div>
             </div>
           </div>
+        </div>
+      </section>
+
+      {/* ── Lead Magnet ─────────────────────────────────── */}
+      <section className="bg-white py-4">
+        <div className="mx-auto max-w-content px-6">
+          <InlineLeadCapture />
         </div>
       </section>
 

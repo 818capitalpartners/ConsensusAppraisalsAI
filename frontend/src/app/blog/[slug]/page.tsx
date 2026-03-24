@@ -2,6 +2,7 @@ import { notFound } from 'next/navigation';
 import Image from 'next/image';
 import Link from 'next/link';
 import { getPostBySlug, getAllSlugs, POSTS } from '@/lib/blog-data';
+import InlineLeadCapture from '@/components/InlineLeadCapture';
 
 export async function generateStaticParams() {
   return getAllSlugs().map((slug) => ({ slug }));
@@ -43,7 +44,8 @@ export default async function BlogPostPage({ params }: { params: Promise<{ slug:
       if (line.trim() === '') return '<br/>';
       const formatted = line
         .replace(/\*\*(.*?)\*\*/g, '<strong class="text-navy-900">$1</strong>')
-        .replace(/\*(.*?)\*/g, '<em>$1</em>');
+        .replace(/\*(.*?)\*/g, '<em>$1</em>')
+        .replace(/\[([^\]]+)\]\(([^)]+)\)/g, '<a href="$2" class="text-accent hover:underline font-semibold">$1</a>');
       return `<p class="text-navy-600 font-body text-sm leading-relaxed mb-3">${formatted}</p>`;
     })
     .join('\n');
@@ -67,6 +69,34 @@ export default async function BlogPostPage({ params }: { params: Promise<{ slug:
       <section className="bg-white py-12">
         <div className="mx-auto max-w-3xl px-6">
           <div dangerouslySetInnerHTML={{ __html: html }} />
+        </div>
+      </section>
+
+      {/* Inline Lead Capture */}
+      <section className="bg-white pb-4">
+        <div className="mx-auto max-w-3xl px-6">
+          <InlineLeadCapture />
+        </div>
+      </section>
+
+      {/* Author Bio */}
+      <section className="bg-white py-8 border-t border-navy-100">
+        <div className="mx-auto max-w-3xl px-6">
+          <div className="flex items-start gap-4">
+            <div className="w-14 h-14 rounded-full bg-navy-200 flex items-center justify-center flex-shrink-0">
+              <span className="text-lg font-sans font-bold text-navy-500">RP</span>
+            </div>
+            <div>
+              <p className="text-sm font-sans font-semibold text-navy-900">Written by Ravi Punn</p>
+              <p className="text-xs text-accent font-sans font-semibold">Founder &amp; Principal, 818 Capital Partners</p>
+              <p className="mt-2 text-xs text-navy-500 font-body leading-relaxed">
+                Serial entrepreneur and real estate developer with 20+ years and $100M+ in transactions. Ravi founded 818 Capital to get the right operators the right capital — with an advisory process that&apos;s relational, educational, and direct.
+              </p>
+              <Link href="/about" className="text-xs text-accent font-sans font-semibold mt-2 inline-block hover:underline">
+                Learn more about our team &rarr;
+              </Link>
+            </div>
+          </div>
         </div>
       </section>
 
