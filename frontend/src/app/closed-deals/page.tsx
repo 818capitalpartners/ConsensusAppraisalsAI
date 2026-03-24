@@ -8,9 +8,9 @@ export const metadata: Metadata = {
 };
 
 const STATS = [
-  { value: '27+', label: 'Deals Closed' },
+  { value: '$100M+', label: 'Transaction Experience' },
   { value: '14-21', label: 'Days to Close' },
-  { value: '14', label: 'States' },
+  { value: '14', label: 'States Active' },
   { value: '12+', label: 'Capital Programs' },
 ];
 
