@@ -8,10 +8,10 @@ export const metadata: Metadata = {
 };
 
 const STATS = [
-  { value: '$14.5M+', label: 'Loan Volume Closed' },
   { value: '27+', label: 'Deals Closed' },
-  { value: '18', label: 'Avg Days to Close' },
+  { value: '14-21', label: 'Days to Close' },
   { value: '14', label: 'States' },
+  { value: '12+', label: 'Capital Programs' },
 ];
 
 const HIGHLIGHTS = [

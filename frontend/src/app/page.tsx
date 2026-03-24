@@ -37,10 +37,10 @@ const LANES = [
 ];
 
 const STATS = [
-  { value: '$14.5M+', label: 'Funded to Date' },
-  { value: '18 Days', label: 'Avg Time to Close' },
-  { value: '48 States', label: 'Lending Coverage' },
-  { value: '95%+', label: 'Scenario Approval Rate' },
+  { value: '27+', label: 'Deals Funded' },
+  { value: '14-21', label: 'Days to Close' },
+  { value: '12+', label: 'Capital Programs' },
+  { value: '4', label: 'Product Lanes' },
 ];
 
 const STEPS = [
