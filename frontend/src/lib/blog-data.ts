@@ -549,6 +549,331 @@ The easiest way to evaluate a correspondent partner is to submit a real deal and
 
 Our broker program gives you access to the AI Scenario Desk, Flip Lab, STR Signal, and Sponsor Brief tools — plus a dedicated point of contact for every deal. Apply and get access within 24 hours.`,
   },
+  {
+    slug: 'dscr-loan-requirements-2026',
+    title: 'DSCR Loan Requirements in 2026: The Complete Investor Guide',
+    excerpt: 'Everything you need to know about qualifying for a DSCR loan in 2026 — minimum credit scores, down payment tiers, DSCR ratio thresholds, and which properties are eligible.',
+    category: 'DSCR',
+    date: 'March 20, 2026',
+    readTime: '8 min read',
+    image: 'https://images.unsplash.com/photo-1560518883-ce09059eeffa?w=1200&h=600&fit=crop',
+    content: `## DSCR Loan Requirements in 2026
+
+DSCR loans have become the most popular financing tool for real estate investors who want to qualify on property income rather than personal income. But the requirements vary significantly between lenders. This guide breaks down exactly what you need to qualify in 2026 — from a direct lender that closes these deals every week.
+
+## Minimum Credit Score
+
+Most DSCR lenders require a **minimum credit score of 660**. However, the score you bring directly impacts your terms:
+
+- **740+**: Best rates, lowest down payment (20%), most flexible terms
+- **700-739**: Competitive rates, 25% down typical
+- **660-699**: Higher rates, 25-30% down, may require higher DSCR
+- **Below 660**: Limited options. Some lenders go to 620 with 30%+ down and DSCR above 1.25
+
+**Pro tip:** If your credit is below 700, focus on improving it before applying. Even 20 points can save you 0.5-1% on your rate, which translates to thousands per year on a rental property.
+
+## DSCR Ratio Requirements
+
+The Debt Service Coverage Ratio is the single most important qualification metric. The formula is straightforward:
+
+**DSCR = Monthly Rental Income / Monthly PITI**
+
+Here is what most lenders require in 2026:
+
+- **1.25+ DSCR**: Preferred tier. Best rates, most lender options, fastest approvals.
+- **1.0-1.24 DSCR**: Standard tier. Most lenders will approve at this level.
+- **0.75-0.99 DSCR**: Some lenders allow "no-ratio" or sub-1.0 DSCR. Expect higher rates and larger down payments.
+- **Below 0.75**: Very limited options. The property likely does not generate enough income to support the debt.
+
+At 818 Capital, we work with capital programs that accept DSCR as low as 0.75, but we always recommend structuring deals at 1.0+ for the best terms.
+
+## Down Payment and LTV
+
+DSCR loans typically require more equity than conventional mortgages:
+
+- **Purchase**: 20-25% down payment (75-80% LTV)
+- **Rate & Term Refinance**: Up to 80% LTV
+- **Cash-Out Refinance**: Up to 75% LTV (some lenders allow 80%)
+
+The down payment requirement is directly tied to your credit score, DSCR ratio, and property type. Higher-risk profiles require more equity.
+
+## Eligible Property Types
+
+DSCR loans cover a wide range of investment property types:
+
+- Single-family residences (SFR)
+- 2-4 unit properties (duplexes, triplexes, quads)
+- Condos and townhomes (warrantable and non-warrantable)
+- Short-term rental properties (Airbnb, VRBO)
+- Portfolio loans (5+ properties in one loan)
+
+**Not eligible:** Owner-occupied properties, raw land, or ground-up construction.
+
+## Documentation Required
+
+One of the biggest advantages of DSCR loans is the streamlined documentation:
+
+**What you DO need:**
+- Rental income documentation (lease agreement, rent roll, or STR platform statements)
+- Property appraisal (ordered by the lender)
+- Entity documents (LLC operating agreement, EIN)
+- Insurance binder
+- Title commitment
+- 2-3 months bank statements (for reserves verification)
+
+**What you DON'T need:**
+- Tax returns
+- W-2s or pay stubs
+- Employment verification
+- Debt-to-income ratio calculation
+
+## Reserve Requirements
+
+Most lenders require **6-12 months of PITI in liquid reserves** after closing. This ensures you can cover the mortgage even if the property is temporarily vacant.
+
+Acceptable reserve sources include:
+- Checking and savings accounts
+- Retirement accounts (typically counted at 60-70% of value)
+- Other real estate equity (in some cases)
+- Gift funds (some lenders accept)
+
+## Interest Rates in 2026
+
+DSCR loan rates in 2026 typically range from **7.0% to 9.5%**, depending on:
+
+- Credit score (higher score = lower rate)
+- LTV (more equity = lower rate)
+- DSCR ratio (higher ratio = lower rate)
+- Property type (SFR is cheapest, multi-unit costs more)
+- Loan amount (higher amounts often get better pricing)
+- Prepayment penalty (accepting a prepay can reduce rate by 0.25-0.50%)
+
+## How to Improve Your DSCR
+
+If your deal is close but does not quite hit the DSCR threshold, here are strategies to improve it:
+
+1. **Increase rent**: Research market rents and adjust if below market
+2. **Reduce expenses**: Shop insurance, challenge tax assessments
+3. **Increase down payment**: A larger down payment reduces your monthly PITI
+4. **Buy down the rate**: Pay points to reduce the interest rate
+5. **Choose interest-only**: Some DSCR products offer IO periods that improve the ratio
+
+## Next Steps
+
+Ready to run the numbers on your deal? Use our [DSCR Calculator](/dscr-loans#form) for an instant analysis, or call us at (917) 993-9194. As a direct lender, we can give you a term sheet within 24 hours and close in 14-21 days.`,
+  },
+  {
+    slug: 'fix-flip-loan-calculator-2026',
+    title: 'Fix and Flip Loan Calculator: How to Estimate Your Profit Before You Buy',
+    excerpt: 'Learn how to calculate fix-and-flip profitability before you make an offer. Includes a step-by-step guide to estimating ARV, holding costs, and ROI.',
+    category: 'Fix & Flip',
+    date: 'March 18, 2026',
+    readTime: '7 min read',
+    image: 'https://images.unsplash.com/photo-1572120360610-d971b9d7767c?w=1200&h=600&fit=crop',
+    content: `## How to Calculate Fix and Flip Profit
+
+Every successful flip starts with the numbers. Before you make an offer on a property, you need to know three things: what it will cost, what it will be worth after renovation, and how much profit is left after all expenses. This guide walks you through the math, step by step.
+
+## The Core Formula
+
+**Flip Profit = ARV - Purchase Price - Rehab Costs - Holding Costs - Selling Costs - Loan Costs**
+
+Let us break down each component with a real-world example.
+
+## Step 1: Estimate the After Repair Value (ARV)
+
+ARV is what the property will sell for after your renovation is complete. This is the most important number in any flip analysis.
+
+**How to estimate ARV:**
+- Pull 3-5 comparable sales (comps) within 0.5 miles, sold in the last 6 months
+- Adjust for differences in square footage, bedrooms, bathrooms, lot size, and finishes
+- Use the average as your baseline
+- Be conservative — overestimating ARV is the most common flip mistake
+
+**Example:** You find a distressed 3/2 SFR listed at $200,000. Comparable renovated homes in the area are selling for $340,000-$380,000. You estimate a conservative ARV of $350,000.
+
+## Step 2: Estimate Rehab Costs
+
+Create a detailed scope of work for the renovation. Common rehab costs include:
+
+| Item | Typical Cost Range |
+|------|-------------------|
+| Kitchen remodel | $15,000-$40,000 |
+| Bathroom remodel (each) | $5,000-$15,000 |
+| Flooring (whole house) | $5,000-$15,000 |
+| Painting (interior/exterior) | $3,000-$8,000 |
+| HVAC replacement | $5,000-$10,000 |
+| Roof replacement | $8,000-$20,000 |
+| Plumbing/electrical updates | $3,000-$10,000 |
+| Landscaping | $2,000-$5,000 |
+
+**Example:** Your property needs a full interior renovation. You estimate $65,000 in total rehab costs.
+
+## Step 3: Calculate Holding Costs
+
+Holding costs are the monthly expenses you pay while the property is being renovated and marketed for sale. Typical holding period: 4-8 months.
+
+Monthly holding costs include:
+- Loan interest payment
+- Property taxes (monthly equivalent)
+- Insurance
+- Utilities
+- HOA fees (if applicable)
+
+**Example:** With a $233,000 loan at 10% interest-only, your monthly carry is approximately $1,940 in interest alone. Add $300/month for taxes and insurance, and $150 for utilities. Over a 6-month hold period: **$14,340 in holding costs.**
+
+## Step 4: Estimate Selling Costs
+
+When you sell the flipped property, expect to pay:
+- Real estate agent commissions: 5-6% of sale price
+- Closing costs (title, escrow, transfer taxes): 1-2%
+- Staging and marketing: $2,000-$5,000
+
+**Example:** At a $350,000 sale price with 6% commission and 1.5% closing costs: **$26,250 in selling costs.**
+
+## Step 5: Calculate Loan Costs
+
+Fix-and-flip loans come with upfront costs:
+- Origination fee: 1-3 points (1-3% of loan amount)
+- Processing and underwriting fees: $1,000-$2,500
+- Appraisal: $500-$1,000
+
+**Example:** On a $233,000 loan with 2 points origination: **$4,660 plus $1,500 in fees = $6,160 in loan costs.**
+
+## Putting It All Together
+
+Using our example:
+
+| Component | Amount |
+|-----------|--------|
+| ARV (Sale Price) | $350,000 |
+| - Purchase Price | $200,000 |
+| - Rehab Costs | $65,000 |
+| - Holding Costs (6 months) | $14,340 |
+| - Selling Costs | $26,250 |
+| - Loan Costs | $6,160 |
+| **= Net Profit** | **$38,250** |
+
+**Cash invested:** With a 90% LTC loan, you bring approximately $26,500 to close (10% of total cost plus loan fees). Your return on invested capital: **144%**.
+
+## The 70% Rule
+
+A quick screening tool: never pay more than **70% of ARV minus rehab costs**.
+
+**Max Offer = (ARV x 0.70) - Rehab Costs**
+
+In our example: ($350,000 x 0.70) - $65,000 = $180,000 max offer. Since the property is listed at $200,000, you would need to negotiate down or accept slimmer margins.
+
+## How 818 Capital Finances Your Flip
+
+As a direct lender, 818 Capital offers fix-and-flip loans with:
+- Up to 90% of purchase + rehab (LTC)
+- Up to 75% of ARV
+- 12-18 month terms
+- Interest-only payments
+- Draw schedules released as work completes
+- Close in as fast as 10 days
+
+Our [Flip Lab](/fix-and-flip) tool analyzes your deal at three ARV scenarios so you can see your profit range before making an offer. Submit your deal at (917) 993-9194 or through our [scenario form](/dscr-loans#form).`,
+  },
+  {
+    slug: 'no-tax-return-mortgage-investors',
+    title: 'No Tax Return Mortgage for Investors: DSCR Loans Explained',
+    excerpt: 'If your tax returns do not reflect your true income, you are not alone. DSCR loans let real estate investors qualify without tax returns, W-2s, or income verification.',
+    category: 'DSCR',
+    date: 'March 16, 2026',
+    readTime: '6 min read',
+    image: 'https://images.unsplash.com/photo-1554224155-6726b3ff858f?w=1200&h=600&fit=crop',
+    content: `## Why Tax Returns Kill Investment Property Loans
+
+If you are a real estate investor, you have probably experienced this frustrating cycle: you find a great rental property, apply for a loan, and get denied because your tax returns show low income. Why? Because you are doing exactly what your CPA told you to do — writing off depreciation, repairs, interest, and other deductions to minimize your tax bill.
+
+The result: your tax returns show $40,000 in income while your actual cash flow is $150,000+. Traditional lenders only see the $40,000.
+
+**This is the exact problem DSCR loans solve.**
+
+## What Is a No Tax Return Mortgage?
+
+A DSCR (Debt Service Coverage Ratio) loan is a type of investment property mortgage that qualifies you based on the **property's rental income** rather than your personal income. No tax returns. No W-2s. No pay stubs. No employment verification.
+
+The lender evaluates one question: does this property generate enough rent to cover the mortgage payment?
+
+If the answer is yes, you qualify. Your personal income, tax situation, and employment status are irrelevant.
+
+## Who Benefits Most from DSCR Loans?
+
+DSCR loans are ideal for investors who:
+
+**Self-employed business owners** — Your tax returns are optimized for deductions, not mortgage qualification. DSCR bypasses this entirely.
+
+**Full-time investors** — If real estate IS your job, traditional lenders often struggle to categorize your income. DSCR removes that friction.
+
+**High-write-off professionals** — Doctors, attorneys, and consultants who aggressively deduct expenses often show low adjusted gross income despite high earnings.
+
+**Foreign nationals** — Many DSCR programs accept foreign national borrowers who cannot provide US tax returns at all.
+
+**Entity-based investors** — If you hold properties in LLCs, DSCR loans close directly in the entity name without requiring personal income qualification.
+
+## How DSCR Qualification Works
+
+The qualification process is straightforward:
+
+1. **Property identification**: You identify a rental property (or refinance an existing one)
+2. **Rental income verification**: The lender reviews the lease, rent roll, or short-term rental platform statements
+3. **DSCR calculation**: Monthly rent is divided by monthly PITI (principal, interest, taxes, insurance)
+4. **Ratio threshold**: If the DSCR meets the minimum (typically 1.0+), the deal qualifies
+5. **Credit and reserves**: The lender checks your credit score (660+ minimum) and verifies reserves (6-12 months PITI)
+
+**That is it.** No income calculation. No debt-to-income ratio. No tax return analysis.
+
+## DSCR vs. Traditional Mortgage: Key Differences
+
+| Feature | DSCR Loan | Traditional Mortgage |
+|---------|-----------|---------------------|
+| Income verification | Property income only | Full personal income docs |
+| Tax returns required | No | Yes (2 years) |
+| W-2s required | No | Yes |
+| Employment verification | No | Yes |
+| Debt-to-income ratio | Not applicable | Required (43-50% max) |
+| Entity (LLC) closing | Yes | Rarely |
+| Minimum credit score | 660 | 620 |
+| Down payment | 20-25% | 15-25% |
+| Close timeline | 14-21 days | 30-45 days |
+| Interest rates | 7-9.5% | 6.5-8% |
+
+The trade-off: DSCR loans have slightly higher rates than conventional mortgages, but the speed, flexibility, and qualification simplicity more than compensate for most investors.
+
+## What About Short-Term Rental Income?
+
+Yes — many DSCR lenders accept Airbnb and VRBO income. However, the income calculation is different:
+
+- **Long-term rentals**: Use the lease amount as gross rent
+- **Short-term rentals**: Use 75% of trailing 12-month gross STR income
+
+This conservative calculation accounts for seasonality, vacancy, and operating expenses unique to short-term rentals. At 818 Capital, our STR Signal tool normalizes your Airbnb income into a lender-ready DSCR calculation automatically.
+
+## Common Misconceptions
+
+**"No doc means no paperwork."** False. DSCR loans still require an appraisal, title work, insurance, entity documents, and bank statements for reserves. "No doc" refers specifically to income documentation.
+
+**"DSCR loans are only for experienced investors."** False. First-time investors qualify, though some lenders may require a slightly higher credit score or down payment.
+
+**"The rates are too high."** Context matters. If a traditional loan takes 45 days and requires you to restructure your tax strategy, the "cheaper" rate costs you time and opportunity. A DSCR loan that closes in 14 days lets you capture deals faster.
+
+## How 818 Capital Handles DSCR Loans
+
+As a direct investment property lender, we fund DSCR loans across 48 states with:
+
+- No tax returns or W-2s required
+- Minimum 660 credit score
+- Up to 80% LTV on purchase and refinance
+- 1-4 unit properties, condos, STR properties
+- Close in LLC or entity structure
+- 14-21 day close timeline
+- AI-powered scenario analysis for instant qualification
+
+Submit your deal through our [scenario form](/dscr-loans#form) or call (917) 993-9194. We will give you an honest assessment within 24 hours — and if the numbers work, a term sheet the same day.`,
+  },
 ];
 
 export function getPostBySlug(slug: string): BlogPost | undefined {

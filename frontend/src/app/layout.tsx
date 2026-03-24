@@ -3,6 +3,8 @@ import Image from 'next/image';
 import Link from 'next/link';
 import './globals.css';
 import Script from 'next/script';
+import ExitIntentPopup from '@/components/ExitIntentPopup';
+import ChatWidget from '@/components/ChatWidget';
 
 export const metadata: Metadata = {
   title: '818 Capital | Investor & Commercial Real Estate Financing',
@@ -160,6 +162,8 @@ export default function RootLayout({ children }: { children: React.ReactNode }) 
 
         {/* ── Main ───────────────────────────────────────── */}
         <main className="flex-1">{children}</main>
+        <ExitIntentPopup />
+        <ChatWidget />
 
         {/* ── Footer ─────────────────────────────────────── */}
         <footer className="bg-navy-900 text-white">
@@ -227,7 +231,7 @@ export default function RootLayout({ children }: { children: React.ReactNode }) 
                 &copy; {new Date().getFullYear()} 818 Capital Partners. All rights reserved.
               </p>
               <div className="text-xs text-navy-500 font-body max-w-xl text-center md:text-right space-y-1">
-                <p>818 Capital Partners is a commercial mortgage brokerage. This is not a commitment to lend. All loans subject to credit approval. Terms, conditions, and programs subject to change without notice.</p>
+                <p>This is not a commitment to lend. All loans subject to credit approval. Terms, conditions, and programs subject to change without notice.</p>
                 <p>Equal Housing Opportunity. Corporate NMLS pending. Licensed in applicable states.</p>
               </div>
             </div>
