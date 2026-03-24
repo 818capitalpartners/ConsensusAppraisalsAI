@@ -1,0 +1,223 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>Real Estate Operator Bio — 818 Capital Partners</title>
+<link rel="icon" type="image/png" href="/logo.png">
+<style>
+  :root {
+    --navy: #1F4E78;
+    --blue: #4472C4;
+    --light-blue: #D9E2F3;
+    --bg: #F7F9FC;
+    --white: #FFFFFF;
+    --text: #2C3E50;
+    --help: #6B7C93;
+    --border: #D1D9E6;
+    --field-bg: #FDFDFE;
+    --success: #27AE60;
+    --error: #E74C3C;
+  }
+  * { margin: 0; padding: 0; box-sizing: border-box; }
+  body { font-family: 'Segoe UI', system-ui, -apple-system, sans-serif; background: var(--bg); color: var(--text); line-height: 1.5; -webkit-font-smoothing: antialiased; }
+  .header { background: var(--navy); padding: 0; position: sticky; top: 0; z-index: 100; box-shadow: 0 2px 12px rgba(0,0,0,0.15); }
+  .header-inner { max-width: 800px; margin: 0 auto; padding: 16px 24px; display: flex; align-items: center; gap: 16px; }
+  .header img { width: 48px; height: 48px; border-radius: 6px; }
+  .header-text h1 { color: var(--white); font-size: 18px; font-weight: 600; letter-spacing: 0.5px; }
+  .header-text p { color: rgba(255,255,255,0.7); font-size: 13px; }
+  .progress-bar { background: rgba(255,255,255,0.1); height: 4px; }
+  .progress-fill { height: 100%; background: linear-gradient(90deg, var(--blue), #6CB4EE); transition: width 0.4s ease; border-radius: 0 2px 2px 0; }
+  .container { max-width: 800px; margin: 0 auto; padding: 24px 24px 80px; }
+  .intro { background: var(--white); border-radius: 12px; padding: 28px 32px; margin-bottom: 28px; border: 1px solid var(--border); box-shadow: 0 1px 4px rgba(0,0,0,0.04); }
+  .intro h2 { font-size: 24px; color: var(--navy); margin-bottom: 8px; }
+  .intro .subtitle { color: var(--help); font-size: 15px; margin-bottom: 16px; }
+  .intro .instructions { background: #FFFDF5; border: 1px solid #F0E6C8; border-radius: 8px; padding: 16px 20px; font-size: 14px; color: #5D4E37; line-height: 1.6; }
+  .intro .instructions strong { display: block; margin-bottom: 4px; color: var(--navy); }
+  .section { margin-bottom: 28px; }
+  .section-header { background: var(--navy); color: var(--white); padding: 14px 24px; border-radius: 10px 10px 0 0; font-size: 15px; font-weight: 600; letter-spacing: 0.3px; display: flex; align-items: center; gap: 10px; }
+  .section-header .section-num { background: rgba(255,255,255,0.2); width: 28px; height: 28px; border-radius: 50%; display: flex; align-items: center; justify-content: center; font-size: 13px; flex-shrink: 0; }
+  .section-body { background: var(--white); border: 1px solid var(--border); border-top: none; border-radius: 0 0 10px 10px; padding: 24px; box-shadow: 0 1px 4px rgba(0,0,0,0.04); }
+  .question { margin-bottom: 24px; }
+  .question:last-child { margin-bottom: 0; }
+  .question label { display: block; font-weight: 600; font-size: 14px; color: var(--navy); margin-bottom: 4px; }
+  .question label .q-num { color: var(--blue); margin-right: 4px; }
+  .question .help { font-size: 13px; color: var(--help); margin-bottom: 8px; font-style: italic; line-height: 1.5; }
+  .question input[type="text"], .question input[type="email"], .question input[type="tel"], .question input[type="number"], .question textarea { width: 100%; padding: 12px 16px; border: 1.5px solid var(--border); border-radius: 8px; font-size: 15px; font-family: inherit; color: var(--text); background: var(--field-bg); transition: border-color 0.2s, box-shadow 0.2s; outline: none; }
+  .question input:focus, .question textarea:focus { border-color: var(--blue); box-shadow: 0 0 0 3px rgba(68,114,196,0.12); }
+  .question textarea { resize: vertical; min-height: 80px; }
+  .question textarea.large { min-height: 160px; }
+  .question textarea.medium { min-height: 120px; }
+  .cert-box { background: var(--light-blue); border: 1px solid var(--blue); border-radius: 10px; padding: 24px 28px; margin-top: 28px; }
+  .cert-box h3 { color: var(--navy); font-size: 16px; margin-bottom: 10px; }
+  .cert-box p { font-size: 13px; color: #3D5A80; margin-bottom: 16px; line-height: 1.6; }
+  .cert-row { display: grid; grid-template-columns: 1fr 1fr; gap: 16px; margin-top: 12px; }
+  .checkbox-row { display: flex; align-items: flex-start; gap: 10px; margin-bottom: 16px; }
+  .checkbox-row input[type="checkbox"] { width: 20px; height: 20px; margin-top: 2px; accent-color: var(--navy); flex-shrink: 0; }
+  .checkbox-row label { font-size: 14px; font-weight: 400; color: var(--text); cursor: pointer; }
+  .submit-area { text-align: center; margin-top: 32px; }
+  .submit-btn { background: var(--navy); color: var(--white); border: none; padding: 16px 48px; font-size: 16px; font-weight: 600; border-radius: 8px; cursor: pointer; transition: background 0.2s, transform 0.1s; letter-spacing: 0.3px; }
+  .submit-btn:hover { background: #163D5E; }
+  .submit-btn:active { transform: scale(0.98); }
+  .submit-btn:disabled { background: #94A3B8; cursor: not-allowed; }
+  .submit-note { font-size: 12px; color: var(--help); margin-top: 10px; }
+  .success-msg { display: none; background: #F0FFF4; border: 1px solid #C6F6D5; border-radius: 12px; padding: 40px; text-align: center; margin-top: 28px; }
+  .success-msg.show { display: block; }
+  .success-msg h3 { color: var(--success); font-size: 22px; margin-bottom: 8px; }
+  .success-msg p { color: #2D6A4F; font-size: 15px; }
+  .footer { text-align: center; padding: 24px; border-top: 1px solid var(--border); margin-top: 40px; }
+  .footer p { font-size: 12px; color: var(--help); }
+  .footer a { color: var(--blue); text-decoration: none; }
+  .required { color: var(--error); }
+  @media (max-width: 600px) { .header-inner { padding: 12px 16px; } .header img { width: 40px; height: 40px; } .header-text h1 { font-size: 15px; } .container { padding: 16px 16px 60px; } .intro { padding: 20px; } .section-body { padding: 16px; } .cert-row { grid-template-columns: 1fr; } }
+</style>
+</head>
+<body>
+<div class="header">
+  <div class="header-inner">
+    <img src="/logo.png" alt="818 Capital">
+    <div class="header-text">
+      <h1>818 CAPITAL PARTNERS</h1>
+      <p>Real Estate Operator Bio — Loan Application Questionnaire</p>
+    </div>
+  </div>
+  <div class="progress-bar"><div class="progress-fill" id="progressFill" style="width:0%"></div></div>
+</div>
+<div class="container">
+  <div class="intro">
+    <h2>Real Estate Operator Bio</h2>
+    <p class="subtitle">Guided Questionnaire for Commercial Loan Applications</p>
+    <div class="instructions">
+      <strong>Instructions</strong>
+      This questionnaire helps lenders understand your real estate experience, track record, and operational capability. Your responses will be compiled into a professional operator biography for your loan package.<br><br>
+      <strong>Be specific:</strong> include numbers, dollar amounts, dates, and property addresses where possible. Lenders want evidence, not generalities.
+    </div>
+  </div>
+  <form id="bioForm" action="https://hook.us2.make.com/0s5qfaqgkrhmzk1nie3q977mljmzqvt8" method="POST">
+    <div class="section">
+      <div class="section-header"><span class="section-num">1</span> Personal & Entity Information</div>
+      <div class="section-body">
+        <div class="question"><label><span class="q-num">1.</span> Full Legal Name <span class="required">*</span></label><input type="text" name="legal_name" required></div>
+        <div class="question"><label><span class="q-num">2.</span> Operating Entity Name(s) & Structure <span class="required">*</span></label><p class="help">List every LLC, LP, Corp, or trust you use for real estate. Include state of formation and your role (managing member, GP, etc.).</p><textarea name="entities" class="medium" required></textarea></div>
+        <div class="question"><label><span class="q-num">3.</span> Business Address & Primary Contact Info <span class="required">*</span></label><p class="help">Phone, email, website if applicable.</p><textarea name="contact_info" required></textarea></div>
+        <div class="question"><label><span class="q-num">4.</span> How many years have you been actively investing in real estate? <span class="required">*</span></label><input type="text" name="years_investing" required></div>
+      </div>
+    </div>
+    <div class="section">
+      <div class="section-header"><span class="section-num">2</span> Real Estate Experience & Track Record</div>
+      <div class="section-body">
+        <div class="question"><label><span class="q-num">5.</span> What types of real estate projects have you completed? <span class="required">*</span></label><p class="help">Examples: ground-up construction, gut renovations, cosmetic flips, buy-and-hold rentals, commercial repositioning, multifamily value-add, mixed-use development, land entitlement.</p><textarea name="project_types" class="medium" required></textarea></div>
+        <div class="question"><label><span class="q-num">6.</span> How many real estate transactions have you completed in total? <span class="required">*</span></label><p class="help">Include purchases, renovations, dispositions. Break down by type if possible.</p><textarea name="transaction_count" required></textarea></div>
+        <div class="question"><label><span class="q-num">7.</span> What is the total dollar volume of projects you have completed? <span class="required">*</span></label><p class="help">Combined acquisition + renovation costs across your career.</p><input type="text" name="dollar_volume" required></div>
+        <div class="question"><label><span class="q-num">8.</span> Describe your 3 most relevant completed projects. <span class="required">*</span></label><p class="help">For EACH project include: property address, acquisition date, purchase price, renovation budget (planned vs. actual), scope of work, timeline, exit strategy and sale price OR current value/rent if held, and key challenges you overcame.</p><textarea name="top_projects" class="large" required></textarea></div>
+      </div>
+    </div>
+    <div class="section">
+      <div class="section-header"><span class="section-num">3</span> Current Portfolio & Active Projects</div>
+      <div class="section-body">
+        <div class="question"><label><span class="q-num">9.</span> How many properties do you currently own or control? <span class="required">*</span></label><p class="help">Include properties under contract. Break down: residential, multifamily, commercial, etc.</p><textarea name="properties_owned" required></textarea></div>
+        <div class="question"><label><span class="q-num">10.</span> Describe any projects currently under construction or renovation.</label><p class="help">For each: address, scope, budget, expected completion date, exit plan.</p><textarea name="active_projects" class="medium"></textarea></div>
+        <div class="question"><label><span class="q-num">11.</span> What is your current portfolio value and total equity position? <span class="required">*</span></label><p class="help">Approximate is fine. Should align with your Net Worth Statement and REO Schedule.</p><textarea name="portfolio_value" required></textarea></div>
+      </div>
+    </div>
+    <div class="section">
+      <div class="section-header"><span class="section-num">4</span> Team & Operational Capability</div>
+      <div class="section-body">
+        <div class="question"><label><span class="q-num">12.</span> Do you self-manage your properties or use third-party property management? <span class="required">*</span></label><p class="help">If self-managed: describe your process. If third-party: name the PM company and how many units they manage for you.</p><textarea name="property_mgmt" class="medium" required></textarea></div>
+        <div class="question"><label><span class="q-num">13.</span> Who is on your core team? <span class="required">*</span></label><p class="help">List key people: GC, attorney, CPA, property manager, architect, insurance broker, partners. Include how long you have worked with each.</p><textarea name="core_team" class="medium" required></textarea></div>
+        <div class="question"><label><span class="q-num">14.</span> Do you have any licensed professionals on your team or staff?</label><p class="help">Licensed GC, real estate broker, architect, engineer, etc.</p><textarea name="licensed_pros"></textarea></div>
+        <div class="question"><label><span class="q-num">15.</span> How do you source your deals? <span class="required">*</span></label><p class="help">Direct marketing, broker relationships, off-market, auctions, MLS, networking, etc.</p><textarea name="deal_sourcing" required></textarea></div>
+      </div>
+    </div>
+    <div class="section">
+      <div class="section-header"><span class="section-num">5</span> Financial Profile & Lending History</div>
+      <div class="section-body">
+        <div class="question"><label><span class="q-num">16.</span> What types of financing have you used in the past? <span class="required">*</span></label><p class="help">Hard money, private lending, DSCR, conventional, portfolio, seller financing, syndication, etc. Name lenders if possible.</p><textarea name="financing_history" class="medium" required></textarea></div>
+        <div class="question"><label><span class="q-num">17.</span> Have you ever had a loan default, foreclosure, short sale, or deed-in-lieu? <span class="required">*</span></label><p class="help">If yes, explain circumstances and outcome. If no, state None. Lenders will verify this.</p><textarea name="defaults" required></textarea></div>
+        <div class="question"><label><span class="q-num">18.</span> What is your approximate credit score range? <span class="required">*</span></label><p class="help">e.g., 680-720. If below 680, briefly explain context.</p><input type="text" name="credit_score" required></div>
+        <div class="question"><label><span class="q-num">19.</span> What is your liquidity position? <span class="required">*</span></label><p class="help">Cash reserves, lines of credit, or other liquid assets available for down payments, carry costs, and contingencies.</p><textarea name="liquidity" required></textarea></div>
+      </div>
+    </div>
+    <div class="section">
+      <div class="section-header"><span class="section-num">6</span> This Specific Transaction</div>
+      <div class="section-body">
+        <div class="question"><label><span class="q-num">20.</span> Describe the project you are seeking financing for. <span class="required">*</span></label><p class="help">Property address, type, current condition, acquisition price or refinance amount.</p><textarea name="project_description" class="medium" required></textarea></div>
+        <div class="question"><label><span class="q-num">21.</span> What is your business plan for this property? <span class="required">*</span></label><p class="help">Renovation scope, timeline, budget, target ARV or stabilized NOI, exit strategy (sell, refi, hold).</p><textarea name="business_plan" class="medium" required></textarea></div>
+        <div class="question"><label><span class="q-num">22.</span> What is your equity contribution / skin in the game? <span class="required">*</span></label><p class="help">Down payment amount, source of funds, any co-investors or partners.</p><textarea name="equity_contribution" required></textarea></div>
+        <div class="question"><label><span class="q-num">23.</span> Why are you the right operator for this project? <span class="required">*</span></label><p class="help">Connect your experience to THIS deal. What in your track record proves you can execute this specific business plan?</p><textarea name="why_you" class="medium" required></textarea></div>
+      </div>
+    </div>
+    <div class="section">
+      <div class="section-header"><span class="section-num">7</span> Additional Information</div>
+      <div class="section-body">
+        <div class="question"><label><span class="q-num">24.</span> Is there anything else the lender should know about you or your business?</label><p class="help">Relevant professional background, awards, community involvement, or anything that strengthens your profile.</p><textarea name="additional_info" class="medium"></textarea></div>
+        <div class="question"><label><span class="q-num">25.</span> References (optional but recommended)</label><p class="help">List 2-3 professional references: name, relationship, phone/email. Ideally: a past lender, a GC, and a broker or attorney.</p><textarea name="references" class="medium"></textarea></div>
+      </div>
+    </div>
+    <div class="cert-box">
+      <h3>Certification</h3>
+      <p>I certify that the information provided in this questionnaire is true, complete, and accurate to the best of my knowledge. I understand this information will be used to prepare an operator biography as part of a commercial loan application.</p>
+      <div class="checkbox-row"><input type="checkbox" id="certify" name="certified" required><label for="certify">I certify that all information above is true and accurate. <span class="required">*</span></label></div>
+      <div class="cert-row">
+        <div class="question"><label>Full Name (as signature) <span class="required">*</span></label><input type="text" name="signature_name" required></div>
+        <div class="question"><label>Date <span class="required">*</span></label><input type="date" name="signature_date" required></div>
+      </div>
+    </div>
+    <div class="submit-area">
+      <button type="submit" class="submit-btn" id="submitBtn">Submit Operator Bio</button>
+      <p class="submit-note">Your responses will be sent securely to 818 Capital Partners for review.</p>
+    </div>
+  </form>
+  <div class="success-msg" id="successMsg">
+    <h3>Submission Received</h3>
+    <p>Thank you. Your Operator Bio has been submitted to 818 Capital Partners.<br>Our team will review your information and follow up within 1-2 business days.</p>
+    <p style="margin-top:16px;font-size:13px;color:#6B7C93;">If you have questions, contact us at <a href="mailto:deals@818capitalpartners.com">deals@818capitalpartners.com</a> or (917) 993-9194.</p>
+  </div>
+  <div class="footer">
+    <p>&copy; 2026 818 Capital Partners. All rights reserved.<br>
+    <a href="https://818capitalpartners.com">818capitalpartners.com</a> | <a href="mailto:deals@818capitalpartners.com">deals@818capitalpartners.com</a> | (917) 993-9194</p>
+  </div>
+</div>
+<script>
+  const form = document.getElementById('bioForm');
+  const fields = form.querySelectorAll('input[required], textarea[required]');
+  const progressFill = document.getElementById('progressFill');
+  function updateProgress() {
+    let filled = 0;
+    fields.forEach(f => { if (f.type === 'checkbox' ? f.checked : f.value.trim()) filled++; });
+    const pct = Math.round((filled / fields.length) * 100);
+    progressFill.style.width = pct + '%';
+  }
+  form.addEventListener('input', updateProgress);
+  form.addEventListener('change', updateProgress);
+  form.addEventListener('submit', async (e) => {
+    e.preventDefault();
+    const btn = document.getElementById('submitBtn');
+    btn.disabled = true;
+    btn.textContent = 'Submitting...';
+    const formData = new FormData(form);
+    const data = {};
+    formData.forEach((v, k) => { data[k] = v; });
+    const action = form.getAttribute('action');
+    try {
+      const res = await fetch(action, { method: 'POST', body: JSON.stringify(data), headers: { 'Content-Type': 'application/json' } });
+      if (res.ok) {
+        form.style.display = 'none';
+        document.querySelector('.cert-box').style.display = 'none';
+        document.querySelector('.submit-area').style.display = 'none';
+        document.getElementById('successMsg').classList.add('show');
+        window.scrollTo({ top: 0, behavior: 'smooth' });
+      } else { throw new Error('Submission failed'); }
+    } catch (err) {
+      const body = Object.entries(data).map(([k,v]) => k.replace(/_/g,' ').toUpperCase() + ':\n' + v).join('\n\n');
+      const mailto = 'mailto:deals@818capitalpartners.com?subject=' + encodeURIComponent('Operator Bio: ' + (data.legal_name||'')) + '&body=' + encodeURIComponent(body);
+      if (confirm('Online submission unavailable. Would you like to send via email instead?')) { window.location.href = mailto; }
+      btn.disabled = false;
+      btn.textContent = 'Submit Operator Bio';
+    }
+  });
+  const dateField = document.querySelector('input[name="signature_date"]');
+  if (dateField) dateField.valueAsDate = new Date();
+</script>
+</body>
+</html>
