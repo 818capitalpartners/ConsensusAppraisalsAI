@@ -60,13 +60,13 @@ export default function HomePage() {
             {/* Left: Copy */}
             <div>
               <h1 className="text-4xl md:text-5xl lg:text-display font-sans font-bold text-navy-900 leading-tight">
-                Fund your next deal<br />in 14 days.
+                The question isn&apos;t how many deals you&apos;ve done — it&apos;s how many you could do, with the right partner.
               </h1>
               <p className="mt-6 text-lg text-navy-500 font-body leading-relaxed max-w-lg">
                 818 Capital is a direct investment property lender. We fund DSCR rentals, fix-and-flip, short-term rental, and multifamily deals with speed, certainty, and AI-powered underwriting — no middlemen, no runaround.
               </p>
-              <p className="mt-4 text-base text-navy-700 font-body italic leading-relaxed max-w-lg">
-                The question isn&apos;t how many deals you&apos;ve done — it&apos;s how many you could do, with the right partner.
+              <p className="mt-4 text-base text-navy-700 font-sans font-semibold leading-relaxed max-w-lg">
+                Fund your next deal in 14&ndash;21 days.
               </p>
 
               <p className="mt-8 text-xs font-sans font-semibold uppercase tracking-[0.2em] text-accent">
