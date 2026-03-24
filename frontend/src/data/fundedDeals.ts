@@ -73,21 +73,22 @@ const FUNDED_DEALS: FundedDeal[] = [
   {
     id: 12, city: 'Cleveland', state: 'OH', propertyType: 'SFR', loanType: 'DSCR',
     program: '30-Yr DSCR', ltv: 'N/A', rate: 'N/A', dealValue: '$135,000',
-    // 1713 E 69th Pl — Cleveland SFR
-    image: 'https://images.unsplash.com/photo-1564013799919-ab600027ffc6?w=800&q=80',
+    // Cleveland — white picket fence, modest neighborhood home, NO palm trees
+    image: 'https://images.unsplash.com/photo-1768868949503-6226ee94bbeb?w=800&q=80',
     analysis: `Cleveland SFR — one of the top cash-flow markets in the US. Low acquisition costs relative to rental income create outsized DSCR ratios.\n\nMedian home prices under $150K with rents of $1,100–$1,400. DSCR ratios of 1.3–1.6x. Projected cash-on-cash return: 12–18%.`,
   },
   {
     id: 13, city: 'Sandpoint', state: 'ID', propertyType: 'Condo — Short-Term Rental', loanType: 'DSCR R&T',
     program: '30-Yr DSCR — Rate & Term', ltv: '75%', rate: 'N/A', dealValue: '$340,000',
-    image: 'https://images.unsplash.com/photo-1510798831971-661eb04b3739?w=800&q=80',
+    // Sandpoint — wooden lake cottages, rustic lakefront style
+    image: 'https://images.unsplash.com/photo-1566065576695-cd6086cacde1?w=800&q=80',
     analysis: `Sandpoint, Idaho — premium lakeside resort market. Condo STR at 75% LTV via rate & term refi locks in long-term financing on a proven income property.\n\nLake Pend Oreille area draws year-round tourism. STR condos command $150–$300/night. Net cash-on-cash: 8–12%.`,
   },
   {
     id: 14, city: 'Seneca Falls', state: 'NY', propertyType: '2-Unit', loanType: 'DSCR Cash-Out',
     program: '30-Yr DSCR — Cash-Out Refi', ltv: '75%', rate: 'N/A', dealValue: '$185,000',
-    // 218 Fall St — 5-bed older home, 2,186 sqft, sold $140K
-    image: 'https://images.unsplash.com/photo-1600585154526-990dced4db0d?w=800&q=80',
+    // 218 Fall St — cozy older home surrounded by autumn foliage, upstate NY
+    image: 'https://images.unsplash.com/photo-1761258635423-2a5f6cca1a3a?w=800&q=80',
     analysis: `2-unit duplex cash-out refi in upstate NY's Finger Lakes region. At 75% LTV, the borrower extracts equity while maintaining solid coverage.\n\nDual-unit income provides built-in vacancy protection. Projected cash-on-cash after refi: 10–15%. Classic BRRRR execution.`,
   },
   {
@@ -99,8 +100,8 @@ const FUNDED_DEALS: FundedDeal[] = [
   {
     id: 16, city: 'Seneca Falls', state: 'NY', propertyType: '3-Unit', loanType: 'DSCR Purchase',
     program: '30-Yr DSCR — Purchase', ltv: '70%', rate: 'N/A', dealValue: '$225,000',
-    // 223-225 Fall St — 3-unit on same street as #14
-    image: 'https://images.unsplash.com/photo-1580587771525-78b9dba3b914?w=800&q=80',
+    // 223-225 Fall St — brick house with snow, winter upstate NY
+    image: 'https://images.unsplash.com/photo-1705981378604-2b9c17732f8c?w=800&q=80',
     analysis: `3-unit triplex purchase at 70% LTV — conservative leverage with three income streams. More units per property = better expense ratios and vacancy protection.\n\nThree units at $900–$1,100/mo each provide $2,700–$3,300 gross monthly. DSCR: 1.4–1.7x. Cash-on-cash: 11–16%.`,
   },
   {
@@ -119,14 +120,15 @@ const FUNDED_DEALS: FundedDeal[] = [
   {
     id: 19, city: 'Woodstock', state: 'NY', propertyType: '2-Unit', loanType: 'DSCR Purchase',
     program: '30-Yr DSCR — Purchase', ltv: '60%', rate: 'N/A', dealValue: '$425,000',
-    // Woodstock Hudson Valley cottage
-    image: 'https://images.unsplash.com/photo-1600566753086-00f18fb6b3ea?w=800&q=80',
+    // Woodstock — old Cape Cod beach cottage style, modest
+    image: 'https://images.unsplash.com/photo-1729109024236-7cd9e9170978?w=800&q=80',
     analysis: `Woodstock duplex at 60% LTV — conservative leverage in a desirable Hudson Valley market. Heavy equity position means lower payments and stronger cash flow.\n\nWoodstock's tourism economy supports both long-term and STR strategies. Cash-on-cash: 6–9% traditional, or 10–15% with one STR unit.`,
   },
   {
     id: 20, city: 'Woodstock', state: 'NY', propertyType: '2-Unit', loanType: 'DSCR Purchase',
     program: '30-Yr DSCR — Purchase', ltv: '75%', rate: 'N/A', dealValue: '$390,000',
-    image: 'https://images.unsplash.com/photo-1609766857041-ed402ea8069a?w=800&q=80',
+    // Woodstock — woodland house with natural surroundings
+    image: 'https://images.unsplash.com/photo-1631149784540-d0f6be3b8c7f?w=800&q=80',
     analysis: `Second Woodstock duplex — higher leverage at 75% LTV preserves capital for additional deals. Combined portfolio averages ~68% LTV.\n\nScaling in the same market reduces management friction. Blended cash-on-cash: 8–12%. Hudson Valley popularity with remote workers supports rent growth.`,
   },
   {
@@ -138,13 +140,15 @@ const FUNDED_DEALS: FundedDeal[] = [
   {
     id: 22, city: 'Albuquerque', state: 'NM', propertyType: 'SFR', loanType: 'DSCR',
     program: '30-Yr DSCR', ltv: 'N/A', rate: 'N/A', dealValue: '$275,000',
-    image: 'https://images.unsplash.com/photo-1600585154340-be6161a56a0c?w=800&q=80',
+    // NM — adobe/stucco style, earth tones, southwestern
+    image: 'https://images.unsplash.com/photo-1716634873234-9339ba0547f7?w=800&q=80',
     analysis: `New Mexico SFR — an emerging cash-flow market with low entry costs and solid rental demand. Growing tech and healthcare sectors drive consistent tenant demand.\n\nMedian prices $280K–$320K with rents of $1,300–$1,700. Cash-on-cash: 8–12%. Low property taxes enhance net returns.`,
   },
   {
     id: 23, city: 'Los Fresnos', state: 'TX', propertyType: 'SFR', loanType: 'DSCR',
     program: '30-Yr DSCR', ltv: 'N/A', rate: 'N/A', dealValue: '$175,000',
-    image: 'https://images.unsplash.com/photo-1600573472592-401b489a3cdc?w=800&q=80',
+    // Los Fresnos TX — small ranch house on green field, single story
+    image: 'https://images.unsplash.com/photo-1710627748327-68039e03b8d2?w=800&q=80',
     analysis: `Rio Grande Valley SFR — one of the most affordable markets in Texas with strong rental demand from border trade and healthcare employment.\n\nLow acquisition costs and rents of $1,100–$1,400 create excellent rent-to-price ratios. DSCR: 1.3–1.5x. Cash-on-cash: 10–15%.`,
   },
   {
@@ -156,8 +160,8 @@ const FUNDED_DEALS: FundedDeal[] = [
   {
     id: 25, city: 'Portland', state: 'ME', propertyType: 'SFR', loanType: 'DSCR',
     program: '30-Yr DSCR', ltv: 'N/A', rate: 'N/A', dealValue: '$365,000',
-    // Portland ME — New England clapboard style
-    image: 'https://images.unsplash.com/photo-1600596542815-ffad4c1539a9?w=800&q=80',
+    // Portland ME — tiny Victorian house in Maine, shot on 35mm film
+    image: 'https://images.unsplash.com/photo-1579873666517-3a6620fecba4?w=800&q=80',
     analysis: `Maine SFR — Portland's tourism and food scene create dual rental strategies: long-term tenants in winter, premium STR rates in summer.\n\nBlended gross yield: 8–12%. Limited housing supply and Boston remote worker demand support 4–6% YoY appreciation. Cash-on-cash: 7–10%.`,
   },
   {
@@ -169,7 +173,8 @@ const FUNDED_DEALS: FundedDeal[] = [
   {
     id: 27, city: 'Syosset', state: 'NY', propertyType: '2-Family', loanType: 'DSCR Purchase',
     program: '30-Yr DSCR — Purchase', ltv: '60%', rate: 'N/A', dealValue: '$825,000',
-    image: 'https://images.unsplash.com/photo-1600566753190-17f0baa2a6c3?w=800&q=80',
+    // Syosset — modest suburban house with cars in driveway, Long Island
+    image: 'https://images.unsplash.com/photo-1702908591032-a08a7739222c?w=800&q=80',
     analysis: `Long Island 2-family in Nassau County — one of the most supply-constrained rental markets in the Northeast. Syosset's top-rated schools and LIRR access drive premium demand.\n\nAt 60% LTV, significant equity protection. Dual-unit income of $3,000–$4,500/mo combined. Cash-on-cash: 6–9%.`,
   },
 ];

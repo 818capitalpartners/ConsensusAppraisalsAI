@@ -18,6 +18,7 @@ const LOAN_LINKS = [
 ];
 
 const COMPANY_LINKS = [
+  { href: '/about', label: 'About Us' },
   { href: '/closed-deals', label: 'Closed Deals' },
   { href: '/markets', label: 'Where We Lend' },
   { href: '/professionals', label: 'For Professionals' },
@@ -225,9 +226,10 @@ export default function RootLayout({ children }: { children: React.ReactNode }) 
               <p className="text-xs text-navy-400 font-body">
                 &copy; {new Date().getFullYear()} 818 Capital Partners. All rights reserved.
               </p>
-              <p className="text-xs text-navy-500 font-body max-w-xl text-center md:text-right">
-                This is not a commitment to lend. All loans subject to credit approval. Terms, conditions, and programs subject to change without notice.
-              </p>
+              <div className="text-xs text-navy-500 font-body max-w-xl text-center md:text-right space-y-1">
+                <p>818 Capital Partners is a commercial mortgage brokerage. This is not a commitment to lend. All loans subject to credit approval. Terms, conditions, and programs subject to change without notice.</p>
+                <p>Equal Housing Opportunity. Corporate NMLS pending. Licensed in applicable states.</p>
+              </div>
             </div>
           </div>
         </footer>
