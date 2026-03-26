@@ -338,7 +338,7 @@ export default function FixFlipPlaybookPage() {
                 </div>
                 <h3 className="text-xl font-sans font-bold text-navy-900">Check your inbox!</h3>
                 <p className="mt-2 text-sm text-navy-500 font-body">The Fix &amp; Flip Playbook is on its way.</p>
-                <Link href="/blog/fix-flip-playbook-2026" className="mt-4 inline-block text-sm text-accent font-sans font-semibold hover:underline">
+                <Link href="/blog/fix-flip-profit-guide" className="mt-4 inline-block text-sm text-accent font-sans font-semibold hover:underline">
                   Read the full guide online &rarr;
                 </Link>
               </div>

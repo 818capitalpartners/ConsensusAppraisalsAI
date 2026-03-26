@@ -143,7 +143,7 @@ export default function TestimonialsSection() {
         {/* Google Reviews CTA */}
         <div className="text-center mt-8">
           <a
-            href="https://g.page/r/818capitalpartners/review"
+            href="https://www.google.com/maps/place/818+Capital+Partners"
             target="_blank"
             rel="noopener noreferrer"
             className="inline-flex items-center gap-2 text-sm text-navy-500 hover:text-accent transition font-body"

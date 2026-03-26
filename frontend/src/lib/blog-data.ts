@@ -96,7 +96,7 @@ Reserves can typically be held in checking, savings, investment accounts (stocks
 
 ## Rate Comparison Matrix
 
-> **See the visual rate charts** — side-by-side bar graphs comparing rates by DSCR ratio, LTV, and credit score. [View rate visuals on the playbook page](/dscr-playbook-2026#teaser).
+> **See the visual rate charts** — side-by-side bar graphs comparing rates by DSCR ratio, LTV, and credit score. [View rate visuals on the playbook page](/dscr-playbook-2026#download).
 
 ### Rates by DSCR Ratio (740+ credit, 75% LTV baseline)
 
@@ -218,7 +218,7 @@ Strong STR DSCR markets in 2026 include resort/mountain towns, beach communities
 
 ## Portfolio Scaling Strategies
 
-> **Visual scaling ladder** — see the 4-step progression from individual DSCR loans to institutional-grade portfolio lines, plus the waterfall strategy diagram. [View scaling visuals](/dscr-playbook-2026#teaser).
+> **Visual scaling ladder** — see the 4-step progression from individual DSCR loans to institutional-grade portfolio lines, plus the waterfall strategy diagram. [View scaling visuals](/dscr-playbook-2026#download).
 
 ### 1-4 Properties: Individual DSCR Loans
 
