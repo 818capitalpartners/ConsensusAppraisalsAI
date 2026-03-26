@@ -1,5 +1,6 @@
 import type { Metadata } from 'next';
 import Image from 'next/image';
+import Link from 'next/link';
 import DealForm from '@/components/DealForm';
 
 export const metadata: Metadata = {
@@ -59,6 +60,41 @@ export default function FlipPage() {
                   <span className="text-lg font-sans font-bold text-success">$100,000+</span>
                 </div>
               </div>
+            </div>
+          </div>
+        </div>
+      </section>
+
+      {/* Fix & Flip Playbook Highlights */}
+      <section className="bg-navy-900 py-16">
+        <div className="mx-auto max-w-content px-6">
+          <div className="grid gap-12 lg:grid-cols-2 items-center">
+            <div>
+              <p className="text-xs font-sans font-semibold uppercase tracking-[0.2em] text-accent-light mb-4">Free Download</p>
+              <h2 className="text-2xl md:text-3xl font-sans font-bold text-white leading-tight">
+                The 2026 Fix &amp; Flip<br />Investor Playbook
+              </h2>
+              <p className="mt-4 text-navy-300 font-body leading-relaxed">
+                Bridge loan structures, rehab budgeting, ROI calculators, flip timelines, and 6 real deal breakdowns from our recent closings.
+              </p>
+              <Link href="/fix-flip-playbook-2026" className="btn-primary mt-6 inline-flex items-center gap-2">
+                Get the Playbook
+                <svg className="w-4 h-4" fill="none" viewBox="0 0 24 24" stroke="currentColor"><path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M14 5l7 7m0 0l-7 7m7-7H3" /></svg>
+              </Link>
+            </div>
+            <div className="grid grid-cols-2 gap-3">
+              {[
+                { label: '90% LTC', value: '+ 100% Rehab', sub: 'Maximum leverage programs' },
+                { label: 'Rates', value: '8.5–11%', sub: 'Varies by leverage & credit' },
+                { label: 'Timeline', value: '6–12 Months', sub: 'Close → Rehab → Sell' },
+                { label: 'ROI Target', value: '25–40%+', sub: 'On cash invested' },
+              ].map((item) => (
+                <div key={item.label} className="p-4 rounded-lg bg-navy-800 border border-navy-700">
+                  <p className="text-[10px] font-sans font-semibold text-accent-light uppercase tracking-wider">{item.label}</p>
+                  <p className="text-lg font-sans font-bold text-white mt-1">{item.value}</p>
+                  <p className="text-[10px] text-navy-400 font-body">{item.sub}</p>
+                </div>
+              ))}
             </div>
           </div>
         </div>

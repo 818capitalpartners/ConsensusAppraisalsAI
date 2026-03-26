@@ -1,5 +1,6 @@
 import type { Metadata } from 'next';
 import Image from 'next/image';
+import Link from 'next/link';
 import DealForm from '@/components/DealForm';
 
 export const metadata: Metadata = {
@@ -180,6 +181,41 @@ export default function STRPage() {
                   </div>
                 ))}
               </div>
+            </div>
+          </div>
+        </div>
+      </section>
+
+      {/* STR Playbook Highlights */}
+      <section className="bg-navy-900 py-16">
+        <div className="mx-auto max-w-content px-6">
+          <div className="grid gap-12 lg:grid-cols-2 items-center">
+            <div>
+              <p className="text-xs font-sans font-semibold uppercase tracking-[0.2em] text-accent-light mb-4">Free Download</p>
+              <h2 className="text-2xl md:text-3xl font-sans font-bold text-white leading-tight">
+                The 2026 Short-Term Rental<br />Investor Playbook
+              </h2>
+              <p className="mt-4 text-navy-300 font-body leading-relaxed">
+                Revenue projections, seasonal charts, occupancy impact analysis, top STR markets, setup costs, and 3 real funded deal breakdowns.
+              </p>
+              <Link href="/str-playbook-2026" className="btn-primary mt-6 inline-flex items-center gap-2">
+                Get the Playbook
+                <svg className="w-4 h-4" fill="none" viewBox="0 0 24 24" stroke="currentColor"><path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M14 5l7 7m0 0l-7 7m7-7H3" /></svg>
+              </Link>
+            </div>
+            <div className="grid grid-cols-2 gap-3">
+              {[
+                { label: 'STR Premium', value: '+53%', sub: 'vs long-term rental income' },
+                { label: 'Avg Nightly', value: '$150–350', sub: 'Across top markets' },
+                { label: 'Sweet Spot', value: '75% Occ', sub: '1.25 DSCR qualification' },
+                { label: 'Setup Cost', value: '$15–30K', sub: '3-6 month payback' },
+              ].map((item) => (
+                <div key={item.label} className="p-4 rounded-lg bg-navy-800 border border-navy-700">
+                  <p className="text-[10px] font-sans font-semibold text-accent-light uppercase tracking-wider">{item.label}</p>
+                  <p className="text-lg font-sans font-bold text-white mt-1">{item.value}</p>
+                  <p className="text-[10px] text-navy-400 font-body">{item.sub}</p>
+                </div>
+              ))}
             </div>
           </div>
         </div>
