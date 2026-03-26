@@ -33,6 +33,8 @@ In 2026, DSCR lending is more competitive than it has been in three years. Here 
 
 If you have been waiting for a better window to acquire, refinance, or scale — 2026 is the year to move.
 
+> **Want the visual version?** This guide includes interactive rate charts, DSCR spectrum gauges, portfolio scaling ladders, and downloadable PDF. [View the full visual playbook here](/dscr-playbook-2026).
+
 ## 2026 DSCR Qualification Requirements
 
 ### Credit Score Tiers
@@ -93,6 +95,8 @@ Reserves are liquid assets you need to show after closing:
 Reserves can typically be held in checking, savings, investment accounts (stocks/bonds at 70-80% value), or retirement accounts (60-70% value).
 
 ## Rate Comparison Matrix
+
+> **See the visual rate charts** — side-by-side bar graphs comparing rates by DSCR ratio, LTV, and credit score. [View rate visuals on the playbook page](/dscr-playbook-2026#teaser).
 
 ### Rates by DSCR Ratio (740+ credit, 75% LTV baseline)
 
@@ -213,6 +217,8 @@ STR DSCR loans perform best in markets where:
 Strong STR DSCR markets in 2026 include resort/mountain towns, beach communities, cities with strong business travel demand, and suburban markets near major metro areas.
 
 ## Portfolio Scaling Strategies
+
+> **Visual scaling ladder** — see the 4-step progression from individual DSCR loans to institutional-grade portfolio lines, plus the waterfall strategy diagram. [View scaling visuals](/dscr-playbook-2026#teaser).
 
 ### 1-4 Properties: Individual DSCR Loans
 
@@ -371,7 +377,7 @@ This playbook gives you the framework. Now it is time to put it to work.
 
 **Step 3:** Talk to our team. We do not just originate loans — we advise on deal structure, entity setup, and portfolio strategy. If the deal does not work, we will tell you why and what would need to change.
 
-For the downloadable PDF version of this guide with additional lender comparison charts and rate matrices, visit our [DSCR Playbook page](/dscr-playbook-2026).
+**Want the visual version with rate charts, DSCR gauges, and the downloadable 34-page PDF?** Visit our [2026 DSCR Investor Playbook page](/dscr-playbook-2026) — includes interactive infographics, the full rate comparison matrix, portfolio scaling ladder, and entity structuring visuals.
 
 No fluff. No runaround. Just capital.`,
   },
