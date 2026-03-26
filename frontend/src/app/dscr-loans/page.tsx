@@ -88,37 +88,79 @@ export default function DSCRPage() {
         </div>
       </section>
 
-      {/* DSCR Playbook Highlights */}
-      <section className="bg-navy-900 py-16">
+      {/* DSCR Rate Matrix */}
+      <section className="bg-white py-16">
         <div className="mx-auto max-w-content px-6">
-          <div className="grid gap-12 lg:grid-cols-2 items-center">
-            <div>
-              <p className="text-xs font-sans font-semibold uppercase tracking-[0.2em] text-accent-light mb-4">Free Download</p>
-              <h2 className="text-2xl md:text-3xl font-sans font-bold text-white leading-tight">
-                The 2026 DSCR<br />Investor Playbook
-              </h2>
-              <p className="mt-4 text-navy-300 font-body leading-relaxed">
-                Qualification requirements, rate comparison matrices, no-ratio programs, portfolio scaling strategies, and 4 real deal breakdowns.
-              </p>
-              <Link href="/dscr-playbook-2026" className="btn-primary mt-6 inline-flex items-center gap-2">
-                Get the Playbook
-                <svg className="w-4 h-4" fill="none" viewBox="0 0 24 24" stroke="currentColor"><path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M14 5l7 7m0 0l-7 7m7-7H3" /></svg>
-              </Link>
-            </div>
-            <div className="grid grid-cols-2 gap-3">
+          <div className="text-center mb-10">
+            <p className="text-xs font-sans font-semibold uppercase tracking-[0.2em] text-accent mb-3">2026 Rate Intelligence</p>
+            <h2 className="section-heading">DSCR Rates by Credit Score</h2>
+            <p className="section-subheading mx-auto mt-3">Your credit score is the single biggest lever on your rate. Here&apos;s how lenders tier it.</p>
+          </div>
+          <div className="max-w-3xl mx-auto space-y-3">
+            {[
+              { score: '740+', range: '6.75% – 7.50%', ltv: '80%', access: 'All programs incl. I/O & no-ratio', width: '65%', accent: true },
+              { score: '720–739', range: '7.00% – 7.75%', ltv: '80%', access: 'Most programs, minor bump', width: '72%', accent: true },
+              { score: '700–719', range: '7.25% – 8.00%', ltv: '80%', access: 'Standard programs', width: '78%', accent: false },
+              { score: '660–699', range: '7.75% – 8.50%', ltv: '75%', access: 'Limited, no sub-1.0', width: '85%', accent: false },
+              { score: '620–659', range: '8.25% – 9.25%', ltv: '70%', access: 'Entry level, higher reserves', width: '95%', accent: false },
+            ].map((tier) => (
+              <div key={tier.score} className="flex items-center gap-4">
+                <span className="text-xs font-sans font-bold text-navy-700 w-16 text-right shrink-0">{tier.score}</span>
+                <div className="flex-1 bg-navy-100 rounded-full h-9 relative overflow-hidden">
+                  <div className={`h-full rounded-full flex items-center justify-between px-4 ${tier.accent ? 'bg-accent' : 'bg-navy-300'}`} style={{ width: tier.width }}>
+                    <span className="text-xs font-sans font-bold text-white">{tier.range}</span>
+                    <span className="text-[10px] text-white/80 font-body hidden sm:inline">Max {tier.ltv} LTV</span>
+                  </div>
+                </div>
+              </div>
+            ))}
+          </div>
+          <p className="text-[10px] text-navy-400 font-body text-center mt-4">Based on 75% LTV, 1.25+ DSCR, 30-year fixed. Rates vary by lender and deal structure.</p>
+        </div>
+      </section>
+
+      {/* DSCR Thresholds & Programs */}
+      <section className="bg-navy-50/50 py-16">
+        <div className="mx-auto max-w-content px-6">
+          <div className="text-center mb-10">
+            <h2 className="section-heading">DSCR Programs &amp; Thresholds</h2>
+          </div>
+          <div className="grid gap-4 md:grid-cols-2 lg:grid-cols-4 max-w-5xl mx-auto">
+            {[
+              { title: '1.25+ DSCR', desc: 'Best-in-class pricing. Full access to every program type. This is where you want to be.', tag: 'Sweet Spot', tagColor: 'bg-green-100 text-green-700' },
+              { title: '1.0 – 1.24 DSCR', desc: 'Qualifies at most lenders. Slight rate premium of 12.5-37.5 bps above 1.25+ tier.', tag: 'Standard', tagColor: 'bg-blue-100 text-blue-700' },
+              { title: 'Sub-1.0 (0.75+)', desc: 'Property doesn\'t fully cover PITI. Requires 25-30% down, 700+ credit, 9-12 mo reserves.', tag: 'Limited', tagColor: 'bg-yellow-100 text-yellow-700' },
+              { title: 'No-Ratio', desc: 'DSCR not calculated. Qualification on credit (720+), LTV (75% max), and reserves alone.', tag: 'Specialized', tagColor: 'bg-purple-100 text-purple-700' },
+            ].map((prog) => (
+              <div key={prog.title} className="p-5 rounded-lg border border-navy-100 bg-white">
+                <span className={`text-[10px] font-sans font-bold px-2 py-0.5 rounded-full ${prog.tagColor}`}>{prog.tag}</span>
+                <h3 className="text-sm font-sans font-bold text-navy-900 mt-3">{prog.title}</h3>
+                <p className="text-xs text-navy-500 font-body mt-2 leading-relaxed">{prog.desc}</p>
+              </div>
+            ))}
+          </div>
+        </div>
+      </section>
+
+      {/* Reserve Requirements */}
+      <section className="bg-white py-16">
+        <div className="mx-auto max-w-content px-6">
+          <div className="max-w-3xl mx-auto">
+            <h2 className="section-heading text-center mb-8">Reserve Requirements</h2>
+            <div className="grid grid-cols-2 md:grid-cols-4 gap-4">
               {[
-                { label: 'Credit 740+', value: '6.75–7.50%', sub: 'Best-in-class rates' },
-                { label: 'Credit 660–699', value: '7.75–8.50%', sub: 'Workable, limited programs' },
-                { label: '1.25+ DSCR', value: 'Sweet Spot', sub: 'Best pricing tier' },
-                { label: 'No-Ratio', value: '720+ Credit', sub: 'DSCR not calculated' },
-              ].map((item) => (
-                <div key={item.label} className="p-4 rounded-lg bg-navy-800 border border-navy-700">
-                  <p className="text-[10px] font-sans font-semibold text-accent-light uppercase tracking-wider">{item.label}</p>
-                  <p className="text-lg font-sans font-bold text-white mt-1">{item.value}</p>
-                  <p className="text-[10px] text-navy-400 font-body">{item.sub}</p>
+                { months: '3 mo', when: '740+ credit, 1.25+ DSCR, ≤75% LTV', color: 'border-green-300 bg-green-50' },
+                { months: '6 mo', when: 'Standard for most DSCR programs', color: 'border-accent bg-accent/5' },
+                { months: '9 mo', when: '660-699 credit or 80%+ LTV', color: 'border-yellow-300 bg-yellow-50' },
+                { months: '12 mo', when: 'Sub-1.0, no-ratio, or weak combos', color: 'border-red-300 bg-red-50' },
+              ].map((r) => (
+                <div key={r.months} className={`p-4 rounded-lg border-2 ${r.color} text-center`}>
+                  <p className="text-2xl font-sans font-bold text-navy-900">{r.months}</p>
+                  <p className="text-[10px] text-navy-500 font-body mt-1 leading-relaxed">{r.when}</p>
                 </div>
               ))}
             </div>
+            <p className="text-xs text-navy-400 font-body text-center mt-4">Reserves = liquid assets after closing (checking, savings, investments at 70-80%, retirement at 60-70%)</p>
           </div>
         </div>
       </section>

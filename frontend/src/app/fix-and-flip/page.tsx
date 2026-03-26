@@ -65,36 +65,124 @@ export default function FlipPage() {
         </div>
       </section>
 
-      {/* Fix & Flip Playbook Highlights */}
-      <section className="bg-navy-900 py-16">
+      {/* Bridge Loan Programs */}
+      <section className="bg-white py-16">
         <div className="mx-auto max-w-content px-6">
-          <div className="grid gap-12 lg:grid-cols-2 items-center">
-            <div>
-              <p className="text-xs font-sans font-semibold uppercase tracking-[0.2em] text-accent-light mb-4">Free Download</p>
-              <h2 className="text-2xl md:text-3xl font-sans font-bold text-white leading-tight">
-                The 2026 Fix &amp; Flip<br />Investor Playbook
-              </h2>
-              <p className="mt-4 text-navy-300 font-body leading-relaxed">
-                Bridge loan structures, rehab budgeting, ROI calculators, flip timelines, and 6 real deal breakdowns from our recent closings.
-              </p>
-              <Link href="/fix-flip-playbook-2026" className="btn-primary mt-6 inline-flex items-center gap-2">
-                Get the Playbook
-                <svg className="w-4 h-4" fill="none" viewBox="0 0 24 24" stroke="currentColor"><path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M14 5l7 7m0 0l-7 7m7-7H3" /></svg>
-              </Link>
+          <div className="text-center mb-10">
+            <p className="text-xs font-sans font-semibold uppercase tracking-[0.2em] text-accent mb-3">Financing Options</p>
+            <h2 className="section-heading">Bridge Loan Programs Compared</h2>
+            <p className="section-subheading mx-auto mt-3">More leverage = less cash out of pocket, but higher rates.</p>
+          </div>
+          <div className="max-w-3xl mx-auto space-y-4">
+            {[
+              { label: '90% LTC + 100% Rehab', rate: '9.5–11%', width: '95%', tag: 'Maximum Leverage', accent: true },
+              { label: '85% LTC + 100% Rehab', rate: '9–10.5%', width: '85%', tag: 'Aggressive', accent: true },
+              { label: '80% LTC + 90% Rehab', rate: '8.5–10%', width: '75%', tag: 'Standard', accent: false },
+              { label: '75% LTC + 80% Rehab', rate: '8–9.5%', width: '65%', tag: 'Conservative', accent: false },
+            ].map((p) => (
+              <div key={p.label}>
+                <div className="flex justify-between items-center mb-1">
+                  <span className="text-xs font-sans font-semibold text-navy-700">{p.label}</span>
+                  <span className={`text-[10px] font-sans font-bold px-2 py-0.5 rounded-full ${p.accent ? 'bg-accent/10 text-accent' : 'bg-navy-100 text-navy-500'}`}>{p.tag}</span>
+                </div>
+                <div className="flex-1 bg-navy-100 rounded-full h-7 relative overflow-hidden">
+                  <div className={`h-full rounded-full flex items-center justify-end pr-3 ${p.accent ? 'bg-accent' : 'bg-navy-300'}`} style={{ width: p.width }}>
+                    <span className="text-xs font-sans font-bold text-white">{p.rate}</span>
+                  </div>
+                </div>
+              </div>
+            ))}
+          </div>
+        </div>
+      </section>
+
+      {/* Flip Timeline */}
+      <section className="bg-navy-50/50 py-16">
+        <div className="mx-auto max-w-content px-6">
+          <div className="max-w-3xl mx-auto">
+            <div className="text-center mb-10">
+              <h2 className="section-heading">The 6-Month Flip Lifecycle</h2>
+              <p className="section-subheading mx-auto mt-3">From close to cash — every month matters.</p>
             </div>
-            <div className="grid grid-cols-2 gap-3">
+            <div className="flex rounded-lg overflow-hidden h-12 mb-4">
               {[
-                { label: '90% LTC', value: '+ 100% Rehab', sub: 'Maximum leverage programs' },
-                { label: 'Rates', value: '8.5–11%', sub: 'Varies by leverage & credit' },
-                { label: 'Timeline', value: '6–12 Months', sub: 'Close → Rehab → Sell' },
-                { label: 'ROI Target', value: '25–40%+', sub: 'On cash invested' },
-              ].map((item) => (
-                <div key={item.label} className="p-4 rounded-lg bg-navy-800 border border-navy-700">
-                  <p className="text-[10px] font-sans font-semibold text-accent-light uppercase tracking-wider">{item.label}</p>
-                  <p className="text-lg font-sans font-bold text-white mt-1">{item.value}</p>
-                  <p className="text-[10px] text-navy-400 font-body">{item.sub}</p>
+                { label: 'Close', color: 'bg-accent', width: '8%' },
+                { label: 'Rehab', color: 'bg-orange-500', width: '35%' },
+                { label: 'List', color: 'bg-yellow-500', width: '10%' },
+                { label: 'Sell', color: 'bg-green-500', width: '20%' },
+                { label: 'Buffer', color: 'bg-navy-200', width: '27%' },
+              ].map((phase) => (
+                <div key={phase.label} className={`${phase.color} flex items-center justify-center`} style={{ width: phase.width }}>
+                  <span className="text-[10px] font-sans font-bold text-white">{phase.label}</span>
                 </div>
               ))}
+            </div>
+            <div className="p-3 rounded-lg bg-white border border-navy-200 text-center">
+              <p className="text-xs text-navy-600 font-body">Carrying costs accumulate at <span className="font-bold text-navy-900">~$3,000/month</span> — every month over budget costs you profit</p>
+            </div>
+          </div>
+        </div>
+      </section>
+
+      {/* Rehab Budget + ROI */}
+      <section className="bg-white py-16">
+        <div className="mx-auto max-w-content px-6">
+          <div className="grid gap-12 lg:grid-cols-2 max-w-5xl mx-auto">
+            {/* Rehab Budget */}
+            <div>
+              <h3 className="text-lg font-sans font-bold text-navy-900 mb-4">Where Your Rehab Budget Goes</h3>
+              <p className="text-xs text-navy-500 font-body mb-4">Based on $75,000 total rehab budget</p>
+              <div className="space-y-2.5">
+                {[
+                  { label: 'Kitchen', pct: 28, cost: '$21,000', color: 'bg-accent' },
+                  { label: 'Bathrooms', pct: 18, cost: '$13,500', color: 'bg-blue-400' },
+                  { label: 'Systems', pct: 17, cost: '$12,750', color: 'bg-navy-500' },
+                  { label: 'Flooring', pct: 13, cost: '$9,750', color: 'bg-navy-400' },
+                  { label: 'Exterior', pct: 10, cost: '$7,500', color: 'bg-navy-300' },
+                  { label: 'Contingency', pct: 14, cost: '$10,500', color: 'bg-orange-400' },
+                ].map((item) => (
+                  <div key={item.label} className="flex items-center gap-3">
+                    <span className="text-[10px] font-sans text-navy-600 w-20 text-right shrink-0">{item.label}</span>
+                    <div className="flex-1 bg-navy-100 rounded-full h-5 overflow-hidden">
+                      <div className={`h-full rounded-full flex items-center justify-between px-2 ${item.color}`} style={{ width: `${item.pct * 2.5}%` }}>
+                        <span className="text-[9px] font-bold text-white">{item.pct}%</span>
+                        <span className="text-[9px] font-bold text-white">{item.cost}</span>
+                      </div>
+                    </div>
+                  </div>
+                ))}
+              </div>
+            </div>
+            {/* ROI Sensitivity */}
+            <div>
+              <h3 className="text-lg font-sans font-bold text-navy-900 mb-4">ROI by ARV &amp; Rehab Cost</h3>
+              <p className="text-xs text-navy-500 font-body mb-4">$200K purchase. Green = strong. Yellow = caution. Red = pass.</p>
+              <table className="w-full text-sm">
+                <thead>
+                  <tr className="bg-navy-900 text-white">
+                    <th className="p-2 text-left text-[10px] font-sans">ARV</th>
+                    <th className="p-2 text-center text-[10px] font-sans">$60K</th>
+                    <th className="p-2 text-center text-[10px] font-sans">$75K</th>
+                    <th className="p-2 text-center text-[10px] font-sans">$90K</th>
+                  </tr>
+                </thead>
+                <tbody>
+                  {[
+                    { arv: '$350K', cells: [{ v: '95%', c: 'bg-green-100 text-green-800' }, { v: '60%', c: 'bg-yellow-100 text-yellow-800' }, { v: '24%', c: 'bg-red-100 text-red-800' }] },
+                    { arv: '$375K', cells: [{ v: '155%', c: 'bg-green-100 text-green-800' }, { v: '124%', c: 'bg-green-100 text-green-800' }, { v: '83%', c: 'bg-yellow-100 text-yellow-800' }] },
+                    { arv: '$400K', cells: [{ v: '215%', c: 'bg-green-100 text-green-800' }, { v: '183%', c: 'bg-green-100 text-green-800' }, { v: '143%', c: 'bg-green-100 text-green-800' }] },
+                  ].map((row) => (
+                    <tr key={row.arv} className="border-b border-navy-100">
+                      <td className="p-2 font-sans font-bold text-navy-900 text-[10px]">{row.arv}</td>
+                      {row.cells.map((cell, i) => (
+                        <td key={i} className="p-1.5 text-center">
+                          <span className={`inline-block rounded px-2 py-1 text-[10px] font-bold ${cell.c}`}>{cell.v}</span>
+                        </td>
+                      ))}
+                    </tr>
+                  ))}
+                </tbody>
+              </table>
             </div>
           </div>
         </div>

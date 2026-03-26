@@ -186,37 +186,93 @@ export default function STRPage() {
         </div>
       </section>
 
-      {/* STR Playbook Highlights */}
-      <section className="bg-navy-900 py-16">
+      {/* STR vs LTR Comparison */}
+      <section className="bg-white py-16">
         <div className="mx-auto max-w-content px-6">
-          <div className="grid gap-12 lg:grid-cols-2 items-center">
-            <div>
-              <p className="text-xs font-sans font-semibold uppercase tracking-[0.2em] text-accent-light mb-4">Free Download</p>
-              <h2 className="text-2xl md:text-3xl font-sans font-bold text-white leading-tight">
-                The 2026 Short-Term Rental<br />Investor Playbook
-              </h2>
-              <p className="mt-4 text-navy-300 font-body leading-relaxed">
-                Revenue projections, seasonal charts, occupancy impact analysis, top STR markets, setup costs, and 3 real funded deal breakdowns.
-              </p>
-              <Link href="/str-playbook-2026" className="btn-primary mt-6 inline-flex items-center gap-2">
-                Get the Playbook
-                <svg className="w-4 h-4" fill="none" viewBox="0 0 24 24" stroke="currentColor"><path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M14 5l7 7m0 0l-7 7m7-7H3" /></svg>
-              </Link>
+          <div className="text-center mb-10">
+            <p className="text-xs font-sans font-semibold uppercase tracking-[0.2em] text-accent mb-3">The STR Premium</p>
+            <h2 className="section-heading">Short-Term vs Long-Term: The Numbers</h2>
+            <p className="section-subheading mx-auto mt-3">Same property. Same market. Dramatically different income.</p>
+          </div>
+          <div className="grid md:grid-cols-2 gap-6 max-w-3xl mx-auto">
+            <div className="p-6 rounded-xl border-2 border-navy-200 bg-white">
+              <p className="text-xs font-sans font-semibold uppercase tracking-[0.15em] text-navy-400 mb-2">Long-Term Rental</p>
+              <p className="text-3xl font-sans font-bold text-navy-900">$2,200<span className="text-lg text-navy-400">/mo</span></p>
+              <div className="mt-4 space-y-2 text-xs font-body text-navy-500">
+                <div className="flex justify-between"><span>Occupancy</span><span className="font-semibold text-navy-700">100%</span></div>
+                <div className="flex justify-between"><span>Annual Income</span><span className="font-semibold text-navy-700">$26,400</span></div>
+                <div className="flex justify-between"><span>Management</span><span className="font-semibold text-navy-700">Low</span></div>
+              </div>
             </div>
-            <div className="grid grid-cols-2 gap-3">
-              {[
-                { label: 'STR Premium', value: '+53%', sub: 'vs long-term rental income' },
-                { label: 'Avg Nightly', value: '$150–350', sub: 'Across top markets' },
-                { label: 'Sweet Spot', value: '75% Occ', sub: '1.25 DSCR qualification' },
-                { label: 'Setup Cost', value: '$15–30K', sub: '3-6 month payback' },
-              ].map((item) => (
-                <div key={item.label} className="p-4 rounded-lg bg-navy-800 border border-navy-700">
-                  <p className="text-[10px] font-sans font-semibold text-accent-light uppercase tracking-wider">{item.label}</p>
-                  <p className="text-lg font-sans font-bold text-white mt-1">{item.value}</p>
-                  <p className="text-[10px] text-navy-400 font-body">{item.sub}</p>
+            <div className="p-6 rounded-xl border-2 border-accent bg-accent/5 relative">
+              <div className="absolute -top-3 right-4 bg-accent text-white text-[10px] font-sans font-bold px-3 py-1 rounded-full">+53% Income</div>
+              <p className="text-xs font-sans font-semibold uppercase tracking-[0.15em] text-accent mb-2">Short-Term Rental</p>
+              <p className="text-3xl font-sans font-bold text-navy-900">$3,375<span className="text-lg text-navy-400">/mo avg</span></p>
+              <div className="mt-4 space-y-2 text-xs font-body text-navy-500">
+                <div className="flex justify-between"><span>Occupancy</span><span className="font-semibold text-accent">75%</span></div>
+                <div className="flex justify-between"><span>Annual Income</span><span className="font-semibold text-accent">$40,500</span></div>
+                <div className="flex justify-between"><span>Management</span><span className="font-semibold text-navy-700">Higher</span></div>
+              </div>
+            </div>
+          </div>
+        </div>
+      </section>
+
+      {/* Occupancy Impact on DSCR */}
+      <section className="bg-navy-50/50 py-16">
+        <div className="mx-auto max-w-content px-6">
+          <div className="text-center mb-10">
+            <h2 className="section-heading">How Occupancy Changes Your DSCR</h2>
+            <p className="section-subheading mx-auto mt-3">10% occupancy difference can mean qualifying or not.</p>
+          </div>
+          <div className="grid md:grid-cols-3 gap-4 max-w-3xl mx-auto">
+            {[
+              { level: 'Conservative', pct: '65%', income: '$2,925/mo', dscr: '0.95', color: 'border-red-400 bg-red-50', dcrColor: 'text-red-600', tag: 'Needs Restructuring' },
+              { level: 'Moderate', pct: '75%', income: '$3,375/mo', dscr: '1.25', color: 'border-accent bg-accent/5', dcrColor: 'text-accent', tag: 'Sweet Spot' },
+              { level: 'Aggressive', pct: '85%', income: '$3,825/mo', dscr: '1.55', color: 'border-green-400 bg-green-50', dcrColor: 'text-green-600', tag: 'Strong' },
+            ].map((s) => (
+              <div key={s.level} className={`p-5 rounded-xl border-2 ${s.color} text-center relative`}>
+                {s.level === 'Moderate' && <div className="absolute -top-3 left-1/2 -translate-x-1/2 bg-accent text-white text-[10px] font-sans font-bold px-3 py-1 rounded-full whitespace-nowrap">Most Common</div>}
+                <p className="text-xs font-sans font-semibold text-navy-500 uppercase tracking-wider">{s.level}</p>
+                <p className="text-3xl font-sans font-bold text-navy-900 mt-2">{s.pct}</p>
+                <p className="text-xs text-navy-500 font-body">occupancy</p>
+                <div className="mt-3 pt-3 border-t border-navy-200">
+                  <p className="text-sm font-sans font-semibold text-navy-700">{s.income}</p>
+                  <p className={`text-2xl font-sans font-bold mt-1 ${s.dcrColor}`}>{s.dscr} DSCR</p>
+                  <p className={`text-[10px] font-sans font-bold mt-1 ${s.dcrColor}`}>{s.tag}</p>
                 </div>
-              ))}
-            </div>
+              </div>
+            ))}
+          </div>
+        </div>
+      </section>
+
+      {/* STR DSCR Calculation Flow */}
+      <section className="bg-white py-16">
+        <div className="mx-auto max-w-content px-6">
+          <div className="text-center mb-10">
+            <h2 className="section-heading">STR DSCR Calculation — Step by Step</h2>
+            <p className="section-subheading mx-auto mt-3">Four numbers. That&apos;s all the lender needs.</p>
+          </div>
+          <div className="flex flex-col md:flex-row items-stretch gap-4 max-w-4xl mx-auto">
+            {[
+              { num: 1, label: 'Annual STR Revenue', value: '$40,500', desc: '75% occupancy x $150/night x 365' },
+              { num: 2, label: 'Monthly Income', value: '$3,375', desc: '$40,500 / 12 months' },
+              { num: 3, label: 'Monthly PITI', value: '$2,700', desc: 'P&I + taxes + insurance' },
+              { num: 4, label: 'DSCR Ratio', value: '1.25', desc: '$3,375 / $2,700 = qualifies!' },
+            ].map((s, i) => (
+              <div key={s.num} className="flex-1 flex items-start gap-3">
+                <div className="flex flex-col items-center shrink-0">
+                  <div className="w-10 h-10 rounded-full bg-accent flex items-center justify-center text-white font-sans font-bold">{s.num}</div>
+                  {i < 3 && <div className="hidden md:block w-0.5 h-full bg-accent/20" />}
+                </div>
+                <div className="pb-4">
+                  <p className="text-xs font-sans font-semibold text-navy-500">{s.label}</p>
+                  <p className={`text-xl font-sans font-bold ${s.num === 4 ? 'text-green-600' : 'text-navy-900'}`}>{s.value}</p>
+                  <p className="text-[10px] text-navy-400 font-body mt-1">{s.desc}</p>
+                </div>
+              </div>
+            ))}
           </div>
         </div>
       </section>
