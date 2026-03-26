@@ -86,47 +86,39 @@ export default function RootLayout({ children }: { children: React.ReactNode }) 
               </span>
             </Link>
 
-            <div className="hidden items-center gap-7 lg:flex">
-              {/* Loan Programs dropdown */}
-              <div className="relative group">
-                <button className="text-sm font-sans font-medium text-navy-700 transition hover:text-accent flex items-center gap-1">
-                  Loan Programs
-                  <svg className="w-3.5 h-3.5 mt-0.5" fill="none" viewBox="0 0 24 24" stroke="currentColor"><path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M19 9l-7 7-7-7" /></svg>
-                </button>
-                <div className="absolute left-0 top-full pt-2 opacity-0 invisible group-hover:opacity-100 group-hover:visible transition-all duration-200">
-                  <div className="w-56 rounded-lg border border-navy-100 bg-white p-2 shadow-lg">
-                    {LOAN_LINKS.map((l) => (
-                      <Link key={l.href} href={l.href} className="block px-4 py-2.5 text-sm font-medium text-navy-700 hover:text-accent hover:bg-navy-50 rounded transition">
-                        {l.label}
-                      </Link>
-                    ))}
-                  </div>
-                </div>
-              </div>
-
+            <div className="hidden items-center gap-6 lg:flex">
+              {/* Direct loan program links — what people came for */}
+              <Link href="/dscr-loans" className="text-sm font-sans font-semibold text-navy-700 transition hover:text-accent">DSCR</Link>
+              <Link href="/fix-and-flip" className="text-sm font-sans font-semibold text-navy-700 transition hover:text-accent">Fix &amp; Flip</Link>
+              <Link href="/str-loans" className="text-sm font-sans font-semibold text-navy-700 transition hover:text-accent">STR</Link>
               <Link href="/closed-deals" className="text-sm font-sans font-medium text-navy-700 transition hover:text-accent">Closed Deals</Link>
-              <Link href="/markets" className="text-sm font-sans font-medium text-navy-700 transition hover:text-accent">Where We Lend</Link>
-              <Link href="/professionals" className="text-sm font-sans font-medium text-navy-700 transition hover:text-accent">For Professionals</Link>
 
-              {/* Insights dropdown */}
+              {/* Insights dropdown — includes Where We Lend, playbooks, blog */}
               <div className="relative group">
                 <button className="text-sm font-sans font-medium text-navy-700 transition hover:text-accent flex items-center gap-1">
                   Insights
                   <svg className="w-3.5 h-3.5 mt-0.5" fill="none" viewBox="0 0 24 24" stroke="currentColor"><path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M19 9l-7 7-7-7" /></svg>
                 </button>
                 <div className="absolute left-0 top-full pt-2 opacity-0 invisible group-hover:opacity-100 group-hover:visible transition-all duration-200">
-                  <div className="w-56 rounded-lg border border-navy-100 bg-white p-2 shadow-lg">
-                    {RESOURCE_LINKS.map((l) => (
-                      <Link key={l.href} href={l.href} className="block px-4 py-2.5 text-sm font-medium text-navy-700 hover:text-accent hover:bg-navy-50 rounded transition">
-                        {l.label}
-                      </Link>
-                    ))}
+                  <div className="w-64 rounded-lg border border-navy-100 bg-white p-2 shadow-lg">
+                    <p className="px-4 py-1.5 text-[10px] font-sans font-semibold uppercase tracking-widest text-navy-400">Playbooks</p>
+                    <Link href="/dscr-playbook-2026" className="block px-4 py-2 text-sm font-medium text-navy-700 hover:text-accent hover:bg-navy-50 rounded transition">DSCR Investor Playbook</Link>
+                    <Link href="/fix-flip-playbook-2026" className="block px-4 py-2 text-sm font-medium text-navy-700 hover:text-accent hover:bg-navy-50 rounded transition">Fix &amp; Flip Playbook</Link>
+                    <Link href="/str-playbook-2026" className="block px-4 py-2 text-sm font-medium text-navy-700 hover:text-accent hover:bg-navy-50 rounded transition">STR Playbook</Link>
+                    <hr className="my-1.5 border-navy-100" />
+                    <Link href="/blog" className="block px-4 py-2 text-sm font-medium text-navy-700 hover:text-accent hover:bg-navy-50 rounded transition">Blog</Link>
+                    <Link href="/insights" className="block px-4 py-2 text-sm font-medium text-navy-700 hover:text-accent hover:bg-navy-50 rounded transition">Industry Insights</Link>
+                    <Link href="/markets" className="block px-4 py-2 text-sm font-medium text-navy-700 hover:text-accent hover:bg-navy-50 rounded transition">Where We Lend</Link>
+                    <Link href="/resources" className="block px-4 py-2 text-sm font-medium text-navy-700 hover:text-accent hover:bg-navy-50 rounded transition">Calculators &amp; Tools</Link>
                   </div>
                 </div>
               </div>
             </div>
 
-            <div className="hidden lg:flex items-center gap-4">
+            <div className="hidden lg:flex items-center gap-3">
+              <Link href="/broker-program" className="inline-flex items-center justify-center rounded border-2 border-accent px-5 py-2 text-xs font-sans font-semibold text-accent transition hover:bg-accent hover:text-white uppercase tracking-wide">
+                For Brokers
+              </Link>
               <Link href="/dscr-loans#form" className="btn-primary text-xs py-2.5">
                 Submit a Scenario
               </Link>
@@ -141,20 +133,25 @@ export default function RootLayout({ children }: { children: React.ReactNode }) 
               </summary>
               <div className="absolute right-0 mt-2 w-72 rounded-lg border border-navy-100 bg-white p-4 shadow-lg z-50 max-h-[80vh] overflow-y-auto">
                 <p className="text-xs font-sans font-semibold uppercase tracking-widest text-navy-400 mb-2">Loan Programs</p>
-                {LOAN_LINKS.map((l) => (
-                  <Link key={l.href} href={l.href} className="block py-2 text-sm font-medium text-navy-700 hover:text-accent">{l.label}</Link>
-                ))}
+                <Link href="/dscr-loans" className="block py-2 text-sm font-semibold text-navy-700 hover:text-accent">DSCR / Rental Loans</Link>
+                <Link href="/fix-and-flip" className="block py-2 text-sm font-semibold text-navy-700 hover:text-accent">Fix &amp; Flip</Link>
+                <Link href="/str-loans" className="block py-2 text-sm font-semibold text-navy-700 hover:text-accent">STR Loans</Link>
+                <Link href="/multifamily" className="block py-2 text-sm font-semibold text-navy-700 hover:text-accent">Multifamily</Link>
                 <hr className="my-3 border-navy-100" />
-                <p className="text-xs font-sans font-semibold uppercase tracking-widest text-navy-400 mb-2">Company</p>
-                {COMPANY_LINKS.map((l) => (
-                  <Link key={l.href} href={l.href} className="block py-2 text-sm font-medium text-navy-700 hover:text-accent">{l.label}</Link>
-                ))}
+                <p className="text-xs font-sans font-semibold uppercase tracking-widest text-navy-400 mb-2">Playbooks</p>
+                <Link href="/dscr-playbook-2026" className="block py-2 text-sm font-medium text-navy-700 hover:text-accent">DSCR Investor Playbook</Link>
+                <Link href="/fix-flip-playbook-2026" className="block py-2 text-sm font-medium text-navy-700 hover:text-accent">Fix &amp; Flip Playbook</Link>
+                <Link href="/str-playbook-2026" className="block py-2 text-sm font-medium text-navy-700 hover:text-accent">STR Playbook</Link>
                 <hr className="my-3 border-navy-100" />
-                <p className="text-xs font-sans font-semibold uppercase tracking-widest text-navy-400 mb-2">Insights &amp; Resources</p>
-                {RESOURCE_LINKS.map((l) => (
-                  <Link key={l.href} href={l.href} className="block py-2 text-sm font-medium text-navy-700 hover:text-accent">{l.label}</Link>
-                ))}
-                <Link href="/dscr-loans#form" className="btn-primary w-full mt-4 text-xs">Submit a Scenario</Link>
+                <p className="text-xs font-sans font-semibold uppercase tracking-widest text-navy-400 mb-2">More</p>
+                <Link href="/closed-deals" className="block py-2 text-sm font-medium text-navy-700 hover:text-accent">Closed Deals</Link>
+                <Link href="/blog" className="block py-2 text-sm font-medium text-navy-700 hover:text-accent">Blog</Link>
+                <Link href="/markets" className="block py-2 text-sm font-medium text-navy-700 hover:text-accent">Where We Lend</Link>
+                <Link href="/about" className="block py-2 text-sm font-medium text-navy-700 hover:text-accent">About Us</Link>
+                <div className="flex gap-2 mt-4">
+                  <Link href="/broker-program" className="flex-1 inline-flex items-center justify-center rounded border-2 border-accent px-3 py-2.5 text-xs font-sans font-semibold text-accent hover:bg-accent hover:text-white transition uppercase tracking-wide">For Brokers</Link>
+                  <Link href="/dscr-loans#form" className="flex-1 btn-primary text-xs">Scenario</Link>
+                </div>
               </div>
             </details>
           </nav>
