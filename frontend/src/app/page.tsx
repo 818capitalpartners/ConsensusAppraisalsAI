@@ -203,6 +203,65 @@ export default function HomePage() {
         </div>
       </section>
 
+      {/* ── DSCR Playbook Promo ────────────────────────────── */}
+      <section className="bg-navy-900 py-16">
+        <div className="mx-auto max-w-content px-6">
+          <div className="grid gap-12 lg:grid-cols-2 items-center">
+            <div>
+              <p className="text-xs font-sans font-semibold uppercase tracking-[0.2em] text-accent-light mb-4">Free Download</p>
+              <h2 className="text-3xl md:text-4xl font-sans font-bold text-white leading-tight">
+                The 2026 DSCR<br />Investor Playbook
+              </h2>
+              <p className="mt-4 text-navy-300 font-body leading-relaxed">
+                Requirements, rate comparisons, and deal structuring strategies across 12+ capital programs. 34 pages of actionable intel — no fluff.
+              </p>
+              <div className="mt-6 flex flex-wrap gap-4">
+                <Link href="/dscr-playbook-2026" className="btn-primary inline-flex items-center gap-2">
+                  <svg className="w-4 h-4" fill="none" viewBox="0 0 24 24" stroke="currentColor"><path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M4 16v1a3 3 0 003 3h10a3 3 0 003-3v-1m-4-4l-4 4m0 0l-4-4m4 4V4" /></svg>
+                  Get the Playbook
+                </Link>
+                <Link href="/blog/2026-dscr-investor-playbook" className="inline-flex items-center justify-center rounded border-2 border-white/20 px-6 py-2.5 text-sm font-sans font-semibold text-white transition hover:bg-white/10 uppercase tracking-wide">
+                  Read Online
+                </Link>
+              </div>
+            </div>
+            <div className="hidden lg:flex justify-center">
+              <div className="relative">
+                <div className="absolute -right-2 -bottom-2 w-full h-full bg-navy-700 rounded-xl" />
+                <div className="absolute -right-1 -bottom-1 w-full h-full bg-navy-800 rounded-xl" />
+                <div className="relative bg-white rounded-xl p-6 shadow-2xl w-64">
+                  <div className="border-2 border-navy-100 rounded-lg p-5">
+                    <p className="text-[10px] font-sans font-semibold uppercase tracking-[0.15em] text-accent mb-1">818 Capital Partners</p>
+                    <h3 className="text-lg font-sans font-bold text-navy-900 leading-tight">The 2026<br />DSCR Investor<br />Playbook</h3>
+                    <div className="mt-3 h-px bg-navy-200" />
+                    <p className="mt-3 text-[10px] text-navy-400 font-body">Requirements. Rates. Strategies.</p>
+                    <div className="mt-4 flex items-end gap-1 h-10">
+                      {[35, 50, 30, 65, 45, 75, 55, 85, 70, 50].map((h, i) => (
+                        <div key={i} className={`flex-1 rounded-t ${i >= 7 ? 'bg-accent' : 'bg-navy-200'}`} style={{ height: `${h}%` }} />
+                      ))}
+                    </div>
+                    <div className="mt-3 grid grid-cols-3 gap-1.5">
+                      <div className="bg-navy-50 rounded p-1.5 text-center">
+                        <p className="text-[10px] font-sans font-bold text-navy-900">12+</p>
+                        <p className="text-[8px] text-navy-400">Lenders</p>
+                      </div>
+                      <div className="bg-navy-50 rounded p-1.5 text-center">
+                        <p className="text-[10px] font-sans font-bold text-navy-900">9</p>
+                        <p className="text-[8px] text-navy-400">Chapters</p>
+                      </div>
+                      <div className="bg-navy-50 rounded p-1.5 text-center">
+                        <p className="text-[10px] font-sans font-bold text-navy-900">4</p>
+                        <p className="text-[8px] text-navy-400">Studies</p>
+                      </div>
+                    </div>
+                  </div>
+                </div>
+              </div>
+            </div>
+          </div>
+        </div>
+      </section>
+
       {/* ── Testimonials ──────────────────────────────────── */}
       <TestimonialsSection />
 
