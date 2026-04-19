@@ -277,6 +277,169 @@ At current rates (7.0-8.5% for multifamily DSCR loans), properties need a minimu
 
 We're seeing the most deal flow in Tier 2 and Tier 3 markets. Investors who can identify value-add opportunities in these markets — below-market rents, deferred maintenance, operational inefficiencies — are finding the best risk-adjusted returns in the current environment.`,
   },
+  {
+    slug: 'april-2026-dscr-rate-update',
+    title: 'April 2026 DSCR Rate Update: Where Pricing Actually Is After the Tariff Shock',
+    excerpt: 'DSCR par rates are sitting at 6.24% for domestic investors and 6.875% for foreign nationals — but tariff-driven volatility is pushing pricing both directions week to week. Here is what we are actually quoting this month.',
+    category: 'Market Update',
+    date: 'April 2026',
+    image: 'https://images.unsplash.com/photo-1554224155-6726b3ff858f?w=800&h=500&fit=crop',
+    content: `## The Number Everyone Is Asking About
+
+As of mid-April 2026, baseline DSCR par pricing sits at **6.24% for domestic investors** and **6.875% for foreign national investors** on well-qualified profiles. The full range of rates we are quoting runs from **6.0% on the aggressive end to just shy of 8.0% on thin DSCRs and lower FICO profiles**.
+
+That is meaningfully tighter than where DSCR lending sat in late 2025. 50–75 basis points of improvement on equivalent profiles, all else equal.
+
+## What Is Actually Moving Rates
+
+Three things are in play right now:
+
+### 1. Tariff-Driven Treasury Volatility
+
+The 10-year Treasury has been whipsawed by tariff announcements and reversals throughout the spring. DSCR rate sheets are typically reset weekly by our lender partners, sometimes twice a week when the 10-year moves more than 15 bps. If you lock on a Monday and float to Friday, you may be looking at a different price.
+
+Our guidance: when you get a rate you like, lock. The spread on floats is not worth the optionality in this environment.
+
+### 2. Competitive Capital Entering DSCR
+
+More private credit funds and non-QM issuers entered the DSCR space over the last 12 months. That capital is competing for the same borrower profiles, which compresses pricing on the best deals. We routinely see 25–50 bps of difference between the top and bottom of a quote stack on an identical file.
+
+This is exactly why we run every file through multiple lenders simultaneously. If you are getting a single quote from a single shop, you are leaving money on the table.
+
+### 3. Fed Pause, Not Cut
+
+The Fed has signaled only one more potential rate cut in 2026 — the market had priced in more. That means short-term rates stay elevated, but the 10-year (which is what DSCR prices off) is more sensitive to inflation expectations than to the Fed funds rate. Translation: even a Fed cut does not automatically mean cheaper DSCR loans.
+
+## Rate Grid — What We Are Quoting Today
+
+Based on files we ran this week on 30-year fixed DSCR, no prepay issues, 75% LTV:
+
+| FICO Tier | DSCR ≥ 1.25 | DSCR 1.00–1.24 | DSCR 0.75–0.99 |
+|-----------|-------------|-----------------|-----------------|
+| 780+      | 6.125–6.375% | 6.375–6.625% | 6.875–7.250% |
+| 740–779   | 6.375–6.625% | 6.625–6.875% | 7.125–7.500% |
+| 700–739   | 6.625–6.875% | 6.875–7.250% | 7.500–7.875% |
+| 680–699   | 6.875–7.250% | 7.250–7.625% | 7.750–8.125% |
+| 660–679   | 7.375–7.750% | 7.750–8.250% | Limited options |
+
+Add 12.5–50 bps for cash-out refi, 2–4 unit, condos, or STR income qualification. Subtract 12.5–25 bps for 5+ year prepay or loan sizes above $400K.
+
+## What This Means For Your Deal
+
+If you are in the DSCR market right now:
+
+1. **Get the file clean before you shop.** Every data gap you leave gets priced as risk. Clean files get the tight end of the range.
+2. **Lock when you see a number you can live with.** The tariff-driven volatility cuts both ways, but the downside risk from a single bad print is bigger than the upside from catching the bottom.
+3. **Do not shop one lender.** Identical files get 25–50 bps of dispersion across the lender stack. We run files through multiple programs simultaneously and give you the best option.
+
+If you want us to price a scenario, send the property, the loan amount, your FICO band, and the rent roll. We will come back inside 24 hours with what the market is actually willing to do.`,
+  },
+  {
+    slug: 'fhfa-raises-2026-multifamily-caps',
+    title: 'FHFA Raised Fannie/Freddie Multifamily Caps 20% — What It Means for Small-Balance Deals',
+    excerpt: 'Agency multifamily capacity jumped to $88B per enterprise for 2026, a 20.5% year-over-year increase. Here is how that cascades into small-balance pricing and what to watch for.',
+    category: 'Regulation',
+    date: 'April 2026',
+    image: 'https://images.unsplash.com/photo-1567496898669-ee935f5f647a?w=800&h=500&fit=crop',
+    content: `## The Headline
+
+The Federal Housing Finance Agency set 2026 multifamily loan purchase caps at **$88 billion for Fannie Mae and $88 billion for Freddie Mac** — a combined **$176 billion** and **up 20.5% from 2025**. This is the largest single-year cap increase since the agencies were placed into conservatorship.
+
+Why it matters: when agency capacity is loose, agency pricing gets aggressive. When capacity is tight, the agencies start applying volume controls — tighter LTVs, stricter DSCRs, longer process times. Right now the tap is open.
+
+## The Mission-Driven Requirement
+
+At least **50% of each Enterprise's multifamily business must be mission-driven, affordable housing**. That matters because:
+
+- Workforce housing loans (properties serving tenants at or below 80–120% of area median income, depending on market) are **excluded from the cap** entirely. If your deal qualifies, it does not count against the enterprise's volume limit.
+- Deals that qualify as mission-driven get **priority processing and pricing flex**. In a capped environment, that is real money.
+
+If your property has any units at or below local LIHTC or workforce income limits, flag it early. That single data point can shift your deal from a Tier-2 execution to a Tier-1 execution.
+
+## What It Means for Small-Balance Multifamily (5–50 Units)
+
+Both Fannie and Freddie run dedicated small-balance programs (SBL for Freddie, Small Loans for Fannie) for multifamily assets typically in the **$1M–$7.5M loan size range**. Here is what the cap increase cascades into:
+
+### Pricing
+Agency small-balance permanent execution is currently pricing roughly **50–75 bps inside of non-agency bridge or bank CMBS equivalents**. With expanded capacity, that spread should widen in the borrower's favor through Q2 and Q3.
+
+### Process Time
+Agency execution has historically run 45–60 days from application to close. With more headroom, processing times are compressing back toward the 35–45 day range.
+
+### Leverage
+Both agencies are comfortable at **75–80% LTV** on stabilized assets with 1.25x+ DSCR. Market-rate properties in top-30 MSAs are seeing the most aggressive sizing.
+
+## Where We See the Best Executions Right Now
+
+Small-balance agency is working especially well for:
+
+- **5–30 unit stabilized multifamily** in top-50 MSAs with 90%+ occupancy, 6–12 months of trailing operations, and rent comps that support underwriting at or near asking rents
+- **Value-add bridge-to-agency** — 18–24 month bridge execution to stabilize, then refinance into permanent agency at significantly better pricing once the asset is seasoned
+- **Mission-driven acquisitions** — if even a portion of the rent roll is restricted or workforce-qualified, the pricing flex is material
+
+## What to Watch
+
+The 50% mission-driven floor means the agencies will continue to prioritize affordable over pure market-rate. If your deal is 100% market rate in a Tier-1 MSA with no affordability component, expect the agencies to be more selective than they were five years ago — even with the expanded cap.
+
+If you have a small-balance multifamily acquisition or refinance in the pipeline, this is a good quarter to run agency scenarios alongside your bank and bridge alternatives. The pricing gap is real.
+
+Send us the T-12, rent roll, and property specs and we will run the matrix.`,
+  },
+  {
+    slug: 'fix-flip-bridge-rates-dropped-65bps',
+    title: 'Fix & Flip Bridge Rates Dropped 65 bps YoY — Non-QM Is Now 15% of the Mortgage Market',
+    excerpt: 'Bridge loan averages fell from 11.1% to 10.43% year-over-year as non-QM originations hit record share. Here is what is driving it and where fix-and-flip pricing goes next.',
+    category: 'Fix & Flip',
+    date: 'April 2026',
+    image: 'https://images.unsplash.com/photo-1503594384566-461fe158e797?w=800&h=500&fit=crop',
+    content: `## The Number
+
+Average fix-and-flip bridge loan rates fell from **11.1% in September 2024 to 10.43% in September 2025** — a 65 basis point year-over-year improvement. The trend has continued through Q1 2026, with strong-profile borrowers (3+ completed flips, 700+ FICO, 75% ARLTV) routinely pricing in the **9.25–9.75% range** on 12-month interest-only bridge executions.
+
+For the borrower moving 4–6 deals per year, that 65 bps improvement compounds into meaningful savings. On a $350K loan at 12 months IO, you are keeping an extra $2,275 per project in net profit.
+
+## Why Rates Are Compressing
+
+Three structural shifts are at work:
+
+### 1. Non-QM Has Gone Mainstream
+
+Non-QM originations are projected to exceed **15% of total mortgage volume by end of 2026**, up from roughly 8–9% three years ago. That is a massive structural shift driven by:
+
+- **10.5 million self-employed Americans** whose income is not W-2-shaped
+- **Growth of the investor class** (single-family rental and fix-and-flip buyers)
+- **Agency guidelines that do not match modern underwriting realities**
+
+The March 2026 National Mortgage Professional Town Hall concluded that non-QM has evolved into a **primary lending channel for top producers** — no longer a fallback product for deals that cannot fit agency.
+
+### 2. More Capital Competing for the Same Paper
+
+A year ago, roughly 12 active private credit funds were competing aggressively for fix-and-flip paper at the wholesale level. Today that number is closer to 20. More bidders for the same deals means tighter spreads.
+
+You see this directly in the lender stack: identical deals now spread 50–100 bps across the quote stack where they used to spread 150–200 bps. The bottom of the range is coming in.
+
+### 3. Experienced Borrower Premium Shrinking
+
+Historically, a first-time flipper and a 10-flip veteran could see 200+ bps difference on otherwise identical deals. That gap is now closer to 100–125 bps. Lenders are competing more aggressively for the middle of the experience spectrum — 3 to 9 completed projects — which is exactly where most repeat operators sit.
+
+## What This Means For Borrowers
+
+If you are running fix-and-flip deals in 2026:
+
+1. **Shop the full stack, not just your usual lender.** The 50–100 bps dispersion means even sticky borrower relationships are costing you money if you are not pricing against alternatives every deal.
+2. **Experience counts, but less than it used to.** If you are between 3 and 9 completed projects, you are in the sweet spot where multiple lenders will compete hard for your business.
+3. **Watch origination points.** Most fix-and-flip lenders charge **1.5–3.0 origination points**. The lender with the best rate is not always the lender with the best all-in cost once you factor in points, exit fees, and draw processing fees. We model all-in effective yield, not coupon rate.
+
+## Where We See Fix-and-Flip Pricing Going
+
+Our view through Q3 2026:
+
+- **Rates stable to slightly lower** — another 25–50 bps of compression is plausible if inflation stays contained and the Fed holds the line on cuts
+- **Leverage unchanged** — 90% LTC with 100% rehab remains the ceiling on strong borrower profiles, with 85% LTC more common on 1–2 experience band files
+- **Speed becomes the differentiator** — with pricing compressed, lenders are competing on **time to fund** (now routinely 10–14 days on clean files) rather than rate alone
+
+If you are sizing a flip right now and want to see the live quote stack on your file, send us the deal. We will run it through the active non-QM lenders simultaneously and show you what the best execution actually looks like — all-in cost, not just the coupon.`,
+  },
 ];
 
 export function getInsightBySlug(slug: string): InsightPost | undefined {

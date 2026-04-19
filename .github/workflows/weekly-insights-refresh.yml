@@ -1,0 +1,48 @@
+name: Weekly Insights Refresh
+
+# Runs every Monday at 09:07 AM ET to generate a fresh industry-news
+# insights post from the current week's CRE / DSCR / fix-and-flip market data.
+# Commits the new post to main, which triggers a Vercel redeploy.
+
+on:
+  schedule:
+    # 09:07 ET every Monday (13:07 UTC during ET standard time, 14:07 UTC during ET DST)
+    # Using 13:07 UTC — cron runs in UTC; DST drift is acceptable for a weekly job.
+    - cron: '7 13 * * 1'
+  workflow_dispatch: {}  # allow manual trigger from GitHub Actions UI
+
+permissions:
+  contents: write  # needed to commit the generated post back to the repo
+
+jobs:
+  refresh-insights:
+    runs-on: ubuntu-latest
+    steps:
+      - name: Checkout repo
+        uses: actions/checkout@v4
+
+      - name: Set up Python
+        uses: actions/setup-python@v5
+        with:
+          python-version: '3.12'
+
+      - name: Install deps
+        run: |
+          pip install anthropic==0.42.0 requests==2.32.3
+
+      - name: Generate weekly insight post
+        env:
+          ANTHROPIC_API_KEY: ${{ secrets.ANTHROPIC_API_KEY }}
+        run: python scripts/generate_weekly_insight.py
+
+      - name: Commit and push
+        run: |
+          git config user.name "818 Capital Weekly Bot"
+          git config user.email "bot@818capitalpartners.com"
+          git add frontend/src/lib/insights-data.ts
+          if git diff --cached --quiet; then
+            echo "No changes to commit."
+          else
+            git commit -m "Weekly insights refresh: $(date +'%Y-%m-%d')"
+            git push
+          fi
