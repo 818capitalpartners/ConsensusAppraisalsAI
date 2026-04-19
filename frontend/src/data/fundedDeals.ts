@@ -177,6 +177,34 @@ const FUNDED_DEALS: FundedDeal[] = [
     image: 'https://images.unsplash.com/photo-1702908591032-a08a7739222c?w=800&q=80',
     analysis: `Long Island 2-family in Nassau County — one of the most supply-constrained rental markets in the Northeast. Syosset's top-rated schools and LIRR access drive premium demand.\n\nAt 60% LTV, significant equity protection. Dual-unit income of $3,000–$4,500/mo combined. Cash-on-cash: 6–9%.`,
   },
+  {
+    id: 28, city: 'Washington', state: 'DC', propertyType: 'SFR', loanType: 'Fix & Flip',
+    program: '12-Mo Bridge IO — Heavy Rehab', ltv: '90% LTC / 100% Rehab', rate: 'N/A', dealValue: '$978,000',
+    // 1614 Decatur St NW — Federal-style red brick DC rowhouse with columned entry (Petworth/16th St Heights)
+    image: 'https://images.unsplash.com/photo-1564336510711-dcb3df5eefe9?w=800&q=80',
+    analysis: `Decatur Street rowhouse flip in the Petworth / 16th Street Heights corridor — one of DC's fastest-appreciating inner submarkets. Metro-accessible neighborhoods inside the Diamond have seen sustained 5–8% YoY gains.\n\nFull interest-only bridge with 90% acquisition plus 100% rehab draws lets the sponsor recycle capital across concurrent DC flips. Target ARV spread of $200K+ on a 4–6 month renovation. Projected net profit: $120K–$180K. ROI on invested capital: 55–85%.`,
+  },
+  {
+    id: 29, city: 'Falls Church', state: 'VA', propertyType: 'SFR', loanType: 'Fix & Flip',
+    program: '12-Mo Bridge IO — 90% LTC / 100% Rehab', ltv: '90% LTC / 100% Rehab', rate: 'N/A', dealValue: '$432,000',
+    // Falls Church VA — classic red brick Colonial with white shutters, dormers, green lawn
+    image: 'https://images.unsplash.com/photo-1631667711791-c01bcc6b153f?w=800&q=80',
+    analysis: `Northern Virginia brick Colonial inside the Beltway — Falls Church consistently ranks among the top school districts in the DMV and commands a significant premium vs. comparable Fairfax County inventory.\n\nHigh-velocity buyer pool of federal contractors, DoD relocations, and dual-income professional households. Renovated 4-bed homes clear at $800K–$1.2M. IO bridge keeps monthly carry tight during a 5–7 month reposition. Projected net profit: $90K–$140K. ROI on invested capital: 45–70%.`,
+  },
+  {
+    id: 30, city: 'Washington', state: 'DC', propertyType: 'Condo', loanType: 'Fix & Flip',
+    program: '12-Mo Bridge IO — Condo Reposition', ltv: '80% LTC / 100% Rehab', rate: 'N/A', dealValue: '$385,000',
+    // 700 7th St SW — DC mid-rise red brick condo with ground-floor retail (Navy Yard/14th St corridor aesthetic)
+    image: 'https://images.unsplash.com/photo-1722492559309-8f235c08975d?w=800&q=80',
+    analysis: `Downtown DC condo reposition — walkable to Navy Yard, L'Enfant Plaza, and the Wharf. Institutional-grade building in one of the strongest walk-score submarkets in the metro.\n\nCondo-specific bridge underwriting accounts for HOA financials, reserve adequacy, and insurance walls. Renovated 1-bed units resell to federal workers and young professionals at $550K–$700K. 12-month IO matched to a lean cosmetic rehab (kitchens, baths, floors, paint). Projected net profit: $55K–$85K. ROI on invested capital: 40–65%.`,
+  },
+  {
+    id: 31, city: 'Cleveland', state: 'OH', propertyType: 'Small-Balance Commercial', loanType: 'Commercial Bridge',
+    program: 'Small-Balance Commercial Bridge', ltv: '70% LTV', rate: 'N/A', dealValue: '$111,200',
+    // Cleveland OH — Rust Belt red brick commercial with loading bay, authentic Ohio small-balance commercial
+    image: 'https://images.unsplash.com/photo-1698935139911-875aa698d77d?w=800&q=80',
+    analysis: `Cleveland small-balance commercial acquisition in the E 69th / Kinsman corridor — part of the broader East Side industrial-to-mixed-use repositioning trend. Cleveland's cost basis for commercial properties remains 40–60% below Midwest peer cities.\n\nAt 70% LTV, bridge execution provides speed advantage over agency and CMBS while the sponsor stabilizes operations and tenant mix. Cap rate compression opportunity: acquire at 9–11% going-in, exit at 7.5–8.5% on stabilized NOI. 12–18 month hold to permanent financing.`,
+  },
 ];
 
 export default FUNDED_DEALS;

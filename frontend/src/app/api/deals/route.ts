@@ -1,4 +1,5 @@
 import { NextRequest, NextResponse } from 'next/server';
+import { priceLoan, PricingResult } from '@/lib/pricing-engine';
 
 // ── Types ────────────────────────────────────────────────────────────────────
 
@@ -23,6 +24,43 @@ interface DealInput {
   financials?: Record<string, number | string>;
 }
 
+// ── Document Checklists by Lane ─────────────────────────────────────────────
+
+const DOCUMENTS_NEEDED: Record<string, string[]> = {
+  dscr: [
+    'Credit report',
+    'Entity docs (Articles of Organization, Operating Agreement, EIN letter)',
+    'Purchase contract or payoff statement (refinance)',
+    'Lease agreements (current)',
+    'Insurance quote (dwelling coverage)',
+    'Bank statements (2 months, all accounts)',
+  ],
+  flip: [
+    'Credit report',
+    'Entity docs (Articles of Organization, Operating Agreement, EIN letter)',
+    'Purchase contract',
+    'Rehab budget / Scope of Work (SOW)',
+    'Contractor bids (minimum 2)',
+    'Insurance quote (builder\'s risk policy)',
+    'Experience resume (completed projects with addresses)',
+  ],
+  str: [
+    'Credit report',
+    'Entity docs (Articles of Organization, Operating Agreement, EIN letter)',
+    'Purchase contract or payoff statement (refinance)',
+    'AirDNA report or Airbnb/VRBO statements (trailing 12 months)',
+    'Insurance quote (STR-specific dwelling coverage)',
+  ],
+  multifamily: [
+    'Credit report',
+    'Entity docs (Articles of Organization, Operating Agreement, EIN letter)',
+    'T-12 operating statement (trailing 12-month P&L)',
+    'Current rent roll',
+    'Purchase contract or payoff statement (refinance)',
+    'Phase 1 environmental report (if >4 units)',
+  ],
+};
+
 interface TriageResult {
   lane: string;
   score: 'green' | 'yellow' | 'red';
@@ -35,7 +73,8 @@ interface TriageResult {
   debt_yield?: number;
   conservative_monthly?: number;
   profit_scenarios?: { profit100: number; profit95: number; profit90: number };
-  lenders: string[];
+  // CRITICAL: NEVER expose lender names. Only generic program types.
+  programs_available: string[];
   narrative: string;
   next_steps?: string;
 }
@@ -84,42 +123,43 @@ function num(val: unknown): number {
   return isNaN(n) ? 0 : n;
 }
 
-// ── Static lender programs (replaces DB query) ───────────────────────────────
+// ── Generic Program Catalog (NEVER exposes lender names) ────────────────────
+// Client sees only product types. Lender identity is internal-only and
+// lives in pricing-engine.ts under private lender codes (AHL-001, ESC-001, etc.)
 
-const LENDER_PROGRAMS: Record<string, { name: string; minDscr?: number; minFico?: number }[]> = {
+const PROGRAM_CATALOG: Record<string, { name: string; minDscr?: number; minFico?: number }[]> = {
   dscr: [
-    { name: 'Angel Oak', minDscr: 1.0, minFico: 660 },
-    { name: 'Kiavi', minDscr: 0.75, minFico: 680 },
-    { name: 'Visio Lending', minDscr: 1.0, minFico: 660 },
-    { name: 'Griffin Funding', minDscr: 0.75, minFico: 620 },
-    { name: 'CoreVest', minDscr: 1.0, minFico: 660 },
+    { name: 'DSCR 30-Year Fixed', minDscr: 1.0, minFico: 660 },
+    { name: 'DSCR 30-Year Fixed — Reduced Ratio', minDscr: 0.75, minFico: 680 },
+    { name: 'DSCR 5/6 ARM', minDscr: 1.0, minFico: 680 },
+    { name: 'DSCR 10-Year Interest-Only', minDscr: 1.0, minFico: 700 },
+    { name: 'DSCR Bank-Statement Program', minDscr: 0.75, minFico: 660 },
   ],
   flip: [
-    { name: 'Kiavi' },
-    { name: 'RCN Capital' },
-    { name: 'Lima One Capital' },
-    { name: 'CoreVest' },
+    { name: '12-Month Bridge — Fix & Flip' },
+    { name: '18-Month Bridge — Heavy Rehab' },
+    { name: 'Ground-Up Construction' },
+    { name: 'Bridge-to-DSCR Rollover' },
   ],
   str: [
-    { name: 'Angel Oak', minDscr: 1.0, minFico: 660 },
-    { name: 'Visio Lending', minDscr: 1.0, minFico: 660 },
-    { name: 'Griffin Funding', minDscr: 0.75, minFico: 620 },
+    { name: 'STR DSCR 30-Year Fixed', minDscr: 1.0, minFico: 660 },
+    { name: 'STR 10-Year Interest-Only', minDscr: 1.0, minFico: 700 },
+    { name: 'STR Bank-Statement Program', minDscr: 0.75, minFico: 660 },
   ],
   multifamily: [
-    { name: 'Freddie Mac SBL' },
-    { name: 'Fannie Mae Small Loans' },
-    { name: 'Arbor Realty Trust' },
-    { name: 'Ready Capital' },
-    { name: 'CREFCOA' },
+    { name: 'Agency Small-Balance (5-50 units)' },
+    { name: 'Non-Recourse Bridge (Multifamily)' },
+    { name: 'CMBS / Conduit (Permanent)' },
+    { name: 'Mixed-Use Bridge' },
   ],
 };
 
-function matchLenders(
+function matchPrograms(
   lane: string,
   dscr?: number,
   ficoBand?: string,
 ): string[] {
-  const programs = LENDER_PROGRAMS[lane] || [];
+  const programs = PROGRAM_CATALOG[lane] || [];
   const ficoMap: Record<string, number> = {
     '<620': 600, '620-659': 630, '660-699': 675, '700-739': 715, '740+': 750,
   };
@@ -149,7 +189,7 @@ async function triageDSCR(deal: DealInput): Promise<TriageResult> {
   else if (dscr >= 1.0) score = 'yellow';
   else score = 'red';
 
-  const lenders = matchLenders('dscr', dscr, ficoBand);
+  const programs_available = matchPrograms('dscr', dscr, ficoBand);
 
   const narrative = await callAI(`You are a senior DSCR underwriter at 818 Capital.
 
@@ -165,7 +205,7 @@ Write 2-3 sentences explaining: 1) If this likely works for DSCR lending, 2) Rou
 Tone: direct, numeric, no corporate buzzwords.`);
 
   return {
-    lane: 'dscr', dscr: Math.round(dscr * 100) / 100, score, lenders, narrative,
+    lane: 'dscr', dscr: Math.round(dscr * 100) / 100, score, programs_available, narrative,
     next_steps: score === 'red'
       ? "We'll reach out to discuss restructuring."
       : "We'll review docs and aim to send a term sheet within 24 hours.",
@@ -211,7 +251,7 @@ Write 2-3 sentences: is it a good flip, max LTC we'd offer, what to adjust if th
   return {
     lane: 'flip', ltc: Math.round(ltc * 1000) / 1000, max_ltc: maxLtc,
     profit_scenarios: { profit100, profit95, profit90 },
-    score, lenders: matchLenders('flip'), narrative,
+    score, programs_available: matchPrograms('flip'), narrative,
   };
 }
 
@@ -232,7 +272,7 @@ async function triageSTR(deal: DealInput): Promise<TriageResult> {
   else if (dscr >= 1.0) score = 'yellow';
   else score = 'red';
 
-  const lenders = matchLenders('str', dscr, ficoBand);
+  const programs_available = matchPrograms('str', dscr, ficoBand);
 
   const narrative = await callAI(`You are an STR underwriter at 818 Capital.
 
@@ -244,7 +284,7 @@ Write 2-3 sentences: does this STR work for DSCR, risk factors, docs needed. Ton
 
   return {
     lane: 'str', dscr: Math.round(dscr * 100) / 100, conservative_monthly: conservative,
-    score, lenders, narrative,
+    score, programs_available, narrative,
     next_steps: score === 'red'
       ? 'STR income may not support this loan. Consider larger down payment.'
       : "We'll need Airbnb/VRBO statements and AirDNA report. Term sheet in 24-48 hours.",
@@ -270,7 +310,7 @@ async function triageMultifamily(deal: DealInput): Promise<TriageResult> {
   else if (dscr >= 1.1 && ltv <= 0.80) score = 'yellow';
   else score = 'red';
 
-  const lenders = matchLenders('multifamily');
+  const programs_available = matchPrograms('multifamily');
 
   const narrative = await callAI(`You are a multifamily/commercial underwriter at 818 Capital.
 
@@ -284,7 +324,7 @@ Write 3-4 sentences: viability, metrics summary, best financing path, required d
     lane: 'multifamily', noi, cap_rate: Math.round(capRate * 10000) / 10000,
     dscr: Math.round(dscr * 100) / 100, ltv: Math.round(ltv * 1000) / 1000,
     debt_yield: Math.round(debtYield * 10000) / 10000,
-    score, lenders, narrative,
+    score, programs_available, narrative,
   };
 }
 
@@ -327,6 +367,46 @@ export async function POST(req: NextRequest) {
 
     const triageResult = await handler(deal);
 
+    // ── Pricing Engine ────────────────────────────────────────────────────
+    const fin = deal.financials || {};
+    let pricingParams: Record<string, any> = {};
+
+    if (deal.product_lane === 'dscr' || deal.product_lane === 'str') {
+      pricingParams = {
+        fico: Number(fin.fico_band?.toString().replace(/[^0-9]/g, '')) || Number(fin.fico) || 720,
+        ltv: Number(fin.ltv) || (Number(fin.loan_amount) && Number(fin.estimated_value)
+          ? Number(fin.loan_amount) / Number(fin.estimated_value) : 0.75),
+        loanAmount: Number(fin.loan_amount) || 300000,
+        purpose: fin.purpose || 'purchase',
+        propertyType: fin.property_type || deal.property_type || 'sfr',
+        interestOnly: Boolean(fin.interest_only),
+        isSTR: deal.product_lane === 'str' || Boolean(fin.is_str),
+        dscr: triageResult.dscr || Number(fin.dscr) || undefined,
+        prepayYears: Number(fin.prepay_years) ?? 3,
+        bankStatements: Boolean(fin.bank_statements),
+        state: deal.property_state || fin.state || undefined,
+      };
+    } else if (deal.product_lane === 'flip') {
+      pricingParams = {
+        fico: Number(fin.fico) || 720,
+        experience: Number(fin.experience) || 0,
+        ltc: Number(fin.ltc) || (Number(fin.loan_amount) && (Number(fin.purchase_price) + Number(fin.rehab_budget))
+          ? Number(fin.loan_amount) / (Number(fin.purchase_price) + Number(fin.rehab_budget)) : 0.85),
+        arv: Number(fin.arv) || 0,
+        loanAmount: Number(fin.loan_amount) || 0,
+        loanType: fin.loan_type || 'fix_flip',
+        isJudicialState: Boolean(fin.is_judicial_state),
+      };
+    }
+
+    // Run pricing (returns [] for multifamily or if no match)
+    const pricingOptions: PricingResult[] = (deal.product_lane !== 'multifamily' && Object.keys(pricingParams).length > 0)
+      ? priceLoan(deal.product_lane, pricingParams)
+      : [];
+
+    // Document checklist for this lane
+    const documentsNeeded = DOCUMENTS_NEEDED[deal.product_lane] || [];
+
     // Generate a pseudo deal ID (no DB)
     const dealId = `WEB-${Date.now().toString(36).toUpperCase()}`;
 
@@ -349,6 +429,9 @@ export async function POST(req: NextRequest) {
           financials: deal.financials,
           ai_triage_result: triageResult,
           deal_score: triageResult.score,
+          pricing_options: pricingOptions,
+          documents_needed: documentsNeeded,
+          next_steps: triageResult.next_steps || 'We\'ll review your submission and reach out within 24 hours.',
         },
       },
       { status: 201 },
