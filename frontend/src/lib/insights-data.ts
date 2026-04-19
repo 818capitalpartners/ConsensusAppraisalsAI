@@ -440,6 +440,58 @@ Our view through Q3 2026:
 
 If you are sizing a flip right now and want to see the live quote stack on your file, send us the deal. We will run it through the active non-QM lenders simultaneously and show you what the best execution actually looks like — all-in cost, not just the coupon.`,
   },
+  {
+    slug: 'commercial-maturity-wall-2026-q2',
+    title: '$929B in CRE Loan Maturities Hit 2026: What Investors Need to Know Now',
+    excerpt: 'The commercial real estate maturity wall is here. Nearly $1 trillion in loans come due this year, forcing property owners into refinance decisions at 200+ bps higher rates.',
+    category: 'Commercial',
+    date: 'April 2026',
+    image: 'https://images.unsplash.com/photo-1582407947304-fd86f028f716?w=800&h=500&fit=crop',
+    content: `## The $929B Question: Refi or Restructure?
+
+The commercial real estate maturity wall everyone warned about in 2023? It's no longer theoretical. Industry data shows $929 billion in CRE loans maturing in 2026, with Q2 and Q3 representing the heaviest concentration. Property owners who locked in 3.5-4.5% permanent debt in 2019-2021 are now staring at a 6.5-7.5% refinance environment — and that's *before* the recent rate spike from geopolitical instability.
+
+This isn't a small adjustment. A 200-300 basis point jump on a $5M loan means an extra $10,000-$15,000 in monthly debt service. For properties already operating on compressed cash flows, that math doesn't work.
+
+## What's Actually Happening in the Market
+
+Lenders are not walking away from quality deals, but they are repricing risk aggressively. Agency programs remain the most competitive option for stabilized multifamily — some recent refinances in the $10M+ range are still closing in the mid-6% range for strong sponsors with 1.30+ DSCR properties. But those deals are moving slower than they did 18 months ago, with more scrutiny on rent roll stability and market fundamentals.
+
+For everything else — retail, office conversions, light industrial — the pricing spread has widened. Private credit stepped in where banks pulled back, but at 8.5-10.5% pricing and lower proceeds. The trade-off: faster execution and more flexible underwriting on cash flow volatility.
+
+The bridge market has become particularly interesting for owners facing maturities on properties that need light repositioning. Rates have pulled back 65-90 bps from their Q4 2025 highs, creating a narrow window for 18-24 month bridge capital that buys time to stabilize occupancy or complete deferred capex before attempting permanent takeout.
+
+## The Refinance-or-Restructure Decision Tree
+
+If your loan matures in the next 6-9 months, here's the framework:
+
+**Refinance makes sense if:**
+- Property DSCR is 1.25+ at current market rents
+- Occupancy is stable or improving
+- You can handle 200+ bps higher debt service without burning LP reserves
+- The property fits agency boxes (multifamily) or has strong tenant credit (NNN, industrial)
+
+**Bridge capital makes sense if:**
+- You're 6-12 months from stabilization
+- Current DSCR is 1.10-1.20 but trending up
+- You need to complete light value-add work
+- Your basis still supports a profitable exit in 2027-2028
+
+**Restructure or exit if:**
+- DSCR has dropped below 1.10 with no near-term path to improvement
+- The property's debt service at today's rates exceeds 80% of NOI
+- You're in a tertiary market where cap rates have expanded 100+ bps
+
+The worst decision is no decision. Lenders are willing to work with sponsors who come to the table 90-120 days before maturity with a clear plan. Wait until 30 days out, and your options narrow significantly.
+
+## What 818 Is Seeing Right Now
+
+We're structuring more bridge-to-agency sequences than we have in two years. The play: 24-month bridge at 9-9.5% to buy time for a property to hit the 1.30 DSCR threshold agency programs want, then convert to permanent at sub-7%. It's two closings instead of one, but it saves deals that would otherwise require massive capital calls.
+
+For multifamily owners with strong fundamentals, agency programs are still offering the best long-term execution — 10-year fixed rates in the 6.5-6.75% range are available if you move now before the next Fed decision.
+
+**Bottom line:** If you have a loan maturing in 2026, the time to start structuring is now. Send your scenario to 818 — property type, current loan balance, maturity date, and trailing 12-month financials. We'll tell you what's executable in the current market and what rates actually look like for your deal, not the advertised best-case scenarios.`,
+  },
 ];
 
 export function getInsightBySlug(slug: string): InsightPost | undefined {
