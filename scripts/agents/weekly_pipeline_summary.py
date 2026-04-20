@@ -303,24 +303,66 @@ def send_via_resend(plaintext: str, html: str, subject: str) -> bool:
 
 
 def main() -> int:
-    monday = MondayClient()
-    deals = collect_active_deals(monday)
+    # ── Startup diagnostics ────────────────────────────────────────
+    print("=" * 60)
+    print("Weekly Pipeline Summary — starting")
+    print("=" * 60)
+    for k in ("MONDAY_API_TOKEN", "RESEND_API_KEY", "NOTIFICATION_EMAIL", "FROM_EMAIL"):
+        v = os.environ.get(k)
+        if v:
+            # Redact anything sensitive; just show length + last 4 chars
+            print(f"  {k}: SET (len={len(v)}, ends=…{v[-4:]!r})")
+        else:
+            print(f"  {k}: NOT SET")
+    print("-" * 60)
+
+    try:
+        monday = MondayClient()
+    except Exception as e:
+        print(f"FATAL: MondayClient construction failed: {e!r}", file=sys.stderr)
+        return 2
+
+    try:
+        deals = collect_active_deals(monday)
+    except Exception as e:
+        import traceback
+        print(f"FATAL: collect_active_deals failed: {e!r}", file=sys.stderr)
+        traceback.print_exc(file=sys.stderr)
+        return 3
+
     print(f"Found {len(deals)} active deals across {len(ACTIVE_STAGES)} stages")
 
     today = dt.date.today()
     date_str = today.strftime("%B %d, %Y")
 
-    plaintext, html = build_summary(deals, date_str)
+    try:
+        plaintext, html = build_summary(deals, date_str)
+    except Exception as e:
+        import traceback
+        print(f"FATAL: build_summary failed: {e!r}", file=sys.stderr)
+        traceback.print_exc(file=sys.stderr)
+        return 4
 
     total_volume = _total_volume(deals)
     subject = (
         f"818 Pipeline · Week of {date_str} · "
         f"{len(deals)} deals · {_fmt_amount(total_volume)}"
     )
+    print(f"Subject: {subject}")
+    print(f"Body size: {len(html)} chars HTML, {len(plaintext)} chars plaintext")
 
     ok = send_via_resend(plaintext, html, subject)
-    return 0 if ok else 1
+    if not ok:
+        print("FATAL: send_via_resend returned False", file=sys.stderr)
+        return 5
+    return 0
 
 
 if __name__ == "__main__":
-    sys.exit(main())
+    try:
+        sys.exit(main())
+    except Exception as e:
+        import traceback
+        print(f"FATAL unhandled exception: {e!r}", file=sys.stderr)
+        traceback.print_exc(file=sys.stderr)
+        sys.exit(1)
