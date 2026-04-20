@@ -1,0 +1,30 @@
+name: Agent - Weekly Pipeline Summary
+
+# Every Friday at 8:02 AM ET (12:02 UTC). Pulls active pipeline from Monday,
+# builds an HTML + plaintext summary, and SENDS via Resend.
+#
+# Replaces the Cowork Friday Sync skill which was creating drafts instead of
+# actually sending.
+
+on:
+  schedule:
+    - cron: '2 12 * * 5'
+  workflow_dispatch: {}
+
+jobs:
+  run:
+    runs-on: ubuntu-latest
+    steps:
+      - uses: actions/checkout@v4
+      - uses: actions/setup-python@v5
+        with:
+          python-version: '3.12'
+      - run: pip install requests==2.32.3 anthropic==0.42.0
+      - name: Send weekly pipeline summary
+        working-directory: scripts/agents
+        env:
+          MONDAY_API_TOKEN: ${{ secrets.MONDAY_API_TOKEN }}
+          RESEND_API_KEY: ${{ secrets.RESEND_API_KEY }}
+          NOTIFICATION_EMAIL: ${{ secrets.NOTIFICATION_EMAIL }}
+          FROM_EMAIL: ${{ secrets.FROM_EMAIL }}
+        run: python weekly_pipeline_summary.py
