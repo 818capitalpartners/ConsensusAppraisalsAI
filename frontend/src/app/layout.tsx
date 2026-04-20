@@ -7,9 +7,148 @@ import ExitIntentPopup from '@/components/ExitIntentPopup';
 import ChatWidget from '@/components/ChatWidget';
 
 export const metadata: Metadata = {
-  title: '818 Capital | Investor & Commercial Real Estate Financing',
+  metadataBase: new URL('https://www.818capitalpartners.com'),
+  title: {
+    default: '818 Capital | Investor & Commercial Real Estate Financing',
+    template: '%s | 818 Capital Partners',
+  },
   description:
     'Fast, flexible real estate investment financing. DSCR rentals, fix & flip, short-term rental, and multifamily loans with AI-powered scenario analysis.',
+  applicationName: '818 Capital Partners',
+  authors: [{ name: '818 Capital Partners', url: 'https://www.818capitalpartners.com' }],
+  keywords: [
+    'DSCR loans', 'fix and flip financing', 'STR loans', 'short-term rental loans',
+    'multifamily bridge loans', 'investor mortgage broker', 'commercial real estate financing',
+    'investment property loans', 'rental property financing',
+  ],
+  openGraph: {
+    type: 'website',
+    locale: 'en_US',
+    url: 'https://www.818capitalpartners.com',
+    siteName: '818 Capital Partners',
+    title: '818 Capital | Investor & Commercial Real Estate Financing',
+    description:
+      'DSCR, fix & flip, STR, and multifamily loans with AI-powered scenario analysis. 43+ closed deals across 48 states.',
+    images: [{ url: '/logo.png', width: 512, height: 512, alt: '818 Capital Partners' }],
+  },
+  twitter: {
+    card: 'summary_large_image',
+    site: '@818capital',
+    creator: '@818capital',
+    title: '818 Capital | Investor & Commercial Real Estate Financing',
+    description:
+      'DSCR, fix & flip, STR, and multifamily loans with AI-powered scenario analysis.',
+  },
+  alternates: { canonical: 'https://www.818capitalpartners.com' },
+  robots: {
+    index: true,
+    follow: true,
+    googleBot: { index: true, follow: true, 'max-snippet': -1, 'max-image-preview': 'large' },
+  },
+};
+
+// JSON-LD structured data — makes us citable by ChatGPT, Perplexity, Google AI Overviews
+const organizationSchema = {
+  '@context': 'https://schema.org',
+  '@graph': [
+    {
+      '@type': ['Organization', 'FinancialService'],
+      '@id': 'https://www.818capitalpartners.com/#organization',
+      name: '818 Capital Partners',
+      alternateName: '818 Capital',
+      url: 'https://www.818capitalpartners.com',
+      logo: 'https://www.818capitalpartners.com/logo.png',
+      image: 'https://www.818capitalpartners.com/logo.png',
+      description:
+        'Commercial mortgage brokerage specializing in investor real estate financing — DSCR rentals, fix & flip, short-term rental, and multifamily loans across 48 states.',
+      foundingDate: '2023',
+      telephone: '+1-917-993-9194',
+      email: 'deals@818capitalpartners.com',
+      priceRange: '$$$',
+      areaServed: { '@type': 'Country', name: 'United States' },
+      address: {
+        '@type': 'PostalAddress',
+        addressCountry: 'US',
+        addressRegion: 'NY',
+      },
+      knowsAbout: [
+        'DSCR loans',
+        'Fix and flip financing',
+        'Short-term rental loans',
+        'Multifamily bridge loans',
+        'Commercial real estate financing',
+        'Investment property mortgages',
+      ],
+      sameAs: [
+        'https://www.linkedin.com/company/818capital',
+        'https://www.instagram.com/818capital',
+        'https://www.facebook.com/818capital',
+        'https://x.com/818capital',
+      ],
+      hasOfferCatalog: {
+        '@type': 'OfferCatalog',
+        name: 'Investment property loan programs',
+        itemListElement: [
+          {
+            '@type': 'Offer',
+            itemOffered: {
+              '@type': 'LoanOrCredit',
+              name: 'DSCR Rental Loan',
+              description:
+                '30-year fixed investor loans qualified on property cash flow (DSCR), not personal DTI.',
+              url: 'https://www.818capitalpartners.com/dscr-loans',
+            },
+          },
+          {
+            '@type': 'Offer',
+            itemOffered: {
+              '@type': 'LoanOrCredit',
+              name: 'Fix & Flip Loan',
+              description:
+                'Short-term rehab financing up to 90% LTC and 75% ARV.',
+              url: 'https://www.818capitalpartners.com/fix-and-flip',
+            },
+          },
+          {
+            '@type': 'Offer',
+            itemOffered: {
+              '@type': 'LoanOrCredit',
+              name: 'Short-Term Rental (STR) Loan',
+              description:
+                'DSCR loans for Airbnb/VRBO properties underwritten on AirDNA revenue.',
+              url: 'https://www.818capitalpartners.com/str-loans',
+            },
+          },
+          {
+            '@type': 'Offer',
+            itemOffered: {
+              '@type': 'LoanOrCredit',
+              name: 'Multifamily Bridge & Permanent Loan',
+              description:
+                'Bridge and long-term financing for 5+ unit investment properties.',
+              url: 'https://www.818capitalpartners.com/multifamily',
+            },
+          },
+        ],
+      },
+    },
+    {
+      '@type': 'WebSite',
+      '@id': 'https://www.818capitalpartners.com/#website',
+      url: 'https://www.818capitalpartners.com',
+      name: '818 Capital Partners',
+      publisher: { '@id': 'https://www.818capitalpartners.com/#organization' },
+      inLanguage: 'en-US',
+      potentialAction: {
+        '@type': 'SearchAction',
+        target: {
+          '@type': 'EntryPoint',
+          urlTemplate: 'https://www.818capitalpartners.com/blog?q={search_term_string}',
+        },
+        'query-input': 'required name=search_term_string',
+      },
+    },
+  ],
 };
 
 const LOAN_LINKS = [
@@ -45,6 +184,11 @@ export default function RootLayout({ children }: { children: React.ReactNode }) 
     <html lang="en">
       <head>
         <meta name="google-site-verification" content="DtiQjKepeq-tW-ojomkUZFzLxQLDE6pk7jEAbKn9jCM" />
+        {/* JSON-LD structured data for AI crawlers and rich results */}
+        <script
+          type="application/ld+json"
+          dangerouslySetInnerHTML={{ __html: JSON.stringify(organizationSchema) }}
+        />
       </head>
       <body className="min-h-screen flex flex-col">
         <Script
