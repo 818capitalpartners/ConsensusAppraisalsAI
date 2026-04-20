@@ -219,7 +219,12 @@ async function notifyTeam(lead: LeadInput, mondayItemId: string | null): Promise
   // without DNS setup. Once the 818capitalpartners.com domain is verified
   // in Resend, override with FROM_EMAIL=notifications@818capitalpartners.com
   // on Vercel for a branded from-line.
-  const from = process.env.FROM_EMAIL || 'onboarding@resend.dev';
+  const fromEmail = process.env.FROM_EMAIL || 'onboarding@resend.dev';
+  // Resend sandbox (onboarding@resend.dev) rejects display-name wrappers.
+  // Only attach the "818 Capital Leads" label once a real verified domain
+  // is in play.
+  const isSandbox = fromEmail === 'onboarding@resend.dev';
+  const from = isSandbox ? fromEmail : `818 Capital Leads <${fromEmail}>`;
 
   if (!apiKey || !to) {
     return { ok: false, error: 'RESEND_API_KEY or NOTIFICATION_EMAIL not configured' };
@@ -257,26 +262,39 @@ async function notifyTeam(lead: LeadInput, mondayItemId: string | null): Promise
   `;
 
   try {
+    // Minimal payload first — sandbox mode rejects several optional fields.
+    const payload: Record<string, unknown> = {
+      from,
+      to: [to],
+      subject,
+      html,
+    };
+    // reply_to makes "Reply" go straight to the borrower. Safe on verified
+    // domains; accepted in sandbox too.
+    if (lead.email) payload.reply_to = lead.email;
+
     const res = await fetch('https://api.resend.com/emails', {
       method: 'POST',
       headers: {
         'Authorization': `Bearer ${apiKey}`,
         'Content-Type': 'application/json',
       },
-      body: JSON.stringify({
-        from: `818 Capital Leads <${from}>`,
-        to: [to],
-        reply_to: lead.email, // reply goes straight to the borrower
-        subject,
-        html,
-      }),
+      body: JSON.stringify(payload),
     });
     if (!res.ok) {
       const err = await res.json().catch(() => ({}));
-      return { ok: false, error: `Resend error: ${JSON.stringify(err)}` };
+      const errStr = `Resend ${res.status}: ${JSON.stringify(err)}`;
+      console.error('[leads.notifyTeam] Resend rejected send:', {
+        status: res.status,
+        from,
+        to,
+        error: err,
+      });
+      return { ok: false, error: errStr };
     }
     return { ok: true };
   } catch (e) {
+    console.error('[leads.notifyTeam] Resend fetch crashed:', e);
     return { ok: false, error: e instanceof Error ? e.message : 'resend fetch failed' };
   }
 }
