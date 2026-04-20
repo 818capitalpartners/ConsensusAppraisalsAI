@@ -85,27 +85,38 @@ interface TriageResult {
 // ── AI Narrative ─────────────────────────────────────────────────────────────
 
 async function callAI(prompt: string): Promise<string> {
-  const apiKey = process.env.OPENAI_API_KEY;
+  const apiKey = process.env.ANTHROPIC_API_KEY;
   if (!apiKey) {
     return '[AI analysis unavailable — contact us for a full Sponsor Brief]';
   }
   try {
-    const res = await fetch('https://api.openai.com/v1/chat/completions', {
+    const res = await fetch('https://api.anthropic.com/v1/messages', {
       method: 'POST',
       headers: {
         'Content-Type': 'application/json',
-        Authorization: `Bearer ${apiKey}`,
+        'x-api-key': apiKey,
+        'anthropic-version': '2023-06-01',
       },
       body: JSON.stringify({
-        model: 'gpt-4.1-mini',
-        messages: [{ role: 'user', content: prompt }],
+        // Haiku is fast + cheap for short underwriter summaries (~$0.001/call).
+        // Bump to claude-sonnet-4-5 if narratives need more nuance.
+        model: 'claude-haiku-4-5-20251001',
+        max_tokens: 400,
         temperature: 0.4,
-        max_tokens: 300,
+        messages: [{ role: 'user', content: prompt }],
       }),
     });
     const data = await res.json();
-    return data.choices?.[0]?.message?.content?.trim() || '[Analysis pending]';
-  } catch {
+    // Anthropic response shape: { content: [{ type: 'text', text: '...' }], ... }
+    const text = data?.content?.[0]?.text?.trim();
+    if (text) return text;
+    // Surface the real error to Vercel logs instead of silently returning a stub
+    if (data?.error) {
+      console.error('[deals.callAI] Anthropic error:', data.error);
+    }
+    return '[Analysis pending]';
+  } catch (e) {
+    console.error('[deals.callAI] fetch failed:', e);
     return '[AI analysis temporarily unavailable]';
   }
 }
