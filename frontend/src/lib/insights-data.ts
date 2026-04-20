@@ -492,6 +492,63 @@ For multifamily owners with strong fundamentals, agency programs are still offer
 
 **Bottom line:** If you have a loan maturing in 2026, the time to start structuring is now. Send your scenario to 818 — property type, current loan balance, maturity date, and trailing 12-month financials. We'll tell you what's executable in the current market and what rates actually look like for your deal, not the advertised best-case scenarios.`,
   },
+  {
+    slug: 'agency-multifamily-caps-closing-window',
+    title: 'Agency Multifamily Caps Are Already 60% Depleted—Here\'s What Happens Next',
+    excerpt: 'Fannie and Freddie are on track to hit 2025 lending caps by late Q3. Borrowers waiting for better pricing may find themselves locked out entirely.',
+    category: 'Multifamily',
+    date: 'April 2026',
+    image: 'https://images.unsplash.com/photo-1567496898669-ee935f5f647a?w=800&h=500&fit=crop',
+    content: `## Agency lenders are quietly rationing commitments
+
+The agencies are burning through their multifamily caps faster than expected. Multiple reports suggest Fannie Mae and Freddie Mac have already deployed roughly 60% of their 2025 purchase authority, and we're only in April 2026. At this pace, both GSEs will hit their statutory limits by September—possibly earlier if refinance activity accelerates.
+
+For context: FHFA sets annual caps to prevent the agencies from crowding out private capital. Once those caps are reached, new originations stop. No exceptions. No rollover. The window just closes.
+
+What's driving the depletion? Three factors:
+
+**Refinance volume spiked in Q1.** Borrowers who locked floating-rate bridge loans in 2023-24 are now termed out into agency paper. The recent 40-50 basis point drop in Treasury yields made the math work for thousands of sponsors who were underwater on their original business plans.
+
+**Private credit pulled back.** Life company and debt fund allocations to multifamily compressed in late 2025. That pushed marginal deals—properties with 1.20-1.30 DSCR that wouldn't have qualified for agency pricing a year ago—back toward Fannie and Freddie small balance programs.
+
+**Cap rate compression in secondary markets.** Stabilized workforce housing in the Sunbelt is trading at 5.0-5.5% caps again. Agency execution at 6.0-6.5% all-in makes these deals pencil, so acquisition volume is returning.
+
+The agencies aren't advertising how much capacity remains, but originators are seeing it in real time: longer lock timelines, tighter underwriting on marginal credit, and early conversations about prioritizing mission-driven affordable housing transactions over market-rate deals.
+
+## What this means if you have a multifamily maturity in H2 2026
+
+If you're planning to refinance a stabilized multifamily asset between now and year-end, your execution risk just increased materially.
+
+Scenario 1: You wait for rates to drop another 25-50 bps and the caps close before you lock. Now you're pricing non-agency debt that's 100-150 bps wider, or you're extending your bridge loan at penalty spreads.
+
+Scenario 2: You lock now at current agency spreads (roughly 165-185 bps over the 10-year) and accept that you might leave some rate improvement on the table.
+
+Most experienced sponsors are choosing Scenario 2. The cost of being wrong—locked out of agency execution entirely—is too high.
+
+## Private lenders are widening spreads in anticipation
+
+Non-agency multifamily lenders know what's coming. We're already seeing life companies and balance sheet lenders reprice their small-balance multifamily programs. Spreads that were 225-250 over in January are now 275-300 over for the same credit profile.
+
+That's not a market dislocation—it's rational pricing. When agency capacity disappears, private capital doesn't step in at the same price. It steps in at a premium that reflects actual credit risk and illiquidity.
+
+Some borrowers will get caught assuming agency availability is infinite. It's not. It's a government-regulated allocation that resets every calendar year, and this year's allocation is disappearing faster than any year since 2021.
+
+## The 2026 playbook
+
+If you own stabilized multifamily and have a maturity or refi opportunity in the next 9 months:
+
+- **Get your agency quote now.** Even if you're not ready to lock, you need to know where you stand in the underwriting queue.
+- **Model your backup execution.** What's the all-in cost if agency capacity is gone? Price that scenario before you make a timing bet.
+- **Don't wait for perfect.** Waiting for 5.75% agency rates when you can lock 6.25% today is a gamble that's only paid off once in the last 15 years (2020). Every other time, the caps closed or spreads widened.
+
+This isn't 2019, when agency lenders had capacity to spare and were competing on rate. This is a constrained-supply environment, and constrained supply always favors early movers.
+
+## Let's talk about your scenario
+
+If you have a multifamily maturity coming due or you're evaluating a value-add acquisition that needs bridge-to-agency execution, send us your scenario. We track real-time agency capacity across originators and can tell you whether your deal fits the current underwriting appetite—or whether you need to be structuring around non-agency alternatives now.
+
+**Email your deal summary to info@818capitalpartners.com or call our direct line.** The clock is running.`,
+  },
 ];
 
 export function getInsightBySlug(slug: string): InsightPost | undefined {
