@@ -6,144 +6,146 @@
 *Annie Lukach · DSCR · $2800000 · Application*
 **Flagged:** no borrower contact in 33d; 1 docs pending
 
-- Text Annie to check in on rate expectations and confirm whether she's monitoring daily pricing or waiting for a specific trigger point
-- Pull current best execution across our DSCR network for both properties and compare to the original VFS/CoreVest/Trinity scenarios from 33 days ago
-- Draft a brief rate update email showing how pricing has moved (if improved) with a soft ask to revisit timing before her 32-day close window tightens further
+- Text Annie directly asking if she wants us to monitor the market weekly and alert her when rates drop 50+ bps on the DSCR programs
+- Pull current pricing on both properties to see if rates have improved since 3/31 and calculate exact savings if she moves now vs. waiting 90 days
+- Mark the deal as "on hold - rate watch" in the system and set a 30-day calendar reminder to re-engage with fresh pricing
 
 ### 218 Falls St, Seneca Falls, NY 13148
 *Marvin Lalin · DSCR · $175000 · Application*
 **Flagged:** no borrower contact in 31d; 1 docs pending
 
-- Call Marvin directly to confirm he still wants to proceed with the $175K cash-out on 218 Falls St and push for a realistic close date given we're 32 days out with zero movement since 3/20
-
-- Send doc request email listing the exact 3 outstanding items needed to submit to our lender partners and set a 48-hour deadline
-
-- If no response by end of day, flag deal as "stalled pending borrower re-engagement" and shift focus to active pipeline until Marvin confirms he's back in
+- Call Marvin directly today to confirm he still wants to proceed with the $175K cash-out and get updated timeline expectations
+- Request the 3 outstanding docs via text with specific list and 48-hour deadline to determine if deal is salvageable
+- If no response by end of business, send formal check-in email stating we'll move file to inactive status in 72 hours unless we hear back
 
 ### Jon Veitch — Deal (Details TBD)
 *Jon Veitch · DSCR · $368000 · Application*
 **Flagged:** no borrower contact in 33d; 1 docs pending
 
-- Draft and send email to Jon Veitch asking if he's locked a property address yet and whether the Idaho STR deal is still moving forward
-- Pull current DSCR pricing for Idaho STR (75% LTV baseline) so we're ready with fresh numbers when he responds
-- Set 48-hour follow-up reminder to text Jon directly if no email response by end of week
+- Draft email to Jon Veitch referencing the Idaho STR opportunity and our 30-year DSCR pricing from mid-March, asking if he's found a property yet or needs updated rates
+- Check if pricing request from 3/18 is still valid or needs refresh based on current rate environment before sending quote
+- Set 48-hour follow-up reminder to call Jon directly if no email response by Thursday
 
 ### Ellman Dr (Collins - Maine/TBD)
 *Tiina Collins · DSCR · $400000 · Application*
 **Flagged:** no borrower contact in 33d; 2 docs pending
 
-- Archive this deal completely in CRM — borrower is selling the property per 3/31 note, no loan needed
-- Send Tiina a brief courtesy email confirming we're closing her file and wishing her well on the sale
-- Remove from Ravi's active dashboard so it stops triggering red flags in daily sweep
+- Email Tiina to confirm the property sale closed and archive the deal with final disposition notes
+- Update CRM to mark deal as "Dead - Property Sold" and remove from active pipeline reporting
+- Send internal note to Ravi confirming no follow-up needed and deal removed from red flag list
 
 ### 600 S Cherry Lane — NorthMarq
 *Martin Pascual · Commercial · $978000 · Processing*
 **Flagged:** 3 docs pending
 
-- Text Martin directly to get the SREO form completed and returned today, plus confirm the $7,280 deposit wire timing
-- Call Nick (borrower partner) to push the outstanding docs ICA needs for underwriting and get commitment on delivery date
-- Follow up with Martin on the proforma Ravi requested 4/17 — need it to clear the DD checklist and keep UW moving
+- Call Martin to collect the completed SREO form and confirm the remaining $7,280 deposit wire by Monday
+- Text Nick (borrower partner) directly for the outstanding docs flagged on the DD checklist
+- Email ICA's processor to confirm which specific items are blocking UW progression and get a revised timeline
 
 ### Maine (exact address TBD)
 *Al Boyce · DSCR · $125000 · Processing*
 **Flagged:** no borrower contact in 24d; 2 docs pending
 
-- Call Al Boyce directly to confirm if he's still pursuing this deal or if we should pivot to a different property with better marketability
-- Email our remaining bridge lender contacts to gauge appetite for rural Maine DSCR with church adjacency as a short-term hold scenario
-- Pull the AmeriMac AM-0340120 file to confirm payoff status and whether resolving that obligation opens any new lender options
+- Text Al Boyce directly to confirm if he's still pursuing the Maine property or if we should pivot to a different asset with better marketability
+- Call our bridge desk to see if anyone will touch rural Maine DSCR at 75% LTV with a 12-month exit timeline
+- Pull the AmeriMac AM-0340120 file and determine if resolving that unpaid note opens any lender options we've missed
 
 ### Hari Yadav — Loan 262-03476 / 1521980 (New Comment Pending)
 *Hari Yadav · DSCR · $116000 · Processing*
 **Flagged:** 10 docs pending
 
-- Call Hari to collect payment on the Todd Appraisal invoice ($26B268118C21) so we can move forward with the $153K ARV appraisal
-- Send Hari the most competitive terms from our alternate DSCR lender network given the ABL quotes weren't workable
-- Clear the credit freeze issue from prior loan #125168 and confirm all 10 pending docs are uploaded to the portal by end of day
+- Pay the Todd Appraisal invoice ($26B268118C21) immediately so we can get the property report on 8001 E 130th St and move forward with underwriting
+
+- Run the Missouri DSCR scenario with updated numbers (ARV $153K, current balance $110K, $1,900 rent) through our alternative lender network since the first quotes weren't competitive
+
+- Text Hari to confirm his credit is now unfrozen and request the 10 outstanding docs so we can package a complete submission by end of week
 
 ### 13429 Fairland Park Dr, Silver Spring, MD 20904
 *Mohammad Jabari / Alex Razjooyan · Fix-and-Flip · $TBD · Processing*
 **Flagged:** no borrower contact in 24d; 1 docs pending
 
-- Text Mohammad and Alex directly to confirm whether they want to proceed or formally withdraw — deal shows "cancelled" in notes but still sits in Processing
-- If they confirm cancellation, move file to Dead/Lost in CRM and close out the lender application to avoid stale pipeline noise
-- If they want to move forward, get appraisal fee paid today and grant Jake Woodyard the Google Drive access he requested 24 days ago
+- Text Mohammad directly to confirm deal is still active or formally mark dead — 24 days dark plus "cancelled per main Jabari note" means we're chasing a ghost
+
+- If he responds alive, get immediate access granted to Jake for the Google Drive folder so we can clear the doc backlog before appraisal expires
+
+- Pull the appraisal invoice from Center Street to confirm if it was paid or if that's blocking progress — then either push Ryan for UW feedback or kill the deal in CRM today
 
 ### 1631 E Maura St, Pensacola, FL
 *Nuke Em Clean LLC / Gennette · Fix-and-Flip · $185405 · Clear To Close*
 **Flagged:** no borrower contact in 33d; 3 docs pending
 
-- Call Gennette directly to confirm deal is permanently dead or if cash situation has changed — if there's any path to revival, get commitment in writing today
-- Email Dawn Marino (realtor) to verify status of the assignment offer to Chris/Nuke Em and push for a decision by end of week
-- Pull this deal from active pipeline and document the full loss anatomy (desktop vs physical appraisal miscommunication, cash crunch timing) for internal post-mortem
+- Call Gennette directly to confirm deal is permanently dead or if cash situation has improved enough to revisit the $185k scenario
+- Email Dawn Marino (realtor) to check status of the backup assignment offer to Chris/Nuke Em and whether property is still available
+- Archive the file in CRM as Lost and document the $53k + $110k cost-to-close breakdown for future fix-and-flip pricing lessons learned
 
 ### 1817 Dolores, TBD
 *Martin Pascual · DSCR · $TBD · Application*
 **Flagged:** no borrower contact in 39d
 
-- Text Martin Pascual directly to confirm property address and final loan amount, then schedule 15-minute call to lock in timeline
-- Pull comps for 1817 Dolores to build preliminary scenario at 75% and 80% LTV so we have numbers ready when he responds
-- Send Angela-voiced "checking in" email referencing his DSCR inquiry 39 days ago with two specific rate/term options to restart momentum
+- Call Martin directly to confirm he still wants to move forward on 1817 Dolores and lock in the DSCR program parameters (purchase price, down payment, rental comps)
+
+- If Martin doesn't answer, text him a 2-option message: "Still planning to close in 5-6 weeks?" or "Should we pause and reconnect when timing is firmer?"
+
+- Pull updated rental comps for the Dolores Street property so you're ready to run pricing scenarios the moment Martin confirms he's live
 
 ### 31 Blakely, TBD
 *Marvin Lalin · DSCR · $TBD · Application*
 **Flagged:** no borrower contact in 39d
 
-- Text Marvin directly to confirm if he's still pursuing the 31 Blakely deal or if this is a duplicate we can archive
-- Pull the original Marvin Lalin file to verify property address and loan amount, then consolidate or close this stub entry
-- If deal is live, get updated property details and loan request so we can run pricing before the 39-day gap becomes a dead lead
+- Call Marvin directly to confirm if 31 Blakely is still active or if this is truly a duplicate of another deal in process
+- Pull the main Marvin Lalin file and verify loan amount, property details, and current status to determine if we consolidate or archive
+- If active: get updated property address, lock in loan amount, and push to pre-approval with revised timeline
 
 ### 3580 Shipwatch, TBD
 *Keisha Fink · DSCR · $TBD · Application*
 **Flagged:** no borrower contact in 35d
 
-- Text Keisha directly to confirm she's still pursuing the Shipwatch property and get current contract details plus loan amount needed
-
-- Pull comps on 3580 Shipwatch to prep pricing scenarios while waiting for her response so we can move immediately once she confirms
-
-- If no reply by 3pm, call her cell and leave a specific voicemail asking whether to keep this active or archive — respect her time but get clarity
+- Text Keisha directly to confirm she still wants to move forward on the Shipwatch property and lock in current DSCR rates before they shift
+- Get property address finalized and run preliminary numbers so we can quote exact loan amount and monthly payment today
+- If she's responsive, schedule 15-minute call tomorrow to collect income docs and push this into underwriting by end of week
 
 ### Franco DiRenzo — Deal (Details TBD)
 *Franco DiRenzo · DSCR · $TBD · Application*
 **Flagged:** no borrower contact in 60d
 
-- Text Franco directly to confirm whether he's still pursuing financing or if we should archive the file
-- Pull credit and run preliminary scenarios at current rates to have fresh numbers ready if he resurfaces
-- If no response by EOD, send final "checking in" email with 48-hour window before moving to inactive status
+- Text Franco directly to confirm whether he's still looking for DSCR financing or if we should mark this closed-lost in our system
+- If he responds positively, ask him to send over the property address and purchase contract so we can pull a fresh rate sheet
+- Update CRM with his response and either resurrect the deal with a new timeline or archive it permanently
 
 ### Grigonis — Visio (Details TBD)
 *Paul Grigonis · DSCR · $TBD · Application*
 **Flagged:** no borrower contact in 95d
 
-- Text Paul directly to confirm whether he's still pursuing financing or if we should archive this file
-- Pull the original application to see what property/amount we were quoting and whether market conditions have shifted enough to warrant a fresh outreach
-- If he responds interested, send updated rate sheet for current DSCR programs and request property address to run new numbers
+- Text Paul directly to confirm if he's still looking for DSCR financing or if the deal fell through — get a yes/no answer today
+- If he responds yes, ask for the property address and purchase price so we can run current pricing and lock a quote within 24 hours
+- If no response by end of day, send a final check-in email marking this as "closing file unless we hear back by Friday" and move to lost pipeline Monday
 
 ### Oakland, CA
 *Gupta · DSCR · $TBD · Application*
 **Flagged:** no borrower contact in 46d
 
-- Text Gupta directly to confirm whether the Oakland DSCR deal is still live or if they've closed elsewhere
-- If no response by 2pm, mark deal as officially dead and archive from active pipeline
-- Pull Gupta's original inquiry details to feed into our cold-lead reactivation campaign for Q2
+- Text Gupta directly to confirm whether Oakland DSCR deal is still active or if they closed elsewhere
+- If no response by EOD, move file to Dead/Lost and note reason (no contact since early March, likely closed with another broker)
+- Pull Oakland comps and have fresh DSCR scenario ready in case Gupta responds with renewed interest or referral opportunity
 
 ### Tulsa, OK
 *McConnel · DSCR · $TBD · Application*
 **Flagged:** no borrower contact in 69d
 
-- Text McConnel directly to confirm whether Tulsa deal is still active or if they've closed elsewhere
-- If no response by 2pm, move deal to Lost and log the lender feedback for future Tulsa DSCR scenarios
-- Pull McConnel's original application to see if there's another contact (partner, attorney) who might know deal status
+- Text McConnel directly asking if they're still planning to close on the Tulsa property or if we should shelve this file
+- Pull the original application and last communication to confirm whether deal died on pricing, timeline, or borrower went dark
+- If no response by EOD, mark deal as Lost in CRM and remove from active pipeline so it stops flagging red
 
 
 ## 🟡 Yellow — 4 deal(s) overdue
 
-- **Royal Palms — 33-Unit Apartment, Fort Myers, FL** (Application, 2 docs pending) — Email borrower: "Royal Palms — need T12 and rent roll by EOD to hold rate lock"
-- **3521 16th St NW (ROV open) + 3505 24th NE (4/28 close) + 6932 Chestnut + 700 7th, Washington DC** (Application, 2 docs pending) — Follow up on 2 missing docs — need those by EOD to keep underwriting moving
-- **5050 1st Ave S, St. Petersburg, FL** (Processing, 1 docs pending) — Follow up with borrower: submit final bank statements by EOD to clear yellow flag
-- **1713 E 69th Place, Cleveland, OH 44103** (Underwriting, 2 docs pending) — Call borrower now — chase 2023 tax return + current rent roll by EOD
+- **Royal Palms — 33-Unit Apartment, Fort Myers, FL** (Application, 2 docs pending) — Follow up with borrower for 2025 rent roll and T12 operating statement
+- **3521 16th St NW (ROV open) + 3505 24th NE (4/28 close) + 6932 Chestnut + 700 7th, Washington DC** (Application, 2 docs pending) — Call borrower re: missing 2 docs; set 5pm deadline for upload
+- **5050 1st Ave S, St. Petersburg, FL** (Processing, 1 docs pending) — Chase updated rent roll — lender needs it to clear conditions by Friday
+- **1713 E 69th Place, Cleveland, OH 44103** (Underwriting, 2 docs pending) — Call borrower now — request 2024 tax return + current rent roll by 5pm
 
 ## 🟢 Green — 3 deal(s) on track
 
 ---
 
-*Generated 2026-04-20 02:00 · 818 Capital Dashboard Bot*
+*Generated 2026-04-20 12:12 · 818 Capital Dashboard Bot*
