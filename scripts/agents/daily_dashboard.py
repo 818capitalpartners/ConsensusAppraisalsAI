@@ -15,7 +15,11 @@ Gmail send via OAuth.
 from __future__ import annotations
 
 import datetime as dt
+import os
+import smtplib
 import sys
+from email.mime.multipart import MIMEMultipart
+from email.mime.text import MIMEText
 from pathlib import Path
 
 from common import (
@@ -158,6 +162,101 @@ Give ONE short action (single bullet, 8-15 words). Actionable, specific, today."
     ).strip().lstrip("-").lstrip("•").strip()
 
 
+def markdown_to_html(md: str) -> str:
+    """Lightweight markdown-to-HTML conversion — just enough for email rendering.
+    No heavy deps. Handles headings, bold, bullet lists, paragraphs."""
+    import re
+    lines = md.split("\n")
+    html_parts = []
+    in_list = False
+    for line in lines:
+        line = line.rstrip()
+        # Headings
+        if line.startswith("### "):
+            if in_list:
+                html_parts.append("</ul>"); in_list = False
+            html_parts.append(f"<h3 style='color:#0a2540;margin-top:24px;margin-bottom:4px;'>{line[4:]}</h3>")
+        elif line.startswith("## "):
+            if in_list:
+                html_parts.append("</ul>"); in_list = False
+            html_parts.append(f"<h2 style='color:#0a2540;margin-top:32px;margin-bottom:8px;border-bottom:2px solid #e5e5e5;padding-bottom:4px;'>{line[3:]}</h2>")
+        elif line.startswith("# "):
+            if in_list:
+                html_parts.append("</ul>"); in_list = False
+            html_parts.append(f"<h1 style='color:#0a2540;margin-top:16px;'>{line[2:]}</h1>")
+        # Horizontal rule
+        elif line.strip() == "---":
+            if in_list:
+                html_parts.append("</ul>"); in_list = False
+            html_parts.append("<hr style='border:none;border-top:1px solid #e5e5e5;margin:24px 0;'>")
+        # Bullet items
+        elif line.lstrip().startswith("- "):
+            if not in_list:
+                html_parts.append("<ul style='margin:8px 0;padding-left:24px;'>"); in_list = True
+            content = line.lstrip()[2:]
+            # Bold
+            content = re.sub(r"\*\*(.+?)\*\*", r"<strong>\1</strong>", content)
+            # Italic
+            content = re.sub(r"\*(.+?)\*", r"<em>\1</em>", content)
+            html_parts.append(f"<li style='margin-bottom:4px;'>{content}</li>")
+        # Empty line — close list if any
+        elif not line.strip():
+            if in_list:
+                html_parts.append("</ul>"); in_list = False
+            html_parts.append("")
+        else:
+            if in_list:
+                html_parts.append("</ul>"); in_list = False
+            # Bold
+            line = re.sub(r"\*\*(.+?)\*\*", r"<strong>\1</strong>", line)
+            # Italic
+            line = re.sub(r"\*(.+?)\*", r"<em>\1</em>", line)
+            html_parts.append(f"<p style='margin:8px 0;'>{line}</p>")
+    if in_list:
+        html_parts.append("</ul>")
+    body = "\n".join(html_parts)
+    return (
+        "<!DOCTYPE html><html><body style='font-family:-apple-system,Segoe UI,Roboto,"
+        "Helvetica,Arial,sans-serif;font-size:14px;line-height:1.5;color:#1a1a1a;"
+        "max-width:760px;margin:0 auto;padding:20px;'>" + body + "</body></html>"
+    )
+
+
+def send_dashboard_email(dashboard_md: str, date_str: str, red_count: int, yellow_count: int, green_count: int) -> bool:
+    """Send the dashboard via Gmail SMTP. Returns True on success, False if skipped or failed."""
+    sender = os.environ.get("GMAIL_SENDER")
+    password = os.environ.get("GMAIL_APP_PASSWORD")
+    recipient = os.environ.get("DASHBOARD_RECIPIENT", sender)
+
+    if not sender or not password:
+        print("  GMAIL_SENDER or GMAIL_APP_PASSWORD not set — skipping email send")
+        return False
+    if not recipient:
+        print("  No recipient — skipping email send")
+        return False
+
+    subject = f"818 Dashboard · {date_str} · 🔴 {red_count} · 🟡 {yellow_count} · 🟢 {green_count}"
+
+    msg = MIMEMultipart("alternative")
+    msg["Subject"] = subject
+    msg["From"] = f"818 Capital Dashboard <{sender}>"
+    msg["To"] = recipient
+    msg["Reply-To"] = "ravi@818capitalpartners.com"
+
+    msg.attach(MIMEText(dashboard_md, "plain", "utf-8"))
+    msg.attach(MIMEText(markdown_to_html(dashboard_md), "html", "utf-8"))
+
+    try:
+        with smtplib.SMTP_SSL("smtp.gmail.com", 465, timeout=30) as server:
+            server.login(sender, password)
+            server.send_message(msg)
+        print(f"  Email sent to {recipient}")
+        return True
+    except Exception as e:
+        print(f"  Email send failed: {e}", file=sys.stderr)
+        return False
+
+
 def main() -> int:
     monday = MondayClient()
     claude = get_claude()
@@ -246,13 +345,18 @@ def main() -> int:
 
     DASHBOARD_DIR.mkdir(parents=True, exist_ok=True)
     out = DASHBOARD_DIR / f"{today.isoformat()}.md"
-    out.write_text("\n".join(lines), encoding="utf-8")
+    dashboard_md = "\n".join(lines)
+    out.write_text(dashboard_md, encoding="utf-8")
 
     # Also write latest.md pointer
-    (DASHBOARD_DIR / "latest.md").write_text(out.read_text(encoding="utf-8"), encoding="utf-8")
+    (DASHBOARD_DIR / "latest.md").write_text(dashboard_md, encoding="utf-8")
 
     print(f"Dashboard written: {out}")
     print(f"  🔴 {len(red)} Red | 🟡 {len(yellow)} Yellow | 🟢 {green_count} Green")
+
+    # Email the dashboard to Ravi
+    send_dashboard_email(dashboard_md, today_str, len(red), len(yellow), green_count)
+
     return 0
 
 
