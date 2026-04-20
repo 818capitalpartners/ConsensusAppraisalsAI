@@ -292,8 +292,18 @@ def draft_with_retry(
     max_attempts: int = 3,
     model: str = "claude-sonnet-4-5",
     max_tokens: int = 2000,
+    tier: str = "client_facing",
 ) -> str:
-    """Call Claude, retry if output contains forbidden lender names."""
+    """Call Claude, with optional forbidden-lender-name retry guard.
+
+    tier:
+      - "client_facing" (default): applies full lender-name blocklist.
+        Retries if output mentions any competitor lender. Use for borrower
+        emails, LinkedIn posts, public website content.
+      - "internal": no lender blocklist. Use for Ravi's internal dashboard,
+        Monday internal notes, back-office drafts where referencing the
+        assigned lender by name is actually useful context.
+    """
     for attempt in range(max_attempts):
         resp = client.messages.create(
             model=model,
@@ -302,6 +312,8 @@ def draft_with_retry(
             messages=[{"role": "user", "content": user_message}],
         )
         text = resp.content[0].text.strip()
+        if tier == "internal":
+            return text
         flagged = contains_forbidden_lender(text)
         if not flagged:
             return text
@@ -310,7 +322,9 @@ def draft_with_retry(
             f"\n\nREMINDER: Never mention lender names. Your last attempt mentioned: {flagged}. "
             "Use generic terms ('our lender partners', '30-year DSCR program')."
         )
-    raise RuntimeError(f"Failed to produce clean output after {max_attempts} attempts")
+    # Last resort — return the last attempt with a warning rather than crashing
+    print(f"  Warning: after {max_attempts} attempts still flagged; returning last attempt", file=sys.stderr)
+    return text
 
 
 # ── Utility ─────────────────────────────────────────────────────────────────

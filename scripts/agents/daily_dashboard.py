@@ -137,7 +137,7 @@ Red flags: {'; '.join(reasons)}
 
 List 3 specific actions to take today."""
 
-    return draft_with_retry(claude, ACTIONS_SYSTEM_PROMPT, user_msg, max_tokens=400)
+    return draft_with_retry(claude, ACTIONS_SYSTEM_PROMPT, user_msg, max_tokens=400, tier="internal")
 
 
 def yellow_action(claude, deal: dict, reasons: list[str]) -> str:
@@ -154,6 +154,7 @@ Give ONE short action (single bullet, 8-15 words). Actionable, specific, today."
         ANGELA_VOICE + "\n\nYou produce one-line actions. No preamble, no filler.",
         user_msg,
         max_tokens=100,
+        tier="internal",
     ).strip().lstrip("-").lstrip("•").strip()
 
 
