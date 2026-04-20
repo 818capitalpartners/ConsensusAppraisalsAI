@@ -1,0 +1,29 @@
+name: Agent - Doc Chase (24/72/7)
+
+# Every 6 hours. Scans active deals for missing docs >24h old,
+# posts draft pings as Monday updates per spec §3.3.
+# The highest-leverage Week 1 automation.
+
+on:
+  schedule:
+    - cron: '41 */6 * * *'  # 6-hourly, off-minute to avoid fleet collision
+  workflow_dispatch: {}
+
+permissions:
+  contents: read
+
+jobs:
+  run:
+    runs-on: ubuntu-latest
+    steps:
+      - uses: actions/checkout@v4
+      - uses: actions/setup-python@v5
+        with:
+          python-version: '3.12'
+      - run: pip install anthropic==0.42.0 requests==2.32.3
+      - name: Run Doc Chase
+        working-directory: scripts/agents
+        env:
+          ANTHROPIC_API_KEY: ${{ secrets.ANTHROPIC_API_KEY }}
+          MONDAY_API_TOKEN: ${{ secrets.MONDAY_API_TOKEN }}
+        run: python doc_chase.py

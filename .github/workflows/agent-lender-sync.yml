@@ -1,0 +1,40 @@
+name: Agent - Lender Weekly Sync
+
+# Fridays at 8:09 AM ET (12:09 UTC). Generates draft pipeline emails
+# for each v1 lender (NQM, AHL, ABL, Crebrid). Drafts committed as
+# markdown to docs/lender-sync-drafts/. No auto-send.
+
+on:
+  schedule:
+    - cron: '9 12 * * 5'
+  workflow_dispatch: {}
+
+permissions:
+  contents: write
+
+jobs:
+  run:
+    runs-on: ubuntu-latest
+    steps:
+      - uses: actions/checkout@v4
+      - uses: actions/setup-python@v5
+        with:
+          python-version: '3.12'
+      - run: pip install anthropic==0.42.0 requests==2.32.3
+      - name: Generate lender drafts
+        working-directory: scripts/agents
+        env:
+          ANTHROPIC_API_KEY: ${{ secrets.ANTHROPIC_API_KEY }}
+          MONDAY_API_TOKEN: ${{ secrets.MONDAY_API_TOKEN }}
+        run: python lender_weekly_sync.py
+      - name: Commit drafts
+        run: |
+          git config user.name "818 Capital Lender Sync Bot"
+          git config user.email "bot@818capitalpartners.com"
+          git add docs/lender-sync-drafts/
+          if git diff --cached --quiet; then
+            echo "No drafts to commit."
+          else
+            git commit -m "Lender sync drafts: $(date +'%Y-%m-%d')"
+            git push
+          fi
