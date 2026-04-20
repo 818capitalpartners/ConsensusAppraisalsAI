@@ -88,15 +88,20 @@ export default function DSCRPlaybookPage() {
     e.preventDefault();
     setStatus('loading');
     try {
-      await fetch('https://hook.us2.make.com/placeholder-webhook', {
+      const [firstName, ...rest] = (formData.name || '').trim().split(' ');
+      const res = await fetch('/api/contacts', {
         method: 'POST',
         headers: { 'Content-Type': 'application/json' },
         body: JSON.stringify({
-          ...formData,
-          source: 'dscr_playbook_2026',
-          timestamp: new Date().toISOString(),
+          email: formData.email,
+          first_name: firstName || undefined,
+          last_name: rest.join(' ') || undefined,
+          phone: formData.phone || undefined,
+          tags: ['dscr_playbook_2026', `portfolio:${formData.properties || 'unknown'}`],
+          source: 'dscr_playbook',
         }),
       });
+      if (!res.ok) throw new Error('capture failed');
       setStatus('success');
     } catch {
       setStatus('error');

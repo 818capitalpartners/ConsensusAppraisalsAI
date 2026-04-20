@@ -56,3 +56,36 @@ export function trackChatLead(dealType: string) {
     window.fbq?.('track', 'Lead', { content_category: 'chatbot', content_name: dealType });
   }
 }
+
+/**
+ * Universal "lead captured on the server" event. Fire after /api/contacts
+ * or /api/deals confirms the lead was saved. This is the event we marked
+ * as a GA4 Key Event on 2026-04-19, so it flows through to GA4 conversions
+ * and Meta's "Lead" standard event.
+ */
+export function trackGenerateLead(params?: { source?: string; value?: number; program?: string }) {
+  trackEvent('generate_lead', params);
+  if (typeof window !== 'undefined') {
+    window.fbq?.('track', 'Lead', {
+      content_category: params?.source,
+      content_name: params?.program,
+      value: params?.value ?? 0,
+      currency: 'USD',
+    });
+    window.ttq?.track('SubmitForm', { content_type: params?.source });
+  }
+}
+
+export function trackPhoneClick(source: string = 'unknown') {
+  trackEvent('click_phone', { source, phone: '+19179939194' });
+  if (typeof window !== 'undefined') {
+    window.fbq?.('track', 'Contact');
+  }
+}
+
+export function trackApplyClick(source: string = 'unknown') {
+  trackEvent('click_apply', { source });
+  if (typeof window !== 'undefined') {
+    window.fbq?.('trackCustom', 'ApplyClick', { source });
+  }
+}

@@ -5,6 +5,8 @@ import './globals.css';
 import Script from 'next/script';
 import ExitIntentPopup from '@/components/ExitIntentPopup';
 import ChatWidget from '@/components/ChatWidget';
+import TrackingPixels from '@/components/TrackingPixels';
+import ClickTracker from '@/components/ClickTracker';
 
 export const metadata: Metadata = {
   metadataBase: new URL('https://www.818capitalpartners.com'),
@@ -203,6 +205,9 @@ export default function RootLayout({ children }: { children: React.ReactNode }) 
             gtag('config', 'G-7EV7DRMWJW');
           `}
         </Script>
+        {/* Retargeting pixels (Meta, Google Ads, LinkedIn, TikTok) —
+            each one is gated on its NEXT_PUBLIC_* env var. */}
+        <TrackingPixels />
         {/* ── Utility Bar ──────────────────────────────────── */}
         <div className="bg-navy-900 text-white text-xs">
           <div className="mx-auto max-w-content flex items-center justify-between px-6 py-2">
@@ -305,6 +310,7 @@ export default function RootLayout({ children }: { children: React.ReactNode }) 
         <main className="flex-1">{children}</main>
         <ExitIntentPopup />
         <ChatWidget />
+        <ClickTracker />
 
         {/* ── Footer ─────────────────────────────────────── */}
         <footer className="bg-navy-900 text-white">

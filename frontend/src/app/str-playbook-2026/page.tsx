@@ -257,11 +257,20 @@ export default function STRPlaybookPage() {
     e.preventDefault();
     setStatus('loading');
     try {
-      await fetch('https://hook.us2.make.com/placeholder-str-playbook', {
+      const [firstName, ...rest] = (formData.name || '').trim().split(' ');
+      const res = await fetch('/api/contacts', {
         method: 'POST',
         headers: { 'Content-Type': 'application/json' },
-        body: JSON.stringify({ ...formData, source: 'str_playbook_2026', timestamp: new Date().toISOString() }),
+        body: JSON.stringify({
+          email: formData.email,
+          first_name: firstName || undefined,
+          last_name: rest.join(' ') || undefined,
+          phone: formData.phone || undefined,
+          tags: ['str_playbook_2026', `str_status:${formData.strStatus || 'unknown'}`],
+          source: 'str_playbook',
+        }),
       });
+      if (!res.ok) throw new Error('capture failed');
       setStatus('success');
     } catch { setStatus('error'); }
   };

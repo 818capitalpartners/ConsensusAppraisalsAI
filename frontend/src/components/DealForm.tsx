@@ -2,7 +2,7 @@
 
 import { useState, FormEvent } from 'react';
 import { submitDeal } from '@/lib/api';
-import { trackFormSubmit } from '@/lib/tracking';
+import { trackFormSubmit, trackGenerateLead } from '@/lib/tracking';
 
 interface TriageResult {
   lane: string;
@@ -65,7 +65,9 @@ export default function DealForm({ lane, children }: Props) {
 
     try {
       const data = await submitDeal(payload);
-      trackFormSubmit(lane, Number(fd.get('loan_amount')) || 0);
+      const loanAmount = Number(fd.get('loan_amount')) || 0;
+      trackFormSubmit(lane, loanAmount);
+      trackGenerateLead({ source: 'deal_form', value: loanAmount, program: lane });
       setResult(data.deal?.ai_triage_result || null);
     } catch (err: any) {
       setError(err.message || 'Something went wrong.');

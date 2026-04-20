@@ -1,5 +1,8 @@
 import { NextRequest, NextResponse } from 'next/server';
 import { priceLoan, PricingResult } from '@/lib/pricing-engine';
+import { captureLead, type LeadInput } from '@/lib/leads';
+
+export const runtime = 'nodejs';
 
 // ── Types ────────────────────────────────────────────────────────────────────
 
@@ -407,8 +410,54 @@ export async function POST(req: NextRequest) {
     // Document checklist for this lane
     const documentsNeeded = DOCUMENTS_NEEDED[deal.product_lane] || [];
 
-    // Generate a pseudo deal ID (no DB)
+    // Generate a pseudo deal ID (no DB on the Next.js side — leads are
+    // persisted to Monday.com Leads Board + emailed to Ravi via captureLead)
     const dealId = `WEB-${Date.now().toString(36).toUpperCase()}`;
+
+    // ── Save the lead to Monday + email Ravi (fire-and-forget friendly) ──
+    // We await to get the Monday item id so it can appear in the email CTA,
+    // but any failure is logged inside captureLead — it never blocks the UX.
+    const leadFin = (deal.financials || {}) as Record<string, unknown>;
+    const estLoanAmount = Number(leadFin.loan_amount) || 0;
+
+    // Strip lender identity before dropping into "Notes" per the hard rule
+    // established in the prior "Scrub lender names from API" commit.
+    const safeLenders = (triageResult.programs_available || []).join(', ');
+    const summaryLines = [
+      `DSCR: ${triageResult.dscr ?? '—'}`,
+      triageResult.ltc !== undefined ? `LTC: ${(triageResult.ltc * 100).toFixed(1)}%` : null,
+      triageResult.ltv !== undefined ? `LTV: ${(triageResult.ltv * 100).toFixed(1)}%` : null,
+      triageResult.debt_yield !== undefined ? `Debt yield: ${(triageResult.debt_yield * 100).toFixed(2)}%` : null,
+      '',
+      `AI analysis: ${triageResult.narrative}`,
+      '',
+      `Programs matched: ${safeLenders || '(none)'}`,
+      `Deal ID: ${dealId}`,
+    ].filter(Boolean).join('\n');
+
+    const leadInput: LeadInput = {
+      email: person.email.toLowerCase().trim(),
+      firstName: person.first_name,
+      lastName: person.last_name,
+      phone: person.phone,
+      productLane: deal.product_lane,
+      estLoanAmount,
+      propertyState: deal.property_state,
+      propertyCity: deal.property_city,
+      source: 'deal_form',
+      tags: [deal.product_lane, deal.lead_type === 'broker' ? 'broker' : 'investor'],
+      leadType: deal.lead_type === 'broker' ? 'broker' : 'investor',
+      dealScore: triageResult.score,
+      dealSummary: summaryLines,
+      pageUrl: req.headers.get('referer') || undefined,
+    };
+
+    // Intentionally not awaited — we don't want to slow the user-visible
+    // response. Vercel lambdas keep the async context alive long enough
+    // for the Monday + Resend calls to finish (~500ms typical).
+    captureLead(leadInput).catch((err) =>
+      console.error('[deals] captureLead failed', err),
+    );
 
     return NextResponse.json(
       {
