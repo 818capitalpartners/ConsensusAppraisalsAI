@@ -215,7 +215,11 @@ async function mondayCreateItem(lead: LeadInput): Promise<{ id: string | null; e
 async function notifyTeam(lead: LeadInput, mondayItemId: string | null): Promise<{ ok: boolean; error?: string }> {
   const apiKey = process.env.RESEND_API_KEY;
   const to = process.env.NOTIFICATION_EMAIL;
-  const from = process.env.FROM_EMAIL || 'notifications@818capitalpartners.com';
+  // Default to Resend's built-in sandbox from-address — works immediately
+  // without DNS setup. Once the 818capitalpartners.com domain is verified
+  // in Resend, override with FROM_EMAIL=notifications@818capitalpartners.com
+  // on Vercel for a branded from-line.
+  const from = process.env.FROM_EMAIL || 'onboarding@resend.dev';
 
   if (!apiKey || !to) {
     return { ok: false, error: 'RESEND_API_KEY or NOTIFICATION_EMAIL not configured' };
