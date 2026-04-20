@@ -63,10 +63,10 @@ export default function HomePage() {
                 The question isn&apos;t how many deals you&apos;ve done — it&apos;s how many you could do, with the right partner.
               </h1>
               <p className="mt-6 text-lg text-navy-500 font-body leading-relaxed max-w-lg">
-                818 Capital is a direct investment property lender. We fund DSCR rentals, fix-and-flip, short-term rental, and multifamily deals with speed, certainty, and AI-powered underwriting — no middlemen, no runaround.
+                818 Capital is a direct investment property lender built on one principle: sponsors deserve a partner, not a checklist. We underwrite the project <em className="not-italic font-semibold text-navy-900">and</em> the person — and close in 14&ndash;21 days.
               </p>
               <p className="mt-4 text-base text-navy-700 font-sans font-semibold leading-relaxed max-w-lg">
-                Fund your next deal in 14&ndash;21 days.
+                DSCR · Fix &amp; Flip · STR · Multifamily · 48 States.
               </p>
 
               <p className="mt-8 text-xs font-sans font-semibold uppercase tracking-[0.2em] text-accent">
@@ -83,11 +83,11 @@ export default function HomePage() {
               </div>
 
               <div className="mt-8 flex flex-wrap gap-4">
-                <Link href="/dscr-loans#form" className="btn-primary">
-                  Run the Calculator
+                <Link href="/apply" className="btn-primary">
+                  Submit a Deal →
                 </Link>
-                <Link href="/broker-program" className="btn-secondary">
-                  Broker Program
+                <Link href="/about" className="btn-secondary">
+                  Why 818 exists
                 </Link>
               </div>
             </div>

@@ -1,6 +1,8 @@
 import type { Metadata } from 'next';
 import Image from 'next/image';
 import Link from 'next/link';
+import StickyMobileCTA from '@/components/StickyMobileCTA';
+import LiveDealTicker from '@/components/LiveDealTicker';
 import './globals.css';
 import Script from 'next/script';
 import ExitIntentPopup from '@/components/ExitIntentPopup';
@@ -210,17 +212,22 @@ export default function RootLayout({ children }: { children: React.ReactNode }) 
         <TrackingPixels />
         {/* ── Utility Bar ──────────────────────────────────── */}
         <div className="bg-navy-900 text-white text-xs">
-          <div className="mx-auto max-w-content flex items-center justify-between px-6 py-2">
-            <div className="flex items-center gap-4">
-              {SOCIALS.map((s) => (
-                <a key={s.label} href={s.href} target="_blank" rel="noopener noreferrer" className="hover:text-accent-light transition" aria-label={s.label}>
-                  <svg className="w-3.5 h-3.5" fill="currentColor" viewBox="0 0 24 24"><path d={s.icon} /></svg>
-                </a>
-              ))}
+          <div className="mx-auto max-w-content flex items-center justify-between gap-4 px-6 py-2">
+            <div className="flex items-center gap-4 min-w-0 flex-1">
+              <div className="hidden sm:flex items-center gap-4 flex-shrink-0">
+                {SOCIALS.map((s) => (
+                  <a key={s.label} href={s.href} target="_blank" rel="noopener noreferrer" className="hover:text-accent-light transition" aria-label={s.label}>
+                    <svg className="w-3.5 h-3.5" fill="currentColor" viewBox="0 0 24 24"><path d={s.icon} /></svg>
+                  </a>
+                ))}
+              </div>
+              <div className="min-w-0 flex-1 sm:border-l sm:border-white/10 sm:pl-4">
+                <LiveDealTicker />
+              </div>
             </div>
-            <div className="flex items-center gap-6">
+            <div className="flex items-center gap-6 flex-shrink-0">
               <a href="tel:+19179939194" className="hover:text-navy-200 transition">(917) 993-9194</a>
-              <a href="mailto:deals@818capitalpartners.com" className="hover:text-navy-200 transition hidden sm:inline">deals@818capitalpartners.com</a>
+              <a href="mailto:deals@818capitalpartners.com" className="hover:text-navy-200 transition hidden md:inline">deals@818capitalpartners.com</a>
             </div>
           </div>
         </div>
@@ -308,6 +315,9 @@ export default function RootLayout({ children }: { children: React.ReactNode }) 
 
         {/* ── Main ───────────────────────────────────────── */}
         <main className="flex-1">{children}</main>
+
+        {/* ── Sticky Mobile CTA (lg:hidden, autohides on /apply) ── */}
+        <StickyMobileCTA />
         <ExitIntentPopup />
         <ChatWidget />
         <ClickTracker />
@@ -379,7 +389,17 @@ export default function RootLayout({ children }: { children: React.ReactNode }) 
               </p>
               <div className="text-xs text-navy-500 font-body max-w-xl text-center md:text-right space-y-1">
                 <p>This is not a commitment to lend. All loans subject to credit approval. Terms, conditions, and programs subject to change without notice.</p>
-                <p>Equal Housing Opportunity. Corporate NMLS pending. Licensed in applicable states.</p>
+                <p>
+                  Equal Housing Opportunity. NMLS ID{' '}
+                  <a
+                    href="https://www.nmlsconsumeraccess.org/EntityDetails.aspx/COMPANY/2832335"
+                    target="_blank"
+                    rel="noopener noreferrer"
+                    className="text-navy-400 hover:text-white transition underline-offset-2 hover:underline"
+                  >
+                    #2832335
+                  </a>. Licensed in applicable states.
+                </p>
               </div>
             </div>
           </div>
