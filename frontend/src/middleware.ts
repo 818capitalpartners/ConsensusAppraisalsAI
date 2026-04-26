@@ -26,7 +26,7 @@ import { NextRequest, NextResponse } from 'next/server';
  * having it baked into the client bundle.
  */
 
-const PROTECTED_PATHS = ['/command-center'];
+const PROTECTED_PATHS = ['/command-center', '/api/admin'];
 
 export function middleware(req: NextRequest) {
   const { pathname } = req.nextUrl;
@@ -80,5 +80,5 @@ export function middleware(req: NextRequest) {
 export const config = {
   // Only run on the protected paths — keeps middleware overhead off
   // every other request to the site.
-  matcher: ['/command-center/:path*'],
+  matcher: ['/command-center/:path*', '/api/admin/:path*'],
 };

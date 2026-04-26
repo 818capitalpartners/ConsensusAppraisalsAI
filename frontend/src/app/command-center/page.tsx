@@ -60,7 +60,7 @@ function extractText(data: { content?: { type: string; text?: string }[] }) {
     .join("\n");
 }
 
-const TABS = ["Pipeline", "Intake", "Outreach", "Packages", "Automations"] as const;
+const TABS = ["Pipeline", "Intake", "Outreach", "Packages", "Automations", "Cleanup"] as const;
 type Tab = (typeof TABS)[number];
 
 // Deal shape returned from Monday.com (via Claude+MCP)
@@ -729,6 +729,252 @@ Return ONLY JSON: { "scenarioId": { "status": "active|inactive|error", "lastRun"
   );
 }
 
+// ── Cleanup Tab ───────────────────────────────────────────────
+type SurveyItem = {
+  id: string;
+  name: string;
+  group: string;
+  status: string;
+  loanType: string;
+  lender: string;
+  address: string;
+  phone: string;
+  borrower: string;
+  createdAt: string;
+  updatedAt: string;
+  hasUpdates: boolean;
+  score: number;
+  reasons: string[];
+};
+
+type SurveySummary = { total: number; likely_pollution: number; review: number; likely_real: number };
+
+function CleanupTab() {
+  const [items, setItems] = useState<SurveyItem[]>([]);
+  const [summary, setSummary] = useState<SurveySummary | null>(null);
+  const [loading, setLoading] = useState(false);
+  const [error, setError] = useState<string | null>(null);
+  const [selected, setSelected] = useState<Set<string>>(new Set());
+  const [archiving, setArchiving] = useState(false);
+  const [archiveResult, setArchiveResult] = useState<{ archived: number; failed: number } | null>(null);
+  const [filter, setFilter] = useState<"likely_pollution" | "review" | "all" | "likely_real">("likely_pollution");
+
+  const load = useCallback(async () => {
+    setLoading(true);
+    setError(null);
+    try {
+      const res = await fetch("/api/admin/pipeline-survey", { cache: "no-store" });
+      const json = await res.json();
+      if (!res.ok || json.error) {
+        setError(json.error || `Survey failed: ${res.status}`);
+      } else {
+        setItems(json.items || []);
+        setSummary(json.summary);
+        // Auto-check items scoring >= 70 (likely pollution)
+        setSelected(new Set((json.items || []).filter((i: SurveyItem) => i.score >= 70).map((i: SurveyItem) => i.id)));
+      }
+    } catch (e) {
+      setError(`Network error: ${(e as Error).message}`);
+    }
+    setLoading(false);
+  }, []);
+
+  useEffect(() => { load(); }, [load]);
+
+  const toggle = (id: string) => {
+    setSelected((prev) => {
+      const next = new Set(prev);
+      if (next.has(id)) next.delete(id);
+      else next.add(id);
+      return next;
+    });
+  };
+
+  const filtered = items.filter((i) => {
+    if (filter === "all") return true;
+    if (filter === "likely_pollution") return i.score >= 70;
+    if (filter === "review") return i.score >= 40 && i.score < 70;
+    return i.score < 40;
+  });
+
+  const archive = async () => {
+    if (selected.size === 0) return;
+    if (!confirm(`Archive ${selected.size} item${selected.size === 1 ? "" : "s"} on Monday Pipeline? Items can be restored from Monday's archive view.`)) return;
+    setArchiving(true);
+    setArchiveResult(null);
+    try {
+      const res = await fetch("/api/admin/pipeline-archive", {
+        method: "POST",
+        headers: { "Content-Type": "application/json" },
+        body: JSON.stringify({ item_ids: Array.from(selected) }),
+      });
+      const json = await res.json();
+      setArchiveResult({ archived: json.archived || 0, failed: json.failed || 0 });
+      // Refresh after archive
+      await load();
+    } catch (e) {
+      setError(`Archive failed: ${(e as Error).message}`);
+    }
+    setArchiving(false);
+  };
+
+  const scoreColor = (s: number) => (s >= 70 ? BRAND.red : s >= 40 ? BRAND.orange : BRAND.green);
+
+  return (
+    <div>
+      <div style={{ display: "flex", justifyContent: "space-between", alignItems: "center", marginBottom: 12 }}>
+        <h2 style={{ color: BRAND.navy, fontSize: 18, fontWeight: 700, margin: 0 }}>
+          Pipeline Cleanup{" "}
+          {summary && (
+            <span style={{ fontSize: 13, color: BRAND.muted, fontWeight: 400 }}>
+              ({summary.total} items · {summary.likely_pollution} likely pollution · {summary.review} to review)
+            </span>
+          )}
+        </h2>
+        <div style={{ display: "flex", gap: 8 }}>
+          <button
+            onClick={load}
+            style={{ background: "transparent", color: BRAND.blue, border: `1px solid ${BRAND.border}`, borderRadius: 6, padding: "6px 14px", cursor: "pointer", fontSize: 13 }}
+          >
+            {loading ? "Loading…" : "↻ Refresh"}
+          </button>
+          <button
+            onClick={archive}
+            disabled={archiving || selected.size === 0}
+            style={{
+              background: selected.size === 0 ? BRAND.border : BRAND.red,
+              color: "#fff",
+              border: "none",
+              borderRadius: 6,
+              padding: "6px 16px",
+              cursor: selected.size === 0 ? "not-allowed" : "pointer",
+              fontSize: 13,
+              fontWeight: 600,
+            }}
+          >
+            {archiving ? "Archiving…" : `Archive ${selected.size} selected`}
+          </button>
+        </div>
+      </div>
+
+      {error && (
+        <div style={{ color: BRAND.red, marginBottom: 10, fontSize: 12, background: "#fee2e2", padding: "8px 12px", borderRadius: 5 }}>
+          {error}
+        </div>
+      )}
+
+      {archiveResult && (
+        <div style={{ color: BRAND.text, marginBottom: 10, fontSize: 12, background: "#dcfce7", padding: "8px 12px", borderRadius: 5 }}>
+          ✅ Archived {archiveResult.archived} item(s){archiveResult.failed > 0 ? ` · ${archiveResult.failed} failed` : ""}.
+        </div>
+      )}
+
+      <div style={{ display: "flex", gap: 6, flexWrap: "wrap", marginBottom: 14 }}>
+        {(["likely_pollution", "review", "likely_real", "all"] as const).map((f) => {
+          const counts = {
+            likely_pollution: summary?.likely_pollution ?? 0,
+            review: summary?.review ?? 0,
+            likely_real: summary?.likely_real ?? 0,
+            all: summary?.total ?? 0,
+          };
+          const labels = {
+            likely_pollution: `🚫 Likely pollution (${counts.likely_pollution})`,
+            review: `⚠️ Review (${counts.review})`,
+            likely_real: `✅ Likely real (${counts.likely_real})`,
+            all: `All (${counts.all})`,
+          };
+          return (
+            <button
+              key={f}
+              onClick={() => setFilter(f)}
+              style={{
+                padding: "4px 12px",
+                borderRadius: 20,
+                border: `1px solid ${filter === f ? BRAND.blue : BRAND.border}`,
+                background: filter === f ? BRAND.blue : "#fff",
+                color: filter === f ? "#fff" : BRAND.text,
+                fontSize: 12,
+                cursor: "pointer",
+                fontWeight: filter === f ? 600 : 400,
+              }}
+            >
+              {labels[f]}
+            </button>
+          );
+        })}
+      </div>
+
+      <div style={{ background: "#fff7ed", border: "1px solid #fdba74", borderRadius: 6, padding: "10px 14px", fontSize: 12, color: "#7c2d12", marginBottom: 12 }}>
+        <b>How scoring works:</b> items scoring ≥70 are auto-checked (phone-like names, generic placeholders, all key fields empty). Items 40–69 need your eye — could go either way. &lt;40 looks like real deals. <b>Archive ≠ delete</b> — items move to Monday&apos;s archive view and can be restored.
+      </div>
+
+      <div style={{ display: "flex", flexDirection: "column", gap: 4 }}>
+        {filtered.map((it) => (
+          <label
+            key={it.id}
+            style={{
+              display: "grid",
+              gridTemplateColumns: "auto auto 1fr auto auto",
+              gap: 10,
+              alignItems: "center",
+              padding: "8px 12px",
+              background: BRAND.card,
+              border: `1px solid ${BRAND.border}`,
+              borderRadius: 6,
+              borderLeft: `3px solid ${scoreColor(it.score)}`,
+              cursor: "pointer",
+              fontSize: 12,
+            }}
+          >
+            <input
+              type="checkbox"
+              checked={selected.has(it.id)}
+              onChange={() => toggle(it.id)}
+              style={{ cursor: "pointer", width: 16, height: 16 }}
+            />
+            <span
+              style={{
+                fontFamily: "ui-monospace, monospace",
+                fontSize: 11,
+                fontWeight: 700,
+                color: scoreColor(it.score),
+                minWidth: 32,
+                textAlign: "right",
+              }}
+            >
+              {it.score}
+            </span>
+            <div style={{ minWidth: 0 }}>
+              <div style={{ fontWeight: 600, color: BRAND.text, whiteSpace: "nowrap", overflow: "hidden", textOverflow: "ellipsis" }}>
+                {it.name}
+              </div>
+              <div style={{ fontSize: 10, color: BRAND.muted, marginTop: 1 }}>
+                {[
+                  it.address && `📍 ${it.address}`,
+                  it.lender && `🏦 ${it.lender}`,
+                  it.loanType && it.loanType,
+                  it.phone && `📞 ${it.phone}`,
+                ].filter(Boolean).join(" · ") || <span style={{ fontStyle: "italic", color: BRAND.muted }}>(empty)</span>}
+              </div>
+            </div>
+            <span style={{ fontSize: 10, color: BRAND.muted, fontFamily: "ui-monospace, monospace" }}>
+              {new Date(it.createdAt).toLocaleDateString()}
+            </span>
+            <span style={{ fontSize: 9, color: BRAND.muted, fontFamily: "ui-monospace, monospace", maxWidth: 280, textAlign: "right" }}>
+              {it.reasons.join(", ")}
+            </span>
+          </label>
+        ))}
+        {!loading && filtered.length === 0 && (
+          <div style={{ textAlign: "center", padding: 24, color: BRAND.muted, fontSize: 13 }}>
+            No items in this filter.
+          </div>
+        )}
+      </div>
+    </div>
+  );
+}
+
 // ── App Shell ─────────────────────────────────────────────────
 export default function CommandCenter() {
   const [tab, setTab] = useState<Tab>("Pipeline");
@@ -765,6 +1011,11 @@ export default function CommandCenter() {
     Automations: (
       <svg width="16" height="16" fill="none" viewBox="0 0 24 24" stroke="currentColor" strokeWidth={2}>
         <path strokeLinecap="round" strokeLinejoin="round" d="M13 10V3L4 14h7v7l9-11h-7z" />
+      </svg>
+    ),
+    Cleanup: (
+      <svg width="16" height="16" fill="none" viewBox="0 0 24 24" stroke="currentColor" strokeWidth={2}>
+        <path strokeLinecap="round" strokeLinejoin="round" d="M19 7l-.867 12.142A2 2 0 0116.138 21H7.862a2 2 0 01-1.995-1.858L5 7m5 4v6m4-6v6M1 7h22M8 7V4a2 2 0 012-2h4a2 2 0 012 2v3" />
       </svg>
     ),
   };
@@ -813,6 +1064,7 @@ export default function CommandCenter() {
         {tab === "Outreach" && <OutreachTab />}
         {tab === "Packages" && <PackagesTab />}
         {tab === "Automations" && <AutomationsTab />}
+        {tab === "Cleanup" && <CleanupTab />}
       </div>
     </div>
   );
