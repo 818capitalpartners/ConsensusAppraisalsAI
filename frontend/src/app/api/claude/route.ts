@@ -29,9 +29,9 @@ function injectMcpAuth(servers: McpServer[]): McpServer[] {
     const url = s.url || "";
     const name = s.name || "";
 
-    // Monday.com MCP
+    // Monday.com MCP — accept either naming convention
     if (name === "monday-mcp" || url.includes("mcp.monday.com")) {
-      const token = process.env.MONDAY_API_TOKEN;
+      const token = process.env.MONDAY_API_TOKEN || process.env.MONDAY_API_KEY;
       if (token) return { ...s, authorization_token: token };
     }
 
