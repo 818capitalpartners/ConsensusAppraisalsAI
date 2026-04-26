@@ -275,8 +275,11 @@ export default function RootLayout({ children }: { children: React.ReactNode }) 
               <Link href="/broker-program" className="inline-flex items-center justify-center rounded border-2 border-accent px-5 py-2 text-xs font-sans font-semibold text-accent transition hover:bg-accent hover:text-white uppercase tracking-wide">
                 For Brokers
               </Link>
-              <Link href="/dscr-loans#form" className="btn-primary text-xs py-2.5">
+              <Link href="/dscr-loans#form" className="inline-flex items-center justify-center rounded border-2 border-navy-700 px-5 py-2 text-xs font-sans font-semibold text-navy-700 transition hover:bg-navy-700 hover:text-white uppercase tracking-wide">
                 Submit a Scenario
+              </Link>
+              <Link href="/borrower-portal.html" className="btn-primary text-xs py-2.5">
+                Apply Now →
               </Link>
             </div>
 
@@ -304,9 +307,10 @@ export default function RootLayout({ children }: { children: React.ReactNode }) 
                 <Link href="/blog" className="block py-2 text-sm font-medium text-navy-700 hover:text-accent">Blog</Link>
                 <Link href="/markets" className="block py-2 text-sm font-medium text-navy-700 hover:text-accent">Where We Lend</Link>
                 <Link href="/about" className="block py-2 text-sm font-medium text-navy-700 hover:text-accent">About Us</Link>
-                <div className="flex gap-2 mt-4">
+                <Link href="/borrower-portal.html" className="block btn-primary text-xs text-center mt-4">Apply Now →</Link>
+                <div className="flex gap-2 mt-2">
                   <Link href="/broker-program" className="flex-1 inline-flex items-center justify-center rounded border-2 border-accent px-3 py-2.5 text-xs font-sans font-semibold text-accent hover:bg-accent hover:text-white transition uppercase tracking-wide">For Brokers</Link>
-                  <Link href="/dscr-loans#form" className="flex-1 btn-primary text-xs">Scenario</Link>
+                  <Link href="/dscr-loans#form" className="flex-1 inline-flex items-center justify-center rounded border-2 border-navy-700 px-3 py-2.5 text-xs font-sans font-semibold text-navy-700 hover:bg-navy-700 hover:text-white transition uppercase tracking-wide">Scenario</Link>
                 </div>
               </div>
             </details>
