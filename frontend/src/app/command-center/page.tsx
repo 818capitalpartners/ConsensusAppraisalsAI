@@ -101,17 +101,36 @@ No markdown, no preamble.`,
         `Fetch all items from Monday.com board ${MONDAY_BOARD_ID} and return as JSON array.`,
         [MCP_SERVERS[0]],
       );
+
+      // Surface API-level errors (auth failures, rate limits, beta access, etc.)
+      if (data?.error) {
+        const apiErr = data.error.message || JSON.stringify(data.error);
+        setError(`Monday.com API error: ${apiErr.slice(0, 200)}`);
+        console.error("[command-center] Anthropic error:", data.error);
+        setLoading(false);
+        return;
+      }
+
       const txt = extractText(data).replace(/```json|```/g, "").trim();
       const s = txt.indexOf("["),
         e = txt.lastIndexOf("]");
       if (s !== -1 && e !== -1) {
-        setDeals(JSON.parse(txt.slice(s, e + 1)));
-        setLastFetched(new Date());
+        try {
+          setDeals(JSON.parse(txt.slice(s, e + 1)));
+          setLastFetched(new Date());
+        } catch (parseErr) {
+          console.error("[command-center] JSON parse failed:", parseErr, "raw:", txt);
+          setError(`Response was malformed JSON. Check console for raw output. (${(parseErr as Error).message.slice(0, 100)})`);
+        }
       } else {
-        setError("Could not parse response from Monday.com. Click Refresh to retry.");
+        // No array in response — show the actual content so we can see why
+        const preview = txt.slice(0, 240) || "[empty response]";
+        console.error("[command-center] No JSON array in response. Full data:", data);
+        setError(`No JSON array returned. Claude said: "${preview}${txt.length > 240 ? '…' : ''}"`);
       }
-    } catch {
-      setError("Live fetch from Monday.com failed. Click Refresh to retry.");
+    } catch (e) {
+      console.error("[command-center] Fetch error:", e);
+      setError(`Network/fetch error: ${(e as Error).message || "unknown"}`);
     }
     setLoading(false);
   }, []);
