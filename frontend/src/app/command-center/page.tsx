@@ -36,7 +36,9 @@ async function callClaude(
 ) {
   const body: Record<string, unknown> = {
     model: "claude-sonnet-4-20250514",
-    max_tokens: 1000,
+    // Pipeline board has ~200 deals; each deal ~150-200 output tokens in JSON.
+    // 1000 was truncating the response mid-array → "Could not parse" errors.
+    max_tokens: 32000,
     system: systemPrompt,
     messages: [{ role: "user", content: userPrompt }],
   };
