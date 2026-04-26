@@ -61,43 +61,32 @@ function extractText(data: { content?: { type: string; text?: string }[] }) {
 const TABS = ["Pipeline", "Intake", "Outreach", "Packages", "Automations"] as const;
 type Tab = (typeof TABS)[number];
 
-const LIVE_DEALS = [
-  { id: "11441511394", name: "Annie Lukach — STR Cash-Out Refi (Pigeon Forge + Nashville)", loanType: "DSCR", status: "Borrower Docs", urgency: "⚠️ Needs Review", lender: "VFS / CoreVest / Trinity", lastUpdate: "3/18: Angela requested updated pricing from LimaOne for Lukach STR DSCR deals.", address: "The Rowan - Pigeon Forge, TN / The Ebony - Nashville, TN" },
-  { id: "11441506709", name: "Sam Lukach — Royal Palms (Fort Myers, FL)", loanType: "DSCR", status: "Borrower Docs", urgency: "⚠️ Needs Review", lender: "CoreVest / LimaOne", lastUpdate: "3/18: Sent Samuel Lukach the complete Royal Palms financing package.", address: "Royal Palms — Fort Myers, FL" },
-  { id: "11441511448", name: "Mohammad Jabari — 3505 24th St NE, Washington DC", loanType: "Fix-and-Flip", status: "Appraisal", urgency: "⚠️ Needs Review", lender: "Roc Capital (#124918)", lastUpdate: "3/18: Appraisal from Tamarisk AMC overdue (ordered 3/11, due 3/16). Blocked.", address: "3505 24th St NE, Washington, DC 20018" },
-  { id: "11543789225", name: "Mohammad Jabari — 13429 Fairland Park Dr, Silver Spring MD", loanType: "Fix-and-Flip", status: "Appraisal", urgency: "🔥 Hot", lender: "Center Street Lending", lastUpdate: "3/18: Ryan St. John sent appraisal payment link. Awaiting UW items list.", address: "13429 Fairland Park Dr, Silver Spring, MD 20904" },
-  { id: "11441511116", name: "Mohammad Jabari — 1614 Decatur St NW (FUNDED ✅)", loanType: "Fix-and-Flip", status: "Funded", urgency: "✅ Clear to Advance", lender: "Center Street Lending", lastUpdate: "3/18: Insurance discrepancy East vs World Insurance flagged to Nick Gegen.", address: "1614 Decatur St NW, Washington, DC 20011" },
-  { id: "11439799433", name: "Pascual #124339 — 220 SE Robert Street, Burleson TX", loanType: "Fix-and-Flip", status: "Title / Closing", urgency: "⚠️ Needs Review", lender: "ROC Capital (LSF #124339)", lastUpdate: "3/18: Title corrections sent. Survey missing. Closing delayed.", address: "220 SE Robert Street, Burleson, TX 76028" },
-  { id: "11441479178", name: "4763 Westcreek Dr — Fort Worth TX (ROC #122951)", loanType: "Fix-and-Flip", status: "Lender Review", urgency: "🚫 BLOCKED", lender: "ROC Capital", lastUpdate: "3/18: No new activity. Jake passport/ID missing, FinCEN pending.", address: "4763 Westcreek Dr, Fort Worth, TX 76133" },
-  { id: "11439798512", name: "600 S Cherry Lane — NorthMarq / ICADV", loanType: "Commercial", status: "Lender Review", urgency: "⚠️ Needs Review", lender: "Innovative Capital Advisors", lastUpdate: "3/18: Sent approved AMC inquiry to NorthMarq. Awaiting reply.", address: "600 S Cherry Lane, White Settlement, TX" },
-  { id: "11441506455", name: "1713 E 69th Pl — Karim El Raddaf (Cleveland, OH) — CLF", loanType: "Commercial", status: "Lender Review", urgency: "🚫 BLOCKED", lender: "Commercial Loan Funding (CLF)", lastUpdate: "3/18: Forwarded full package to Sam Thomas/Dominion. Deal may be killed.", address: "1713 E 69th Place, Cleveland, OH 44103" },
-  { id: "11441467690", name: "1631 E Maura St — Nuke Em Clean LLC (Pensacola, FL)", loanType: "Fix-and-Flip", status: "Title / Closing", urgency: "⚠️ Needs Review", lender: "Stormfield Capital", lastUpdate: "3/18: Coordinating closing docs with Riley Gousse. Moving to close.", address: "1631 E Maura St, Pensacola, FL" },
-  { id: "11441495852", name: "5050 1st Ave S — Lance Woodyard (St. Pete, FL) — Visio 1522770", loanType: "DSCR", status: "Appraisal", urgency: "🔥 Hot", lender: "Visio Lending", lastUpdate: "3/18: Pressed FastApp for appraisal delivery date. Insurance issue with Taryn at Visio.", address: "5050 1st Ave S, St. Petersburg, FL" },
-  { id: "11441511420", name: "Al Boyce — Maine (BLOCKED — Unpaid Appraisal AM-0340120)", loanType: "DSCR", status: "Appraisal", urgency: "🚫 BLOCKED", lender: "TBD", lastUpdate: "3/18: AmeriMac daily unpaid reminders for AM-0340120. Confirm pay or cancel.", address: "Maine (exact address TBD)" },
-  { id: "11441503253", name: "Hari Yadav — Loan 262-03476 / 1521980", loanType: "DSCR", status: "Lender Review", urgency: "⚠️ Needs Review", lender: "TBD", lastUpdate: "3/18: Angela requested updated pricing from LimaOne for Yadav deal.", address: "TBD" },
-  { id: "11441508313", name: "Marvin Lalin — Magnifico Investments (NJ/NY Portfolio)", loanType: "DSCR", status: "Borrower Docs", urgency: "⚠️ Needs Review", lender: "ROC Capital (portal #124577-79)", lastUpdate: "3/18: Bridge financing decks from Freedom Trail Capital received for review.", address: "218 Fall St Seneca Falls NY / 31 Blakely Pl Garfield NJ" },
-  { id: "11441516455", name: "31 Blakely — Visio (Marvin Lalin)", loanType: "DSCR", status: "Borrower Docs", urgency: "⚠️ Needs Review", lender: "Visio", lastUpdate: "Awaiting borrower application.", address: "31 Blakely Pl, Garfield, NJ" },
-  { id: "11441508641b", name: "Jon Veitch — Idaho STR DSCR", loanType: "DSCR", status: "Borrower Docs", urgency: "⚠️ Needs Review", lender: "LimaOne", lastUpdate: "3/18: Angela requested updated pricing from LimaOne for Veitch Idaho STR DSCR.", address: "Idaho (TBD)" },
-  { id: "11441500079", name: "Tiina Collins — 168 Elliman GA", loanType: "DSCR", status: "Borrower Docs", urgency: "⚠️ Needs Review", lender: "LimaOne", lastUpdate: "3/18: Angela requested updated pricing from LimaOne for Collins deal.", address: "Ellman Dr, GA" },
-  { id: "11441500032", name: "1817 Dolores — Martin Pascual (LimaOne)", loanType: "DSCR", status: "Borrower Docs", urgency: "⚠️ Needs Review", lender: "LimaOne", lastUpdate: "Confirm borrower, address, and stage.", address: "1817 Dolores (TBD)" },
-  { id: "11441504191", name: "Fink — 3580 Shipwatch", loanType: "DSCR", status: "Borrower Docs", urgency: "⚠️ Needs Review", lender: "TBD", lastUpdate: "Confirm full address and lender.", address: "3580 Shipwatch (TBD)" },
-  { id: "11441514833", name: "Franco DiRenzo — Deal (TBD)", loanType: "DSCR", status: "Borrower Docs", urgency: "⚠️ Needs Review", lender: "TBD", lastUpdate: "Confirm property address, loan type, and lender.", address: "TBD" },
-  { id: "11441514834", name: "Grigonis — Visio (DSCR)", loanType: "DSCR", status: "Borrower Docs", urgency: "⚠️ Needs Review", lender: "Visio", lastUpdate: "Confirm property address and loan amount.", address: "TBD" },
-  { id: "11441514793", name: "Gupta — Oakland, CA", loanType: "DSCR", status: "Borrower Docs", urgency: "⚠️ Needs Review", lender: "TBD", lastUpdate: "Confirm full borrower name, lender, and stage.", address: "Oakland, CA" },
-  { id: "11441515075", name: "McConnel — Tulsa, OK", loanType: "DSCR", status: "Borrower Docs", urgency: "⚠️ Needs Review", lender: "TBD", lastUpdate: "Confirm full borrower name, lender, and stage.", address: "Tulsa, OK" },
-  { id: "11441508206", name: "Nanez — Deal (TBD)", loanType: "DSCR", status: "Borrower Docs", urgency: "⚠️ Needs Review", lender: "TBD", lastUpdate: "Confirm property address, loan type, and lender.", address: "TBD" },
-  { id: "11441512297", name: "Pascual — Possible 2nd Deal (Confirm vs Fort Worth)", loanType: "DSCR", status: "Borrower Docs", urgency: "⚠️ Needs Review", lender: "TBD", lastUpdate: "Confirm if this is separate from 4763 Westcreek deal.", address: "TBD" },
-  { id: "11441508141", name: "Pete Connor — New Mexico", loanType: "DSCR", status: "Borrower Docs", urgency: "⚠️ Needs Review", lender: "TBD", lastUpdate: "Confirm property address and loan amount.", address: "New Mexico" },
-  { id: "11441500073", name: "Denorah — Los Fresnos, TX", loanType: "DSCR", status: "Borrower Docs", urgency: "⚠️ Needs Review", lender: "TBD", lastUpdate: "Confirm full borrower name and lender.", address: "Los Fresnos, TX" },
-];
+// Deal shape returned from Monday.com (via Claude+MCP)
+type Deal = {
+  id: string;
+  name: string;
+  status: string;
+  loanType: string;
+  urgency: string;
+  lastUpdate: string;
+  address: string;
+  lender: string;
+};
+
+// NOTE: Deal data is no longer baked into the source. The Pipeline tab
+// fetches live from Monday.com board ${MONDAY_BOARD_ID} on mount and on
+// every Refresh click. This keeps PII (sponsor names, addresses, lender
+// assignments) out of the JS bundle entirely — even the auth-gated
+// admin route never ships borrower data via static code.
 
 // ── Pipeline Tab ──────────────────────────────────────────────
 function PipelineTab() {
-  const [deals, setDeals] = useState(LIVE_DEALS);
-  const [loading, setLoading] = useState(false);
+  const [deals, setDeals] = useState<Deal[]>([]);
+  const [loading, setLoading] = useState(true);  // start in loading state — auto-fetch on mount
   const [error, setError] = useState<string | null>(null);
   const [expanded, setExpanded] = useState<number | null>(null);
   const [filter, setFilter] = useState("All");
+  const [lastFetched, setLastFetched] = useState<Date | null>(null);
 
   const load = useCallback(async () => {
     setLoading(true);
@@ -113,13 +102,22 @@ No markdown, no preamble.`,
       const txt = extractText(data).replace(/```json|```/g, "").trim();
       const s = txt.indexOf("["),
         e = txt.lastIndexOf("]");
-      if (s !== -1 && e !== -1) setDeals(JSON.parse(txt.slice(s, e + 1)));
-      else setError("Live refresh failed — showing cached data.");
+      if (s !== -1 && e !== -1) {
+        setDeals(JSON.parse(txt.slice(s, e + 1)));
+        setLastFetched(new Date());
+      } else {
+        setError("Could not parse response from Monday.com. Click Refresh to retry.");
+      }
     } catch {
-      setError("Live refresh failed — showing cached data.");
+      setError("Live fetch from Monday.com failed. Click Refresh to retry.");
     }
     setLoading(false);
   }, []);
+
+  // Auto-fetch on mount — no stale data baked into the bundle
+  useEffect(() => {
+    load();
+  }, [load]);
 
   const FILTERS = ["All", "Fix-and-Flip", "DSCR", "Commercial", "🔥 Hot", "🚫 BLOCKED", "✅ Funded"];
 
@@ -187,6 +185,21 @@ No markdown, no preamble.`,
       {error && (
         <div style={{ color: BRAND.orange, marginBottom: 10, fontSize: 12, background: "#fff7ed", padding: "6px 10px", borderRadius: 5 }}>
           {error}
+        </div>
+      )}
+      {lastFetched && !loading && !error && (
+        <div style={{ color: BRAND.muted, marginBottom: 10, fontSize: 11, fontStyle: "italic" }}>
+          Last refreshed {lastFetched.toLocaleString()}
+        </div>
+      )}
+      {loading && deals.length === 0 && (
+        <div style={{ color: BRAND.muted, fontSize: 13, textAlign: "center", padding: "32px 16px", background: "#fff", border: `1px dashed ${BRAND.border}`, borderRadius: 8 }}>
+          Loading pipeline from Monday.com…
+        </div>
+      )}
+      {!loading && !error && deals.length === 0 && (
+        <div style={{ color: BRAND.muted, fontSize: 13, textAlign: "center", padding: "32px 16px", background: "#fff", border: `1px dashed ${BRAND.border}`, borderRadius: 8 }}>
+          No deals returned from Monday.com board {MONDAY_BOARD_ID}.
         </div>
       )}
       <div style={{ display: "flex", flexDirection: "column", gap: 7 }}>
