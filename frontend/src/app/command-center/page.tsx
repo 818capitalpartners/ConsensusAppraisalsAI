@@ -94,43 +94,20 @@ function PipelineTab() {
     setLoading(true);
     setError(null);
     try {
-      const data = await callClaude(
-        `You are a data extraction assistant. Use monday.com MCP to fetch all items from board ${MONDAY_BOARD_ID}.
-Return ONLY a JSON array. Each object: { id, name, status, loanType, urgency, lastUpdate, address, lender }.
-No markdown, no preamble.`,
-        `Fetch all items from Monday.com board ${MONDAY_BOARD_ID} and return as JSON array.`,
-        [MCP_SERVERS[0]],
-      );
-
-      // Surface API-level errors (auth failures, rate limits, beta access, etc.)
-      if (data?.error) {
-        const apiErr = data.error.message || JSON.stringify(data.error);
-        setError(`Monday.com API error: ${apiErr.slice(0, 200)}`);
-        console.error("[command-center] Anthropic error:", data.error);
-        setLoading(false);
-        return;
-      }
-
-      const txt = extractText(data).replace(/```json|```/g, "").trim();
-      const s = txt.indexOf("["),
-        e = txt.lastIndexOf("]");
-      if (s !== -1 && e !== -1) {
-        try {
-          setDeals(JSON.parse(txt.slice(s, e + 1)));
-          setLastFetched(new Date());
-        } catch (parseErr) {
-          console.error("[command-center] JSON parse failed:", parseErr, "raw:", txt);
-          setError(`Response was malformed JSON. Check console for raw output. (${(parseErr as Error).message.slice(0, 100)})`);
-        }
+      // Direct Monday GraphQL via our /api/monday/pipeline route.
+      // Replaces the prior Claude+MCP path which blew the 200k context
+      // limit on this 223-deal board and cost ~$0.45 per refresh.
+      const res = await fetch("/api/monday/pipeline", { cache: "no-store" });
+      const json = await res.json();
+      if (!res.ok || json.error) {
+        setError(json.error || `Monday API returned ${res.status}`);
       } else {
-        // No array in response — show the actual content so we can see why
-        const preview = txt.slice(0, 240) || "[empty response]";
-        console.error("[command-center] No JSON array in response. Full data:", data);
-        setError(`No JSON array returned. Claude said: "${preview}${txt.length > 240 ? '…' : ''}"`);
+        setDeals(json.deals || []);
+        setLastFetched(new Date());
       }
     } catch (e) {
       console.error("[command-center] Fetch error:", e);
-      setError(`Network/fetch error: ${(e as Error).message || "unknown"}`);
+      setError(`Network error: ${(e as Error).message || "unknown"}`);
     }
     setLoading(false);
   }, []);
