@@ -549,6 +549,73 @@ If you have a multifamily maturity coming due or you're evaluating a value-add a
 
 **Email your deal summary to info@818capitalpartners.com or call our direct line.** The clock is running.`,
   },
+  {
+    slug: 'commercial-maturity-wall-real-numbers',
+    title: '$929B in Commercial Loans Mature Through 2027: What Borrowers Need Now',
+    excerpt: 'The MBA just published maturity data showing $929 billion in commercial real estate loans coming due through 2027. Here\'s how to position before the refinance window narrows.',
+    category: 'Commercial',
+    date: 'April 2026',
+    image: 'https://images.unsplash.com/photo-1582407947304-fd86f028f716?w=800&h=500&fit=crop',
+    content: `## $929B Commercial Maturity Wave Hits in Next 18 Months
+
+The Mortgage Bankers Association released updated charts this week showing $929 billion in commercial real estate loans maturing between now and year-end 2027. That's not a forecast—it's locked-in calendar reality.
+
+For context: $450 billion of that total matures in the next 12 months. Another $479 billion follows in 2027. The bulk sits in office ($287B), multifamily ($312B), and retail ($176B) categories.
+
+## Why This Matters More Than Rate Direction
+
+Most borrowers are watching the Fed and treasury moves. Smart money is watching the maturity schedule.
+
+Here's the math: even if rates drop 50 basis points from today's levels, refinancing a 2021 loan originated at 3.25% into today's 6.75% environment still means a 350bp payment shock. Property cash flow that worked at 1.35x debt service coverage suddenly fails at 1.05x.
+
+Lenders know this. They're pricing extension requests accordingly—typically 75-125 basis points above market for borrowers who show up 90 days before maturity asking for more time.
+
+## What Changed This Month
+
+Three things shifted in April:
+
+**First**, the Iran ceasefire headline moved treasuries down 18 basis points in 72 hours, which pulled commercial mortgage pricing down 12-15 bps across most property types. That's real relief but not structural change.
+
+**Second**, agency multifamily lenders hit their stride after the FHFA cap increases finalized in March. Execution improved 20-30 bps on stabilized assets with strong sponsorship. If you've got 75%+ occupancy and 1.25x+ coverage, this is your window.
+
+**Third**, private credit stepped back into transitional deals after sitting out most of Q1. We're seeing bridge quotes on value-add multifamily and mixed-use that are 40-60 bps tighter than February, though still 150-200 bps wide of where agency programs price.
+
+## The Timing Trap
+
+Borrowers with 2027 maturities think they have time. They don't.
+
+Most commercial loans require 90-120 days for full execution, including appraisal, environmental, engineering, and legal. If your loan matures in Q2 2027, you need to be in market by December 2026. Miss that window and you're negotiating from weakness.
+
+The other trap: assuming your current lender will extend automatically. Regional and community banks that dominate the maturity schedule are under intense regulatory pressure on commercial real estate concentration. Many are actively shrinking portfolios, not growing them. An extension request becomes a payoff demand faster than borrowers expect.
+
+## Positioning Strategy for Next 90 Days
+
+**If your loan matures in 2026**: You should have term sheets in hand already. If not, assume 30-45 days to quote, 90-120 to close. Move now.
+
+**If your loan matures in 2027**: Order a current appraisal and trailing 12-month operating statement this month. Use Q2 and Q3 to shore up occupancy, address deferred maintenance, and build a refinance package. Go to market in Q4 2026.
+
+**If you're looking at acquisition financing**: The coming maturity wave means more motivated sellers in the back half of 2026. Buyers with bridge or agency commitments ready to execute will have leverage.
+
+## Where Execution Still Works
+
+Despite the headlines, commercial mortgage markets remain functional for the right deals:
+
+- Stabilized multifamily (75%+ occupied, major metros, strong demographics): agency execution at 6.25%-6.75%, 75% LTV
+- Grocery-anchored retail (investment-grade tenants, 10+ year leases): life company and CMBS execution at 6.50%-7.00%, 65-70% LTV  
+- Industrial and flex (triple-net or strong credit tenants): life company execution at 6.25%-6.75%, 70% LTV
+- Bridge on value-add with clear path to stabilization: private credit at 8.50%-10.50%, 70-75% LTC
+
+What doesn't work: office with vacancy over 20%, retail without credit anchors, and anything requiring 80%+ leverage without extraordinary sponsorship.
+
+## Bottom Line
+
+The maturity wall is real, the calendar is unforgiving, and early movers get better execution than late ones. The difference between a February 2026 refinance and a September 2026 scramble is typically 75-100 basis points in rate and 5-10 points in proceeds.
+
+**Send us your scenario**: property type, loan balance, maturity date, current occupancy and debt service coverage. We'll map the refinance path and identify execution options before you're forced into emergency mode.
+
+**Email**: info@818capitalpartners.com  
+**Direct**: Use the contact form at 818capitalpartners.com/contact with "Maturity Review" in the subject line.`,
+  },
 ];
 
 export function getInsightBySlug(slug: string): InsightPost | undefined {
