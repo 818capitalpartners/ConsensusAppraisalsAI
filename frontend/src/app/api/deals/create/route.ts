@@ -85,7 +85,7 @@ async function sendMagicLinkEmail(args: {
         </div>
         <p style="margin:0 0 8px;color:#7A7A7A;font-size:12px;">
           Bookmark this email — the link is unique to your deal and how you'll log back in.
-          If you ever need a fresh link, just reply and we'll send one.
+          Lost it later? Just go to <a href="https://www.818capitalpartners.com/deal/login" style="color:#2E75B6;">818capitalpartners.com/deal/login</a> and enter your email — we'll send a fresh link.
         </p>
         <hr style="border:0;border-top:1px solid #D9D9D9;margin:22px 0;">
         <div style="font-size:13px;">
