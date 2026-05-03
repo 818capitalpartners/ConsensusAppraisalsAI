@@ -927,7 +927,7 @@ Our broker program gives you access to the AI Scenario Desk, Flip Lab, STR Signa
     category: 'DSCR',
     date: 'March 20, 2026',
     readTime: '8 min read',
-    image: 'https://images.unsplash.com/photo-1560518883-ce09059eeffa?w=1200&h=600&fit=crop',
+    image: 'https://images.unsplash.com/photo-1450101499163-c8848c66ca85?w=1200&h=600&fit=crop',
     content: `## DSCR Loan Requirements in 2026
 
 DSCR loans have become the most popular financing tool for real estate investors who want to qualify on property income rather than personal income. But the requirements vary significantly between lenders. This guide breaks down exactly what you need to qualify in 2026 — from a direct lender that closes these deals every week.
@@ -1040,7 +1040,7 @@ Ready to run the numbers on your deal? Use our [DSCR Calculator](/dscr-loans#for
     category: 'Fix & Flip',
     date: 'March 18, 2026',
     readTime: '7 min read',
-    image: 'https://images.unsplash.com/photo-1572120360610-d971b9d7767c?w=1200&h=600&fit=crop',
+    image: 'https://images.unsplash.com/photo-1503387762-592deb58ef4e?w=1200&h=600&fit=crop',
     content: `## How to Calculate Fix and Flip Profit
 
 Every successful flip starts with the numbers. Before you make an offer on a property, you need to know three things: what it will cost, what it will be worth after renovation, and how much profit is left after all expenses. This guide walks you through the math, step by step.
@@ -1252,7 +1252,7 @@ Submit your deal through our [scenario form](/dscr-loans#form) or call (917) 993
     category: 'Market Analysis',
     date: 'April 10, 2026',
     readTime: '6 min read',
-    image: 'https://images.unsplash.com/photo-1611974789855-9c2a0a7236a3?w=1200&h=600&fit=crop',
+    image: 'https://images.unsplash.com/photo-1590283603385-17ffb3a7f29f?w=1200&h=600&fit=crop',
     content: `## Where Q1 Started and Where It Ended
 
 DSCR pricing entered 2026 in a holding pattern. Lenders had spent late 2025 absorbing a wave of new capital and were testing how aggressive they could be without losing margin. By the end of Q1, that test was over.
@@ -1343,7 +1343,7 @@ Submit a scenario through our [DSCR scenario form](/dscr-loans#form) or call (91
     category: 'DSCR',
     date: 'April 24, 2026',
     readTime: '7 min read',
-    image: 'https://images.unsplash.com/photo-1486406146926-c627a92ad1ab?w=1200&h=600&fit=crop',
+    image: 'https://images.unsplash.com/photo-1499856871958-5b9627545d1a?w=1200&h=600&fit=crop',
     content: `## Two Tools, Two Jobs
 
 A bridge loan and a DSCR refinance can both put cash in your hands and a property on your balance sheet. That is where the similarity ends.
@@ -1450,7 +1450,7 @@ If you are weighing bridge vs. DSCR on a specific deal, send us the numbers. We 
     category: 'DSCR',
     date: 'May 1, 2026',
     readTime: '7 min read',
-    image: 'https://images.unsplash.com/photo-1568605117036-5fe5e7bab0b3?w=1200&h=600&fit=crop',
+    image: 'https://images.unsplash.com/photo-1604014237800-1c9102c219da?w=1200&h=600&fit=crop',
     content: `## Why Cash-Out Is Back
 
 Cash-out refinances on investment properties slowed through 2024 and 2025 for two reasons: rates were too high to make the math work, and lenders had pulled back on max LTV. Both of those are reversing in 2026.
@@ -1541,7 +1541,7 @@ Send us your property details — current value, current balance, current rent �
     category: 'STR',
     date: 'May 12, 2026',
     readTime: '6 min read',
-    image: 'https://images.unsplash.com/photo-1502672260266-1c1ef2d93688?w=1200&h=600&fit=crop',
+    image: 'https://images.unsplash.com/photo-1576091160550-2173dba999ef?w=1200&h=600&fit=crop',
     content: `## What Counts as a Mid-Term Rental
 
 A mid-term rental (MTR) is a furnished property rented for 30 days or longer, typically 1-6 months. The tenant pool is different from short-term and long-term:
