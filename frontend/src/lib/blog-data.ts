@@ -1245,6 +1245,387 @@ As a direct investment property lender, we fund DSCR loans across 48 states with
 
 Submit your deal through our [scenario form](/dscr-loans#form) or call (917) 993-9194. We will give you an honest assessment within 24 hours — and if the numbers work, a term sheet the same day.`,
   },
+  {
+    slug: 'q1-2026-dscr-rate-recap',
+    title: 'Q1 2026 DSCR Rate Recap and What\'s Driving Q2',
+    excerpt: 'Where DSCR rates landed in Q1 2026, which programs got more competitive, and what investors should expect from Q2 — including the spread compression we are seeing across credit tiers and the lender shifts on no-ratio and sub-1.0 programs.',
+    category: 'Market Analysis',
+    date: 'April 10, 2026',
+    readTime: '6 min read',
+    image: 'https://images.unsplash.com/photo-1611974789855-9c2a0a7236a3?w=1200&h=600&fit=crop',
+    content: `## Where Q1 Started and Where It Ended
+
+DSCR pricing entered 2026 in a holding pattern. Lenders had spent late 2025 absorbing a wave of new capital and were testing how aggressive they could be without losing margin. By the end of Q1, that test was over.
+
+We saw three things happen across the quarter:
+
+- **Headline rates compressed 40-60 bps** on standard 75% LTV, 740+ credit, 1.25+ DSCR scenarios from January to late March
+- **No-ratio and sub-1.0 programs widened** — more lenders are offering them, and the rate premium over standard DSCR shrank by 25-50 bps
+- **Interest-only products came back** at competitive pricing, not just as a niche overlay
+
+If you priced a deal in early January and again in late March, you likely saw a meaningfully better rate sheet the second time — even with no change to the borrower profile.
+
+## Credit Tier Compression
+
+The most interesting Q1 development was not at the top of the credit stack. It was in the middle.
+
+- **740+ credit:** Improvement of 25-40 bps quarter over quarter. Already the best tier, so the move is smaller in absolute terms.
+- **720-739 credit:** Improvement of 35-50 bps. The gap to 740+ pricing narrowed at several lenders.
+- **700-719 credit:** Improvement of 50-75 bps. This is where competition got real. Lenders are fighting for the slightly-below-prime borrower.
+- **660-699 credit:** Improvement of 30-50 bps. Still a meaningful premium to top tier, but the absolute rate dropped enough to bring deals back into qualification range.
+
+If your borrower scored 705 in January and you got a no-go on DSCR because the rate killed cash flow — re-run it. The same scenario in late March may pencil.
+
+## Programs That Got More Competitive
+
+Three product areas saw real movement in Q1:
+
+### No-Ratio DSCR
+
+These programs do not calculate DSCR at all. Qualification is based on credit, LTV, and reserves. In Q1 2025, you might pay 100-150 bps over standard DSCR for a no-ratio program. In Q1 2026, that premium is closer to 50-100 bps at competitive lenders.
+
+Why it matters: investors with strong credit and reserves who own properties that do not cash flow on paper (negative leverage in expensive markets, recent rent dips, vacancy at the time of underwriting) now have a real path to financing without forcing the DSCR math.
+
+### Sub-1.0 DSCR
+
+For deals that calculate at 0.75-0.99 DSCR, more lenders entered the space in Q1. The rate premium over 1.0+ DSCR compressed from 75-125 bps to roughly 50-75 bps at the better-priced shops. Reserve requirements stayed the same (typically 12 months PITI), but more lenders are willing to look.
+
+This is opening up a class of deal that simply did not get done a year ago — properties with strong fundamentals but soft current rents, or value-add deals where the borrower needs financing before the rent bump materializes.
+
+### Interest-Only
+
+Interest-only DSCR is back at meaningful scale. The 10-year IO period is the most common offering, with rates running roughly 25-40 bps above amortizing on equivalent profiles.
+
+Two reasons investors are using IO right now:
+
+1. **Cash flow boost on tight DSCR deals.** Calculating DSCR on the IO payment instead of the fully amortizing payment lifts your ratio meaningfully — often enough to push a 0.95 deal into 1.10+ territory.
+2. **Maximizing cash-on-cash for shorter holds.** If you plan to refi or sell in 5-7 years, IO frees up capital each month for additional acquisitions.
+
+## LTV Pricing Shifts
+
+The 75% LTV tier remained the standard. The notable Q1 movement was at the edges:
+
+- **80% LTV:** The premium over 75% LTV compressed from 35-50 bps to roughly 25-35 bps at competitive lenders. If you needed maximum leverage, you paid less for it in late March than in early January.
+- **65-70% LTV:** The discount versus 75% LTV widened at a few lenders, with 25-50 bps off pricing for borrowers who could put more down. If you have the capital and are pricing-sensitive, the lower-LTV path improved.
+
+## What's Driving Q2
+
+Three forces are shaping Q2 pricing:
+
+**1. Continued capital inflow.** Securitization spreads tightened through Q1, which means lenders can fund DSCR loans more cheaply and pass some of that savings to borrowers. We expect this to continue into Q2 unless macro spreads widen.
+
+**2. Competition for prime borrowers.** Top-tier credit and DSCR scenarios are the most contested. If you fit the 740+ / 1.25+ / 75% LTV box, expect lender outreach and aggressive pricing. Get multiple quotes — the spread between best and worst lender on the same scenario can be 50+ bps.
+
+**3. Program experimentation.** Several lenders are piloting 40-year amortization, 5/6 ARM products at meaningful discounts to 30-year fixed, and expanded no-ratio to 80% LTV. These are not all permanent yet, but the menu is widening.
+
+## What This Means for Your Strategy
+
+If you are an investor sitting on properties you priced in 2024 or early 2025:
+
+- **Refi candidates exist.** Even without a rate-cut cycle, the rate sheet improvement plus any tightened LTV math may put you in better terms than your current note.
+- **Cash-out refi pencils on more deals.** Compressed pricing means the equity pull does not eat as much into cash flow.
+- **Acquisition windows are real.** If you have been waiting for "the right rate," late Q1 and Q2 are giving you something close to it.
+
+If you are a broker:
+
+- Re-quote scenarios you killed in Q4 2025. Many of them work now.
+- Pay attention to no-ratio and sub-1.0 — your "too tight to fund" pile likely has live deals in it.
+- Pricing speed matters. If you cannot get a same-day scenario response from your lender, you are losing deals to whoever can.
+
+## Get a Current Q2 Quote
+
+Submit a scenario through our [DSCR scenario form](/dscr-loans#form) or call (917) 993-9194. We will run live Q2 pricing across our program shelf and give you a written assessment within 24 hours.`,
+  },
+  {
+    slug: 'bridge-loan-vs-dscr-refi',
+    title: 'Bridge Loan vs. DSCR Refinance: When Each One Wins',
+    excerpt: 'Bridge loans and DSCR refis solve different problems — one buys you time, the other buys you a long-term hold. When to use each, how the math differs on a $500K rental, and the trap of using a bridge when you should have gone straight to DSCR.',
+    category: 'DSCR',
+    date: 'April 24, 2026',
+    readTime: '7 min read',
+    image: 'https://images.unsplash.com/photo-1486406146926-c627a92ad1ab?w=1200&h=600&fit=crop',
+    content: `## Two Tools, Two Jobs
+
+A bridge loan and a DSCR refinance can both put cash in your hands and a property on your balance sheet. That is where the similarity ends.
+
+- **A bridge loan buys you time.** Short term (6-24 months), interest-only, higher rate, easier to qualify, fast to close. You use it when speed matters more than cost.
+- **A DSCR refi buys you a long-term hold.** 30-year amortization (or interest-only), permanent financing, lower rate, more documentation, slower to close. You use it when the property is stabilized and you want to settle in.
+
+Choosing the wrong one wastes money. Choosing the right one in the wrong sequence wastes more.
+
+## When Bridge Wins
+
+Use a bridge loan when at least one of these is true:
+
+**1. The property is not stabilized.** Vacancy, deferred maintenance, mid-renovation, recent eviction. Long-term lenders want to see a property that produces income today. Bridge lenders are comfortable underwriting the future.
+
+**2. You need to close in under 21 days.** DSCR refis run 21-35 days from application to funding at most lenders. If you have a hard purchase deadline, a 1031 exchange clock, or a competitive offer that demands speed, a bridge can close in 7-14 days.
+
+**3. The borrower or entity is not refi-ready.** Recent credit event, entity formed last week, foreign national without a U.S. credit profile, complex title situation. Bridge lenders work with situations that DSCR programs reject on the application.
+
+**4. You are buying value-add and exiting on the back end.** A property at 60% of stabilized rent today, with a clear path to market rent in 12 months, is a classic bridge play. You renovate, lease up, then take out the bridge with a DSCR refi at the higher post-stabilization value.
+
+## When DSCR Refi Wins
+
+Use a DSCR refi when:
+
+**1. The property is producing income today.** Stabilized occupancy, leases in place, market-rate rent. The lender can underwrite to current cash flow and give you the best pricing.
+
+**2. You want to hold for the long term.** Bridge interest accrues fast. If you are not exiting within 18-24 months, the cumulative cost of a bridge crushes the rate advantage of refinancing later.
+
+**3. You are pulling equity for the next acquisition.** A cash-out DSCR refi at 75-80% LTV is the cleanest way to recycle capital from a stabilized property without selling.
+
+**4. You can wait 25-35 days to close.** No hard deadline, no competing offers, no clock running on a 1031.
+
+## The Math on a $500K Rental
+
+Numbers make this concrete. Same property, same investor, two financing paths.
+
+**Property:**
+- Purchase price: $500,000
+- Stabilized rent: $3,800/month
+- Taxes + insurance + HOA: $650/month
+- Down payment available: $125,000 (25%)
+
+### Path A: Bridge Now, Refi in 12 Months
+
+Bridge loan at 75% LTV, 9.99% interest-only, 12-month term:
+- Loan amount: $375,000
+- Monthly interest payment: ~$3,121
+- Origination: 2 points = $7,500
+- Estimated closing costs: $5,000
+- **Total carry over 12 months:** $3,121 x 12 + $7,500 + $5,000 = ~$49,952
+
+Then refi into DSCR at month 12, 7.25%, 75% LTV, 30-year amortization:
+- Loan amount: $375,000
+- Monthly P&I: ~$2,558
+- Origination + closing: ~$10,000
+- **Total combined first-year cost:** ~$59,952 in carry and closing
+
+### Path B: DSCR Refi Direct (if eligible)
+
+DSCR loan at 75% LTV, 7.25%, 30-year amortization:
+- Loan amount: $375,000
+- Monthly P&I: ~$2,558
+- Origination + closing: ~$10,000
+- **First-year cost:** $2,558 x 12 + $10,000 = ~$40,696
+
+The direct DSCR path saves roughly $19,000 in year one. That is the cost of choosing the wrong tool.
+
+But — and this is the key — Path A is the right choice if the property is not stabilized at month zero. Trying to force a DSCR loan on a property that is 60% occupied with a renovation in progress will get you a no-go, or a sub-optimal rate, or a 0.85 DSCR that puts you in a sub-1.0 program with worse pricing than the bridge plus the eventual refi combined.
+
+The math only argues for direct DSCR when DSCR is actually available.
+
+## The Bridge Trap
+
+The most common mistake we see: investors who use a bridge loan when they could have qualified for DSCR from day one.
+
+The pattern:
+
+1. Borrower hears bridge is "fast and easy"
+2. Bridge loan closes in 10 days at 9.99%
+3. Property is stabilized within 60 days
+4. Borrower waits the full 12-month bridge term before refinancing
+5. Total cost of capital over those 12 months is 3-4x what the DSCR refi would have been
+
+If the property is stabilized and you can wait 25-35 days, the bridge is almost never the cheaper option. Speed is real value, but it is not free.
+
+## A Better Sequence
+
+For value-add deals where bridge is the right entry, plan the exit at the start:
+
+1. **Underwrite the post-stabilization DSCR before you write the bridge.** Make sure the refi math works at conservative assumptions — 8% rate, 75% LTV, 1.10 DSCR minimum cushion.
+2. **Execute the renovation and lease-up on a 90-120 day timeline.** Faster stabilization equals less bridge interest.
+3. **Start the DSCR refi process when leases are signed, not when they are seasoned.** Many DSCR lenders accept signed leases without requiring 6 months of payment history. You can start the refi 60-90 days into the bridge and close it before the bridge term hits.
+4. **Pay the prepayment penalty if your bridge has one.** It is almost always cheaper than paying 6 more months of bridge interest.
+
+## Get the Right Tool
+
+If you are weighing bridge vs. DSCR on a specific deal, send us the numbers. We run both paths through our [scenario desk](/dscr-loans#form) and give you a written comparison — bridge cost, refi cost, combined cost, and a recommendation. Same-day response in most cases. Call (917) 993-9194 if you want to talk it through.`,
+  },
+  {
+    slug: 'cash-out-refi-rentals-2026',
+    title: 'Cash-Out Refinance on Rental Properties: How Investors Are Pulling Equity in 2026',
+    excerpt: 'With rates compressing and rents holding, cash-out DSCR refis are back on the table. LTV limits, seasoning rules, how lenders are treating appraisals in 2026, and a step-by-step on calculating whether your equity pull actually pencils.',
+    category: 'DSCR',
+    date: 'May 1, 2026',
+    readTime: '7 min read',
+    image: 'https://images.unsplash.com/photo-1568605117036-5fe5e7bab0b3?w=1200&h=600&fit=crop',
+    content: `## Why Cash-Out Is Back
+
+Cash-out refinances on investment properties slowed through 2024 and 2025 for two reasons: rates were too high to make the math work, and lenders had pulled back on max LTV. Both of those are reversing in 2026.
+
+- **DSCR rates compressed 40-60 bps in Q1**, which means the new payment after a cash-out is no longer dramatically higher than the old payment.
+- **80% LTV cash-out is widely available again** for strong profiles, where 75% was the practical ceiling at most lenders through 2025.
+- **Rents have held in most markets**, which keeps DSCR ratios healthy at the new loan amount.
+
+The result: deals that did not pencil for cash-out in 2024 are penciling in 2026. If you have not re-run the math on a property you bought 18-36 months ago, it is worth doing.
+
+## LTV Caps in 2026
+
+Cash-out DSCR LTV in 2026, by credit tier:
+
+- **740+ credit:** Up to 80% LTV cash-out at multiple lenders, with 75% as the standard. The 80% tier requires 1.10+ DSCR and 6-9 months reserves.
+- **720-739 credit:** 75% LTV widely available. 80% available at fewer lenders, typically with 1.20+ DSCR and additional reserve requirements.
+- **700-719 credit:** 75% LTV available with 1.15+ DSCR and 9-12 months reserves. 80% rare in this tier.
+- **660-699 credit:** 70% LTV is the practical ceiling. 75% available at a few lenders with 1.25+ DSCR.
+
+These are cash-out caps. Rate-and-term refinances (no equity pull) typically allow 5% higher LTV at each tier.
+
+## Seasoning Rules
+
+How long you have owned the property determines what value the lender will use:
+
+- **0-6 months ownership:** Most lenders use the lower of purchase price or current appraisal. You cannot pull equity above your basis. This blocks the "buy distressed cash, refi at full value next month" play at most lenders.
+- **6-12 months ownership:** Some lenders will use current appraisal if you can document substantive improvements. Receipts and before/after photos help.
+- **12+ months ownership:** Most lenders will use current appraised value with no question. This is when the cash-out math really opens up.
+
+If you bought a property 8 months ago at $400K and put $40K into renovations, and it appraises today at $520K — at the 12-month mark you can refi against the $520K. Before 12 months, most lenders cap you at $440K.
+
+A handful of lenders offer "delayed financing" exceptions for properties bought all-cash in the prior 6 months. If you closed cash and want to pull equity quickly, that is the program to ask for.
+
+## How Lenders Are Treating Appraisals in 2026
+
+Two shifts worth knowing:
+
+**1. Appraisal-management discipline tightened.** Appraisals are coming in closer to lender expectations than they were in 2023-2024. Fewer aggressive comps, more weight on recent (under 90 days) sales, less tolerance for adjustments above 15%. Plan your equity pull at conservative comps, not at the top of the recent comp range.
+
+**2. Cost-approach value is showing up more.** Especially for newer construction or properties in markets with thin sales data. If your property has high replacement cost, that may help the appraisal land where you need it.
+
+Practical move: pull recent sold comps within a half-mile and 90 days before you order the appraisal. If your target value is not supported by those comps, your appraisal will not get there either. Adjust your loan amount expectation before you spend $500-700 on the appraisal.
+
+## The Math: Does Your Equity Pull Pencil?
+
+Step by step, using a sample property:
+
+**Property today:**
+- Current value: $600,000
+- Current loan balance: $300,000 (purchased 3 years ago at $450K, 75% LTV)
+- Current rate: 7.50%, monthly P&I: $2,098
+- Current monthly rent: $4,200
+- Taxes + insurance: $700/month
+- Current DSCR: $4,200 / ($2,098 + $700) = 1.50
+
+**Cash-out refi at 75% LTV, 7.10%:**
+- New loan amount: $450,000
+- Cash-out at closing: $450,000 - $300,000 - $10,000 (closing costs) = $140,000
+- New monthly P&I: $3,021
+- New DSCR: $4,200 / ($3,021 + $700) = 1.13
+
+**The decision points:**
+
+1. **Does the new DSCR still qualify?** 1.13 clears most lender minimums (1.0). Comfortable cushion.
+2. **Is the cash flow still positive?** Old cash flow: $4,200 - $2,098 - $700 = $1,402/month. New cash flow: $4,200 - $3,021 - $700 = $479/month. You give up $923/month of cash flow.
+3. **Can you deploy the $140K at a return that beats the lost cash flow?** $923/month x 12 = $11,076/year of lost cash flow on $140K of capital pulled. That is a 7.9% hurdle rate. If your next acquisition or use of capital returns better than 7.9% all-in, the cash-out makes sense. If not, leave the equity in the property.
+
+This is the calculation most investors skip. Pulling equity feels like free money — it is not. It is a refinance into a lower-cash-flow position in exchange for liquidity. The liquidity has to earn its keep.
+
+## Common Mistakes
+
+**Mistake 1: Maxing LTV without checking DSCR.** 80% LTV cash-out sounds great until your DSCR drops below 1.0 and the program disappears. Run the post-refi DSCR before you commit to a loan amount.
+
+**Mistake 2: Not pricing the rate impact.** A 7.50% loan refinanced into a 7.10% loan looks like a win — until you realize you also moved from $300K to $450K of principal. Your monthly payment went up, not down. The savings are in the new loan amount, not the rate.
+
+**Mistake 3: Ignoring closing costs.** Cash-out refis run $8K-$15K in closing costs depending on the loan amount and state. Subtract that from your "cash to me" expectation upfront.
+
+**Mistake 4: Pulling equity to sit on cash.** If the $140K sits in a checking account for 6 months while you "look for the next deal," you are paying $4,500-$5,500 of interest on it for nothing. Have the next use lined up before you close.
+
+## Run Your Cash-Out Numbers
+
+Send us your property details — current value, current balance, current rent — and we will run a written cash-out scenario at multiple LTV options with the new payment, new DSCR, and break-even hurdle rate calculated. Use our [scenario form](/dscr-loans#form) or call (917) 993-9194. 24-hour turnaround.`,
+  },
+  {
+    slug: 'mid-term-rentals-dscr',
+    title: 'Mid-Term Rentals: The DSCR Sweet Spot Most Investors Are Missing',
+    excerpt: '30+ day furnished rentals — for traveling nurses, insurance displacements, corporate relos — qualify under DSCR like long-term leases, but earn closer to STR economics. Why lenders prefer them, how to underwrite the income, and the markets where MTR demand is strongest.',
+    category: 'STR',
+    date: 'May 12, 2026',
+    readTime: '6 min read',
+    image: 'https://images.unsplash.com/photo-1502672260266-1c1ef2d93688?w=1200&h=600&fit=crop',
+    content: `## What Counts as a Mid-Term Rental
+
+A mid-term rental (MTR) is a furnished property rented for 30 days or longer, typically 1-6 months. The tenant pool is different from short-term and long-term:
+
+- **Traveling healthcare workers** on 13-week assignments
+- **Insurance displacements** — homeowners whose property is uninhabitable due to fire, water damage, or storm
+- **Corporate relocations** — employees in temporary housing during a move or assignment
+- **Remote workers** doing 1-3 month stays in different cities
+- **Construction crews** on multi-month projects
+
+The defining traits: stays of at least 30 days, fully furnished, utilities included, lease (not nightly booking) as the contracting form.
+
+This matters because the 30-day-plus lease is what unlocks DSCR financing on terms a true STR cannot get.
+
+## Why Lenders Prefer MTR Over STR
+
+Pure STR (Airbnb, VRBO, sub-30-day) is a category most DSCR lenders treat with extra friction:
+
+- Lower acceptable LTV (often 70-75% max instead of 80%)
+- Income normalization haircuts (lenders often use 70-80% of trailing AirDNA or actual booking revenue)
+- More markets with regulatory restrictions (which affects underwriting)
+- Reserve requirements often bumped 3-6 months above standard DSCR
+
+MTR sidesteps most of that. From a lender perspective, a 30-day-plus lease looks much more like a traditional rental than a vacation booking. That means:
+
+- **80% LTV available** at most DSCR lenders (same as long-term rental)
+- **Income underwritten on actual lease amount**, not normalized down to 70%
+- **No regulatory red flags** in most municipalities (city STR ordinances usually exempt 30-day-plus stays)
+- **Standard reserve requirements** (6 months PITI), not the inflated STR tier
+
+If your operating model can sustain 30-day-plus stays consistently, you get STR-adjacent revenue at long-term-rental loan terms.
+
+## Underwriting MTR Income for DSCR
+
+How lenders qualify MTR income depends on the documentation you can produce:
+
+**Best case: in-place lease.** A signed lease for 30+ days at the time of application is the cleanest path. The lender uses the lease amount directly for DSCR calculation. Treated identically to a long-term rental lease.
+
+**Strong case: rent roll history.** If the property has been operated as MTR for 12+ months, a documented rent roll showing consistent occupancy and rates lets the lender underwrite to actual trailing income, often at full value with no haircut.
+
+**Acceptable case: comparable rents (1007 or market rent analysis).** For new acquisitions or recent conversions, the appraiser provides a market rent analysis. For MTR, you typically need to support the appraisal with actual MTR comp data — Furnished Finder listings, corporate housing comparables, or a market study.
+
+**Weak case: pro forma projections.** Some lenders will not consider pro forma MTR income at all. Others will, but with a 25-30% haircut. Avoid this path if you can — get at least one signed lease before applying.
+
+## Markets Where MTR Demand Is Strongest
+
+MTR works in markets with one or more of these demand drivers:
+
+**1. Major hospital systems.** Travel nursing demand follows large medical centers. Houston, Nashville, Atlanta, Dallas, Phoenix, Tampa, and Charlotte all have multiple Level 1 trauma centers and consistent travel nurse rotation.
+
+**2. Insurance displacement volume.** Markets with frequent severe weather (hurricanes in Florida and the Gulf Coast, hail in Texas, wildfires in Colorado and the Southwest) generate steady insurance-housing demand. Insurance carriers and adjusters book MTR on behalf of policyholders.
+
+**3. Corporate relocation hubs.** Atlanta, Charlotte, Austin, Dallas, Denver, and the Research Triangle (NC) draw consistent corporate housing demand from Fortune 500 employer concentration.
+
+**4. Military bases.** Base towns often have steady demand for officer and contractor housing during training rotations or PCS gaps.
+
+The strongest MTR markets usually have all four. Tampa is a current standout — major hospitals, hurricane-displacement volume, corporate relo growth, and MacDill Air Force Base.
+
+## The Operator Profile That Wins MTR
+
+MTR is not passive. The operators who succeed share a few traits:
+
+- **Furniture and design quality.** Insurance and corporate guests are paying $3,500-$6,000/month. They expect a finished space, not Ikea minimum viable furnishings.
+- **Listings on the right platforms.** Furnished Finder, CHBO, Airbnb (with 30-day minimum filter), and direct relationships with travel nurse agencies, insurance housing coordinators, and corporate relo firms.
+- **Operational basics handled.** Weekly cleaning between guest changeovers, utilities included and tracked, simple lease documentation, fast response to maintenance.
+- **Realistic occupancy targets.** 75-85% occupancy is healthy. Pricing for 95% occupancy means underpricing the unit. Pricing for 60% means overpricing it.
+
+A property that nets $4,500/month at 80% MTR occupancy in a strong market beats the same property at $2,800/month long-term — and qualifies under DSCR at the same loan terms.
+
+## How to Pitch the Loan
+
+When you submit an MTR property for DSCR financing, lead with the documentation that gets you the cleanest underwrite:
+
+1. **Signed lease** — best case, full value
+2. **Trailing 12-month rent roll** — strong case, actual income
+3. **Market rent analysis with MTR comps** — acceptable case, appraiser-supported
+4. **Pro forma with platform data** — weakest, expect a haircut
+
+Make sure the loan officer and lender know you are pitching MTR, not STR. The two get conflated in submission, and the wrong category triggers the wrong overlays. "30-day-plus furnished rental, lease in place, qualifying as long-term rental" is the framing that gets the right pricing.
+
+## Run an MTR Scenario
+
+If you have an MTR property in mind — purchase, refinance, or cash-out — send us the address, lease or rent roll, and target loan amount. We run it as MTR (not STR) through our [scenario form](/dscr-loans#form) and quote 80% LTV programs where most lenders force you into STR pricing. Call (917) 993-9194 if you want to talk through a specific market.`,
+  },
 ];
 
 export function getPostBySlug(slug: string): BlogPost | undefined {
