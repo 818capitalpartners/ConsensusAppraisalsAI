@@ -134,9 +134,41 @@ export interface AiAppraisalResult {
   riskAssessment: RiskAssessment;
   laneMetrics: Record<string, unknown>;
   narrative: AppraisalNarrative;
+  rehab: RehabEstimate | null;
   confidence: number; // 0-100 overall
   generatedAt: string;
   version: string;
+}
+
+// ─── Rehab Estimate ──────────────────────────────────────
+
+export type RehabConditionGrade = 'turnkey' | 'cosmetic' | 'moderate' | 'heavy' | 'gut';
+
+export interface RehabLineItem {
+  category: string; // kitchen, bath, mech, roof, exterior, cosmetic, contingency, etc.
+  scope: string;
+  unit: string; // sqft, ea, bath, kitchen, lump
+  quantity: number;
+  unitCostLow: number;
+  unitCostHigh: number;
+  totalLow: number;
+  totalHigh: number;
+  notes: string | null;
+}
+
+export interface RehabEstimate {
+  conditionGrade: RehabConditionGrade;
+  squareFeet: number | null;
+  costBasis: 'localized' | 'national_fallback';
+  laborIndex: number; // multiplier vs national (1.00 = national avg)
+  lineItems: RehabLineItem[];
+  totalLow: number;
+  totalMid: number;
+  totalHigh: number;
+  contingencyPct: number;
+  confidenceScore: number; // 0-100
+  methodology: string[];
+  assumptions: string[];
 }
 
 // ─── Service Interfaces ──────────────────────────────────
@@ -149,5 +181,40 @@ export interface AppraisalRequest {
 export interface AppraisalResponse {
   success: boolean;
   result: AiAppraisalResult | null;
+  errors: string[];
+}
+
+// ─── Quick (address-first) Path ──────────────────────────
+
+export interface QuickAppraisalRequest {
+  address: string;
+  city?: string;
+  state: string;
+  zip?: string;
+  propertyType?: string;
+  squareFeet?: number;
+  yearBuilt?: number;
+  units?: number;
+  bedrooms?: number;
+  bathrooms?: number;
+  condition?: RehabConditionGrade;
+  targetUse?: 'flip' | 'rental' | 'str' | 'hold';
+}
+
+export interface QuickAppraisalResult {
+  property: PropertyDetails;
+  marketContext: MarketContext;
+  valueEstimate: ValueEstimate;
+  rehab: RehabEstimate | null;
+  riskAssessment: RiskAssessment;
+  narrative: AppraisalNarrative;
+  confidence: number;
+  generatedAt: string;
+  version: string;
+}
+
+export interface QuickAppraisalResponse {
+  success: boolean;
+  result: QuickAppraisalResult | null;
   errors: string[];
 }
