@@ -13,7 +13,7 @@ export interface LenderPdfTable {
 }
 
 export interface LenderPdfSection {
-  key: 'cover' | 'summary' | 'property' | 'valuation-details' | 'comps' | 'risks' | 'appendix';
+  key: 'cover' | 'summary' | 'property' | 'valuation-details' | 'comps' | 'rehab' | 'risks' | 'appendix';
   title: string;
   textBlocks: LenderPdfTextBlock[];
   tables: LenderPdfTable[];
@@ -27,6 +27,7 @@ export interface LenderPdfDocument {
     reportType: 'Lender Appraisal Summary';
   };
   sections: [
+    LenderPdfSection,
     LenderPdfSection,
     LenderPdfSection,
     LenderPdfSection,
@@ -199,6 +200,46 @@ export function buildLenderPdfDocument(pkg: LenderAppraisalPackage): LenderPdfDo
     ],
   };
 
+  const rehabBlock = pkg.rehab;
+  const rehabBullets: string[] = rehabBlock.status === 'present'
+    ? [
+      `Condition Grade: ${rehabBlock.conditionGrade ?? 'N/A'}`,
+      `Cost Basis: ${rehabBlock.costBasis ?? 'N/A'}${rehabBlock.laborIndex != null ? ` (labor index ${rehabBlock.laborIndex.toFixed(2)}x)` : ''}`,
+      `Total Range: ${formatCurrency(rehabBlock.totalLow)} – ${formatCurrency(rehabBlock.totalHigh)} (mid ${formatCurrency(rehabBlock.totalMid)})`,
+      `Contingency: ${rehabBlock.contingencyPct != null ? `${(rehabBlock.contingencyPct * 100).toFixed(0)}%` : 'N/A'}`,
+      `Confidence: ${formatPercent(rehabBlock.confidenceScore)}`,
+    ]
+    : ['No rehab estimate was generated for this deal.'];
+
+  const rehab: LenderPdfSection = {
+    key: 'rehab',
+    title: 'Rehab',
+    textBlocks: [
+      { type: 'bullets', content: rehabBullets },
+      ...(rehabBlock.assumptions.length > 0
+        ? [{ type: 'bullets' as const, heading: 'Assumptions', content: rehabBlock.assumptions }]
+        : []),
+      ...(rehabBlock.methodology.length > 0
+        ? [{ type: 'bullets' as const, heading: 'Methodology', content: rehabBlock.methodology }]
+        : []),
+    ],
+    tables: rehabBlock.lineItems.length > 0 ? [
+      {
+        heading: 'Line Items',
+        columns: ['Category', 'Scope', 'Qty', 'Unit', 'Total Low', 'Total High', 'Notes'],
+        rows: rehabBlock.lineItems.map((item) => ([
+          item.category,
+          item.scope,
+          formatNumber(item.quantity),
+          item.unit,
+          formatCurrency(item.totalLow),
+          formatCurrency(item.totalHigh),
+          item.notes,
+        ])),
+      },
+    ] : [],
+  };
+
   const risks: LenderPdfSection = {
     key: 'risks',
     title: 'Risks',
@@ -252,6 +293,6 @@ export function buildLenderPdfDocument(pkg: LenderAppraisalPackage): LenderPdfDo
       issuer: '818 Capital',
       reportType: 'Lender Appraisal Summary',
     },
-    sections: [cover, summary, property, valuationDetails, comps, risks, appendix],
+    sections: [cover, summary, property, valuationDetails, comps, rehab, risks, appendix],
   };
 }

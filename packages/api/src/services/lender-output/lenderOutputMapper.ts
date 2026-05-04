@@ -4,6 +4,8 @@ import type {
   BorrowerFacingSummary,
   LenderAppraisalPackage,
   LenderComparable,
+  LenderRehabBlock,
+  LenderRehabLineItem,
   LenderRiskFlag,
   ValueRange,
 } from './lenderOutputTypes';
@@ -214,6 +216,61 @@ function deriveSubjectProperty(deal: Deal, appraisal: AiAppraisalResult | null, 
   };
 }
 
+function normalizeRehabLineItem(item: Record<string, unknown>): LenderRehabLineItem {
+  return {
+    category: pickFirstString(item, ['category']) ?? 'misc',
+    scope: pickFirstString(item, ['scope']) ?? 'Line item',
+    unit: pickFirstString(item, ['unit']) ?? 'lump',
+    quantity: pickFirstNumber(item, ['quantity']) ?? 1,
+    unitCostLow: pickFirstNumber(item, ['unitCostLow']) ?? 0,
+    unitCostHigh: pickFirstNumber(item, ['unitCostHigh']) ?? 0,
+    totalLow: pickFirstNumber(item, ['totalLow']) ?? 0,
+    totalHigh: pickFirstNumber(item, ['totalHigh']) ?? 0,
+    notes: pickFirstString(item, ['notes']),
+  };
+}
+
+function buildRehabBlock(appraisal: AiAppraisalResult | null): LenderRehabBlock {
+  const rehab = readObject(appraisal?.rehab);
+  if (!rehab) {
+    return {
+      status: 'absent',
+      conditionGrade: null,
+      squareFeet: null,
+      costBasis: null,
+      laborIndex: null,
+      totalLow: null,
+      totalMid: null,
+      totalHigh: null,
+      contingencyPct: null,
+      confidenceScore: null,
+      methodology: [],
+      assumptions: [],
+      lineItems: [],
+    };
+  }
+
+  const costBasisRaw = pickFirstString(rehab, ['costBasis']);
+  const costBasis: 'localized' | 'national_fallback' | null =
+    costBasisRaw === 'localized' || costBasisRaw === 'national_fallback' ? costBasisRaw : null;
+
+  return {
+    status: 'present',
+    conditionGrade: pickFirstString(rehab, ['conditionGrade']),
+    squareFeet: pickFirstNumber(rehab, ['squareFeet']),
+    costBasis,
+    laborIndex: pickFirstNumber(rehab, ['laborIndex']),
+    totalLow: pickFirstNumber(rehab, ['totalLow']),
+    totalMid: pickFirstNumber(rehab, ['totalMid']),
+    totalHigh: pickFirstNumber(rehab, ['totalHigh']),
+    contingencyPct: pickFirstNumber(rehab, ['contingencyPct']),
+    confidenceScore: pickFirstNumber(rehab, ['confidenceScore']),
+    methodology: readStringArray(rehab.methodology),
+    assumptions: readStringArray(rehab.assumptions),
+    lineItems: readObjectArray(rehab.lineItems).map(normalizeRehabLineItem),
+  };
+}
+
 function buildWarnings(source: LenderAppraisalPackage['audit']['sourceValuationField'], appraisal: AiAppraisalResult | null): string[] {
   const warnings: string[] = [];
 
@@ -286,6 +343,7 @@ export async function buildLenderAppraisalPackage(args: {
       rent: readObjectArray(appraisal?.comps?.rent).slice(0, MAX_RENT_COMPS).map(normalizeComparable),
       sales: readObjectArray(appraisal?.comps?.sales).slice(0, MAX_SALE_COMPS).map(normalizeComparable),
     },
+    rehab: buildRehabBlock(appraisal),
     riskSummary: {
       combinedRiskFlags,
       humanReviewFlags,
