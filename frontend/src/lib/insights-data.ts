@@ -616,6 +616,54 @@ The maturity wall is real, the calendar is unforgiving, and early movers get bet
 **Email**: info@818capitalpartners.com  
 **Direct**: Use the contact form at 818capitalpartners.com/contact with "Maturity Review" in the subject line.`,
   },
+  {
+    slug: 'ceasefire-mortgage-rate-reversal',
+    title: 'Rates Drop 40-50bps in 72 Hours After Ceasefire — What It Means for Commercial Debt',
+    excerpt: 'The US-Iran ceasefire triggered the sharpest rate decline in 18 months. Here\'s how lenders are responding and what deals just became pencil-able.',
+    category: 'Market Update',
+    date: 'May 2026',
+    image: 'https://images.unsplash.com/photo-1554224155-6726b3ff858f?w=800&h=500&fit=crop',
+    content: `## Rates Fell Faster Than They Rose
+
+Mortgage rates dropped 40-50 basis points across most commercial and investment property programs in the three days following the US-Iran ceasefire announcement. That's the single largest weekly decline since Q4 2024.
+
+The 10-year Treasury — which had spiked 75+ basis points during the conflict — retraced nearly two-thirds of that move inside 72 hours. Agency pricing desks, bridge lenders, and DSCR originators all repriced downward by midweek. One non-QM issuer that had pulled rate sheets entirely during the volatility came back online with 5-year fixed DSCR products 55 basis points lower than their pre-conflict levels.
+
+## What Changed on the Ground
+
+**DSCR loans:** Nationally, 30-year fixed DSCR rates for 1.25+ cash flow properties dropped from the low 8s to the mid-to-high 7s. That's a $200+/month swing on a $500K loan, which changes underwriting materially for thin-margin rental acquisitions.
+
+**Agency multifamily:** Both agencies saw application volume jump 30-40% week-over-week as borrowers who'd been waiting for sub-7% financing suddenly had line of sight. Rate locks that were off the table at 7.4% became viable at 6.9%. Sponsors with Q2 maturities are rushing to refi before volatility returns.
+
+**Bridge and fix-flip:** Short-term construction and value-add bridge products saw smaller moves — 25-35 basis points — because these float on SOFR plus spread, not Treasury benchmarks. But even that reduction is enough to make levered flip deals that were underwater at 11% suddenly work at 10.6%.
+
+**Permanent commercial:** Conduit CMBS spreads tightened modestly but remain elevated compared to late 2025. Life companies that had paused new commitments began quoting again, though credit boxes stayed tight. Office and retail remain effectively unfundable outside of trophy assets.
+
+## The Maturity Wall Is Still There
+
+$1.2 trillion in commercial real estate debt matures between now and Q4 2027. The ceasefire doesn't change that. What it does is open a potential refinance window for borrowers whose loans mature in the next 6-9 months and who couldn't justify refi costs at 8%+ rates.
+
+If you're sitting on a $2-5M multifamily loan maturing in late 2026 or early 2027, this is your signal to model takeout scenarios now. Lenders are quoting again. That won't last if geopolitical risk re-emerges or if economic data weakens and rates spike for different reasons.
+
+## Deals That Just Became Viable
+
+- **Cash-out refis on stabilized rental portfolios** that couldn't hit debt service at 8.2% suddenly pencil at 7.6%.
+- **1031 exchange buyers** who were priced out two weeks ago can now meet seller pricing and still achieve 1.25+ DSCR.
+- **Value-add multifamily acquisitions** with 12-18 month business plans can lock agency bridge or construction debt at levels that allow for reasonable exit assumptions.
+- **Portfolio recaps** for investors holding multiple DSCR loans originated in 2021-22 at sub-4% rates — the spread between old and new debt narrowed enough that a strategic recap to pull equity makes sense again.
+
+## What We're Telling Clients
+
+Rate relief is real but likely temporary. If you've been waiting to act on a refinance, acquisition, or cash-out scenario, the window is open right now. Lenders are underwriting, pricing is rational, and the economic backdrop — absent another geopolitical shock — is stable enough to support 60-90 day closings.
+
+Don't assume this holds through summer. Lock what you can lock.
+
+## Talk to 818
+
+If you're evaluating a refinance, acquisition, or construction takeout in the current rate environment, send your scenario to 818 Capital Partners. We'll show you what's actually available from agency, DSCR, and bridge programs — and where the best execution is hiding.
+
+**Email your deal summary to info@818capitalpartners.com or call our team directly. We're quoting live.**`,
+  },
 ];
 
 export function getInsightBySlug(slug: string): InsightPost | undefined {
