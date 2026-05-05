@@ -250,3 +250,47 @@ class BorrowerFacingSummary(BaseModel):
     methods_used: list[str] = []
     risk_summary: list[str] = []
     notes: str = ""
+
+
+# ── Multi-agent supervisor ("Ask David"-style) ────────────────────────────────
+
+class AgentToolCall(BaseModel):
+    agent: str = Field(pattern=r"^(retrieval|structured|analytics)$")
+    tool: str
+    args: dict[str, Any] = {}
+
+
+class AgentPlan(BaseModel):
+    rationale: str = ""
+    steps: list[AgentToolCall] = []
+
+
+class AgentTraceStep(BaseModel):
+    agent: str
+    tool: str
+    args: dict[str, Any] = {}
+    result: Any = None
+    error: str | None = None
+    duration_ms: int = 0
+
+
+class JudgeVerdict(BaseModel):
+    score: int = Field(ge=0, le=100)
+    issues: list[str] = []
+    requires_human_review: bool = False
+    rationale: str = ""
+
+
+class AgentAskRequest(BaseModel):
+    question: str = Field(min_length=3, max_length=2000)
+    context: dict[str, Any] | None = None
+
+
+class AgentAskResponse(BaseModel):
+    question: str
+    answer: str
+    plan: AgentPlan
+    trace: list[AgentTraceStep] = []
+    judge: JudgeVerdict
+    requires_human_review: bool = False
+    notified_slack: bool = False
