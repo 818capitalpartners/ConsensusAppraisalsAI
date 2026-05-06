@@ -3,7 +3,7 @@ name: Agent - Daily Dashboard
 # Every weekday at 7:03 AM ET (11:03 UTC). Computes Red/Yellow/Green
 # health across active pipeline, drafts 3 actions per Red deal, 1 per
 # Yellow, writes the dashboard markdown to docs/daily-dashboard/.
-# Per spec §6.
+# Per spec 6.
 
 on:
   schedule:
@@ -18,6 +18,8 @@ jobs:
     runs-on: ubuntu-latest
     steps:
       - uses: actions/checkout@v4
+        with:
+          token: ${{ secrets.SAML_LINKED_PAT || github.token }}
       - uses: actions/setup-python@v5
         with:
           python-version: '3.12'
@@ -33,8 +35,8 @@ jobs:
         run: python daily_dashboard.py
       - name: Commit dashboard
         run: |
-          git config user.name "818 Capital Dashboard Bot"
-          git config user.email "bot@818capitalpartners.com"
+          git config user.name "818capitalpartners"
+          git config user.email "818capitalpartners@gmail.com"
           git add docs/daily-dashboard/
           if git diff --cached --quiet; then
             echo "No dashboard change."
