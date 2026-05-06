@@ -64,6 +64,37 @@ export interface LenderRehabLineItem {
   notes: string | null;
 }
 
+export interface LenderApproach {
+  kind: 'sales_comparison' | 'market_band' | 'income';
+  label: string;
+  available: boolean;
+  range: ValueRange;
+  confidence: number | null;
+  reasoning: string;
+}
+
+export interface LenderAdjustedComp {
+  compId: string | null;
+  address: string | null;
+  city: string | null;
+  zip: string | null;
+  salePrice: number | null;
+  saleDate: string | null;
+  squareFeet: number | null;
+  pricePerSqFt: number | null;
+  bedrooms: number | null;
+  bathrooms: number | null;
+  yearBuilt: number | null;
+  source: string | null;
+  recencyMonths: number | null;
+  locationMatch: 'zip' | 'city' | 'county' | null;
+  adjustmentTotal: number | null;
+  adjustedValue: number | null;
+  similarityScore: number | null;
+  weight: number | null;
+  reasoning: string[];
+}
+
 export interface LenderRehabBlock {
   status: 'present' | 'absent';
   conditionGrade: string | null;
@@ -123,6 +154,8 @@ export interface LenderAppraisalPackage {
     sales: LenderComparable[];
   };
   rehab: LenderRehabBlock;
+  approaches: LenderApproach[];
+  adjustedComps: LenderAdjustedComp[];
   riskSummary: {
     combinedRiskFlags: LenderRiskFlag[];
     humanReviewFlags: LenderRiskFlag[];
@@ -180,6 +213,8 @@ export interface AiAppraisalResult {
   };
   subjectProperty?: Partial<LenderAppraisalPackage['subjectProperty']>;
   notesForBorrower?: string[];
+  approaches?: unknown[];
+  selectedComps?: unknown[];
   rehab?: {
     conditionGrade?: string;
     squareFeet?: number | null;

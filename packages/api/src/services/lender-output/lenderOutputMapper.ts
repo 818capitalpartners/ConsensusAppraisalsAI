@@ -2,6 +2,8 @@ import { prisma, type Deal } from '@818capital/db';
 import type {
   AiAppraisalResult,
   BorrowerFacingSummary,
+  LenderAdjustedComp,
+  LenderApproach,
   LenderAppraisalPackage,
   LenderComparable,
   LenderRehabBlock,
@@ -230,6 +232,64 @@ function normalizeRehabLineItem(item: Record<string, unknown>): LenderRehabLineI
   };
 }
 
+function buildApproaches(appraisal: AiAppraisalResult | null): LenderApproach[] {
+  const arr = Array.isArray(appraisal?.approaches) ? appraisal!.approaches : [];
+  return arr.filter(isRecord).map((raw): LenderApproach => {
+    const kindRaw = pickFirstString(raw, ['kind']) ?? 'sales_comparison';
+    const kind: LenderApproach['kind'] =
+      kindRaw === 'market_band' || kindRaw === 'income' || kindRaw === 'sales_comparison'
+        ? kindRaw
+        : 'sales_comparison';
+    const range = readObject(raw.range);
+    return {
+      kind,
+      label: pickFirstString(raw, ['label']) ?? kind,
+      available: Boolean(raw.available),
+      range: {
+        low: pickFirstNumber(range, ['low']),
+        high: pickFirstNumber(range, ['high']),
+        pointValue: pickFirstNumber(range, ['mid', 'pointValue']),
+        currency: 'USD',
+      },
+      confidence: pickFirstNumber(raw, ['confidence']),
+      reasoning: pickFirstString(raw, ['reasoning']) ?? '',
+    };
+  });
+}
+
+function buildAdjustedComps(appraisal: AiAppraisalResult | null): LenderAdjustedComp[] {
+  const arr = Array.isArray(appraisal?.selectedComps) ? appraisal!.selectedComps : [];
+  return arr.filter(isRecord).map((raw): LenderAdjustedComp => {
+    const locMatchRaw = pickFirstString(raw, ['locationMatch']);
+    const locationMatch: LenderAdjustedComp['locationMatch'] =
+      locMatchRaw === 'zip' || locMatchRaw === 'city' || locMatchRaw === 'county'
+        ? locMatchRaw
+        : null;
+    const reasoning = Array.isArray(raw.reasoning) ? readStringArray(raw.reasoning) : [];
+    return {
+      compId: pickFirstString(raw, ['compId']),
+      address: pickFirstString(raw, ['address']),
+      city: pickFirstString(raw, ['city']),
+      zip: pickFirstString(raw, ['zip']),
+      salePrice: pickFirstNumber(raw, ['salePrice']),
+      saleDate: pickFirstString(raw, ['saleDate']),
+      squareFeet: pickFirstNumber(raw, ['squareFeet']),
+      pricePerSqFt: pickFirstNumber(raw, ['pricePerSqFt']),
+      bedrooms: pickFirstNumber(raw, ['bedrooms']),
+      bathrooms: pickFirstNumber(raw, ['bathrooms']),
+      yearBuilt: pickFirstNumber(raw, ['yearBuilt']),
+      source: pickFirstString(raw, ['source']),
+      recencyMonths: pickFirstNumber(raw, ['recencyMonths']),
+      locationMatch,
+      adjustmentTotal: pickFirstNumber(raw, ['adjustmentTotal']),
+      adjustedValue: pickFirstNumber(raw, ['adjustedValue']),
+      similarityScore: pickFirstNumber(raw, ['similarityScore']),
+      weight: pickFirstNumber(raw, ['weight']),
+      reasoning,
+    };
+  });
+}
+
 function buildRehabBlock(appraisal: AiAppraisalResult | null): LenderRehabBlock {
   const rehab = readObject(appraisal?.rehab);
   if (!rehab) {
@@ -344,6 +404,8 @@ export async function buildLenderAppraisalPackage(args: {
       sales: readObjectArray(appraisal?.comps?.sales).slice(0, MAX_SALE_COMPS).map(normalizeComparable),
     },
     rehab: buildRehabBlock(appraisal),
+    approaches: buildApproaches(appraisal),
+    adjustedComps: buildAdjustedComps(appraisal),
     riskSummary: {
       combinedRiskFlags,
       humanReviewFlags,

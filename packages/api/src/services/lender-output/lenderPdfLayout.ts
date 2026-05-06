@@ -13,7 +13,7 @@ export interface LenderPdfTable {
 }
 
 export interface LenderPdfSection {
-  key: 'cover' | 'summary' | 'property' | 'valuation-details' | 'comps' | 'rehab' | 'risks' | 'appendix';
+  key: 'cover' | 'summary' | 'property' | 'valuation-details' | 'methods' | 'comps' | 'rehab' | 'risks' | 'appendix';
   title: string;
   textBlocks: LenderPdfTextBlock[];
   tables: LenderPdfTable[];
@@ -26,16 +26,7 @@ export interface LenderPdfDocument {
     issuer: '818 Capital';
     reportType: 'Lender Appraisal Summary';
   };
-  sections: [
-    LenderPdfSection,
-    LenderPdfSection,
-    LenderPdfSection,
-    LenderPdfSection,
-    LenderPdfSection,
-    LenderPdfSection,
-    LenderPdfSection,
-    LenderPdfSection,
-  ];
+  sections: LenderPdfSection[];
 }
 
 function formatCurrency(value: number | null): string {
@@ -166,38 +157,57 @@ export function buildLenderPdfDocument(pkg: LenderAppraisalPackage): LenderPdfDo
     ],
   };
 
-  const comps: LenderPdfSection = {
-    key: 'comps',
-    title: 'Comps',
-    textBlocks: [],
-    tables: [
+  const methods: LenderPdfSection = {
+    key: 'methods',
+    title: 'Valuation Methods',
+    textBlocks: [
       {
-        heading: 'Rent Comps',
-        columns: ['Address', 'Type', 'Units', 'Rent', 'Rent/SF', 'Distance', 'Source'],
-        rows: pkg.comps.rent.map((comp) => ([
-          comp.address,
-          comp.propertyType,
-          comp.units,
-          formatCurrency(comp.monthlyRent),
-          formatCurrency(comp.rentPerSquareFoot),
-          formatNumber(comp.distanceMiles),
-          comp.source,
-        ])),
-      },
-      {
-        heading: 'Sale Comps',
-        columns: ['Address', 'Type', 'Units', 'Sale Price', 'Price/SF', 'Distance', 'Source'],
-        rows: pkg.comps.sales.map((comp) => ([
-          comp.address,
-          comp.propertyType,
-          comp.units,
-          formatCurrency(comp.salePrice),
-          formatCurrency(comp.pricePerSquareFoot),
-          formatNumber(comp.distanceMiles),
-          comp.source,
-        ])),
+        type: 'bullets',
+        content: pkg.approaches.length === 0
+          ? ['No valuation approach detail was attached.']
+          : pkg.approaches.map((a) =>
+            a.available
+              ? `${a.label}: ${formatCurrency(a.range.pointValue)} (${formatPercent(a.confidence)} confidence) — ${a.reasoning}`
+              : `${a.label}: not available — ${a.reasoning}`,
+          ),
       },
     ],
+    tables: pkg.approaches.length > 0 ? [
+      {
+        heading: 'Method Reconciliation',
+        columns: ['Method', 'Low', 'Mid', 'High', 'Confidence'],
+        rows: pkg.approaches.map((a) => ([
+          a.label,
+          formatCurrency(a.range.low),
+          formatCurrency(a.range.pointValue),
+          formatCurrency(a.range.high),
+          formatPercent(a.confidence),
+        ])),
+      },
+    ] : [],
+  };
+
+  const comps: LenderPdfSection = {
+    key: 'comps',
+    title: 'Adjusted Comps',
+    textBlocks: pkg.adjustedComps.length === 0 ? [
+      { type: 'paragraph', content: 'No adjusted comp set was produced for this deal.' },
+    ] : [],
+    tables: pkg.adjustedComps.length > 0 ? [
+      {
+        heading: `Adjusted Comps (${pkg.adjustedComps.length}, ranked by similarity)`,
+        columns: ['Address', 'Sale', 'Adj', 'Adjusted', 'Similarity', 'Match', 'Recency'],
+        rows: pkg.adjustedComps.map((c) => ([
+          c.address,
+          formatCurrency(c.salePrice),
+          formatCurrency(c.adjustmentTotal),
+          formatCurrency(c.adjustedValue),
+          formatPercent(c.similarityScore),
+          c.locationMatch ?? 'n/a',
+          c.recencyMonths != null ? `${c.recencyMonths.toFixed(1)} mo` : 'n/a',
+        ])),
+      },
+    ] : [],
   };
 
   const rehabBlock = pkg.rehab;
@@ -293,6 +303,6 @@ export function buildLenderPdfDocument(pkg: LenderAppraisalPackage): LenderPdfDo
       issuer: '818 Capital',
       reportType: 'Lender Appraisal Summary',
     },
-    sections: [cover, summary, property, valuationDetails, comps, rehab, risks, appendix],
+    sections: [cover, summary, property, valuationDetails, methods, comps, rehab, risks, appendix],
   };
 }
