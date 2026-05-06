@@ -16,17 +16,17 @@ const MARKET_STATS = [
 ];
 
 const PROGRAM_TIERS = [
-  { name: 'Agency (Fannie/Freddie)', units: '5–500+', ltv: 'Up to 80%', term: '5–35yr', best: 'Stabilized assets with strong NOI' },
-  { name: 'Bridge / Value-Add', units: '5–200+', ltv: 'Up to 80% LTC', term: '12–36mo IO', best: 'Renovation, lease-up, repositioning' },
-  { name: 'CMBS / Life Company', units: '20+', ltv: 'Up to 75%', term: '5–25yr fixed', best: 'Long-term hold, institutional quality' },
-  { name: 'DSCR Multifamily', units: '5–20', ltv: 'Up to 80%', term: '30yr fixed', best: 'Small multifamily, no tax returns' },
+  { name: 'Agency (Fannie/Freddie)', units: '5-500+', ltv: 'Up to 80%', term: '5-35yr', best: 'Stabilized assets with strong NOI' },
+  { name: 'Bridge / Value-Add', units: '5-200+', ltv: 'Up to 80% LTC', term: '12-36mo IO', best: 'Renovation, lease-up, repositioning' },
+  { name: 'CMBS / Life Company', units: '20+', ltv: 'Up to 75%', term: '5-25yr fixed', best: 'Long-term hold, institutional quality' },
+  { name: 'DSCR Multifamily', units: '5-20', ltv: 'Up to 80%', term: '30yr fixed', best: 'Small multifamily, no tax returns' },
 ];
 
 const TOP_MARKETS = [
   { market: 'Dallas-Fort Worth', units: '28K+', occ: '92%', growth: '+4.1%', image: 'https://images.unsplash.com/photo-1545194445-dddb8f4487c6?w=400&q=80' },
   { market: 'Phoenix', units: '22K+', occ: '94%', growth: '+3.8%', image: 'https://images.unsplash.com/photo-1558645836-e44122a743ee?w=400&q=80' },
-  { market: 'Atlanta', units: '19K+', occ: '93%', growth: '+3.5%', image: 'https://images.unsplash.com/photo-1575917649111-0c4d35e0391a?w=400&q=80' },
-  { market: 'Nashville', units: '12K+', occ: '91%', growth: '+4.7%', image: 'https://images.unsplash.com/photo-1545419913-775e3e0e2fc4?w=400&q=80' },
+  { market: 'Atlanta', units: '19K+', occ: '93%', growth: '+3.5%', image: 'https://images.unsplash.com/photo-1486406146926-c627a92ad1ab?w=400&q=80' },
+  { market: 'Nashville', units: '12K+', occ: '91%', growth: '+4.7%', image: 'https://images.unsplash.com/photo-1560518883-ce09059eeffa?w=400&q=80' },
 ];
 
 function TrendIcon({ trend }: { trend: string }) {
@@ -64,7 +64,7 @@ export default function MultifamilyPage() {
             <h2 className="section-heading">National Market Snapshot</h2>
             <span className="text-[10px] font-sans font-semibold text-navy-400 bg-navy-50 px-2.5 py-1 rounded uppercase tracking-wider">Q1 2026</span>
           </div>
-          <p className="text-sm text-navy-500 font-body mb-8">Source: Northmarq, CBRE, CoStar — national multifamily averages</p>
+          <p className="text-sm text-navy-500 font-body mb-8">Source: Northmarq, CBRE, CoStar - national multifamily averages</p>
 
           <div className="grid grid-cols-2 lg:grid-cols-4 gap-4 mb-14">
             {MARKET_STATS.map((stat, i) => (
