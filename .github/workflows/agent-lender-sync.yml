@@ -17,6 +17,8 @@ jobs:
     runs-on: ubuntu-latest
     steps:
       - uses: actions/checkout@v4
+        with:
+          token: ${{ secrets.SAML_LINKED_PAT || github.token }}
       - uses: actions/setup-python@v5
         with:
           python-version: '3.12'
@@ -29,8 +31,8 @@ jobs:
         run: python lender_weekly_sync.py
       - name: Commit drafts
         run: |
-          git config user.name "818 Capital Lender Sync Bot"
-          git config user.email "bot@818capitalpartners.com"
+          git config user.name "818capitalpartners"
+          git config user.email "818capitalpartners@gmail.com"
           git add docs/lender-sync-drafts/
           if git diff --cached --quiet; then
             echo "No drafts to commit."
