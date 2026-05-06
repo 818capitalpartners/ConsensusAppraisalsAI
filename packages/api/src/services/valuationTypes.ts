@@ -37,6 +37,9 @@ export interface ComparableSaleData {
   squareFeet: number | null;
   pricePerSqFt: number | null;
   units: number | null;
+  bedrooms: number | null;
+  bathrooms: number | null;
+  yearBuilt: number | null;
   distanceMiles: number | null;
   daysOnMarket: number | null;
   adjustedValue: number | null;
@@ -91,6 +94,29 @@ export interface ValueEstimate {
   methodology: string[];
 }
 
+// ─── Multi-method Valuation ──────────────────────────────
+
+export type ApproachKind = 'sales_comparison' | 'market_band' | 'income';
+
+export interface ApproachResult {
+  kind: ApproachKind;
+  label: string; // human-readable
+  range: ValueRange;
+  confidence: number; // 0-100
+  weight: number; // 0-1, used in reconciliation
+  inputs: Record<string, number | string | null>; // what fed the calculation
+  reasoning: string; // one-sentence explanation
+  available: boolean; // false when inputs are missing
+}
+
+export interface ReconciledValuation {
+  asIs: ValueRange;
+  stabilized: ValueRange | null;
+  confidenceScore: number;
+  approaches: ApproachResult[];
+  methodology: string[];
+}
+
 // ─── Risk Assessment ─────────────────────────────────────
 
 export type RiskCategory = 'market' | 'property' | 'financial' | 'data_quality';
@@ -124,6 +150,32 @@ export interface AppraisalNarrative {
   aiGenerated: boolean;
 }
 
+// Per-comp adjustment surfaced to consumers (mirrors compSelection.AdjustedComp
+// but kept here to avoid a circular type dependency between valuationTypes
+// and compSelection).
+export interface AdjustedCompView {
+  compId: string;
+  address: string;
+  city: string | null;
+  zip: string | null;
+  salePrice: number;
+  saleDate: string;
+  squareFeet: number | null;
+  pricePerSqFt: number | null;
+  bedrooms: number | null;
+  bathrooms: number | null;
+  yearBuilt: number | null;
+  source: string | null;
+  recencyMonths: number;
+  locationMatch: 'zip' | 'city' | 'county';
+  adjustments: { size: number; age: number; beds: number; baths: number; condition: number };
+  adjustmentTotal: number;
+  adjustedValue: number;
+  similarityScore: number;
+  weight: number;
+  reasoning: string[];
+}
+
 export interface AiAppraisalResult {
   id: string;
   dealId: string;
@@ -131,6 +183,8 @@ export interface AiAppraisalResult {
   property: PropertyDetails;
   marketContext: MarketContext;
   valueEstimate: ValueEstimate;
+  approaches: ApproachResult[];
+  selectedComps: AdjustedCompView[];
   riskAssessment: RiskAssessment;
   laneMetrics: Record<string, unknown>;
   narrative: AppraisalNarrative;
@@ -205,6 +259,8 @@ export interface QuickAppraisalResult {
   property: PropertyDetails;
   marketContext: MarketContext;
   valueEstimate: ValueEstimate;
+  approaches: ApproachResult[];
+  selectedComps: AdjustedCompView[];
   rehab: RehabEstimate | null;
   riskAssessment: RiskAssessment;
   narrative: AppraisalNarrative;
