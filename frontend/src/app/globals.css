@@ -60,3 +60,12 @@ html {
 body {
   overflow-x: hidden;
 }
+
+/* Hide the homepage hero photo collage until real, matching property assets are available. */
+body > div > section:first-of-type .relative.hidden.md\:block {
+  display: none !important;
+}
+
+body > div > section:first-of-type .grid.lg\:grid-cols-2 {
+  grid-template-columns: minmax(0, 1fr) !important;
+}
