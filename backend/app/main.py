@@ -4,7 +4,7 @@ from fastapi import FastAPI
 from fastapi.middleware.cors import CORSMiddleware
 
 from app.config import settings
-from app.routes import health, deals, contacts, broker_kit, content, appraisal
+from app.routes import health, deals, contacts, broker_kit, content, appraisal, agent
 
 
 @asynccontextmanager
@@ -37,6 +37,7 @@ app.include_router(contacts.router, prefix="/api/contacts", tags=["contacts"])
 app.include_router(broker_kit.router, prefix="/api/broker-kit", tags=["broker-kit"])
 app.include_router(content.router, prefix="/api/content", tags=["content"])
 app.include_router(appraisal.router, prefix="/api/appraisal", tags=["appraisal"])
+app.include_router(agent.router, prefix="/api/agent", tags=["agent"])
 
 
 @app.get("/")
