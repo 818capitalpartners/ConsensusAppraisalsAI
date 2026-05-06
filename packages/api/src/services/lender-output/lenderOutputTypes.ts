@@ -52,6 +52,34 @@ export interface LenderRiskFlag {
   mitigant: string | null;
 }
 
+export interface LenderRehabLineItem {
+  category: string;
+  scope: string;
+  unit: string;
+  quantity: number;
+  unitCostLow: number;
+  unitCostHigh: number;
+  totalLow: number;
+  totalHigh: number;
+  notes: string | null;
+}
+
+export interface LenderRehabBlock {
+  status: 'present' | 'absent';
+  conditionGrade: string | null;
+  squareFeet: number | null;
+  costBasis: 'localized' | 'national_fallback' | null;
+  laborIndex: number | null;
+  totalLow: number | null;
+  totalMid: number | null;
+  totalHigh: number | null;
+  contingencyPct: number | null;
+  confidenceScore: number | null;
+  methodology: string[];
+  assumptions: string[];
+  lineItems: LenderRehabLineItem[];
+}
+
 export interface LenderAppraisalPackage {
   metadata: {
     lenderLoanId: string;
@@ -94,6 +122,7 @@ export interface LenderAppraisalPackage {
     rent: LenderComparable[];
     sales: LenderComparable[];
   };
+  rehab: LenderRehabBlock;
   riskSummary: {
     combinedRiskFlags: LenderRiskFlag[];
     humanReviewFlags: LenderRiskFlag[];
@@ -151,4 +180,18 @@ export interface AiAppraisalResult {
   };
   subjectProperty?: Partial<LenderAppraisalPackage['subjectProperty']>;
   notesForBorrower?: string[];
+  rehab?: {
+    conditionGrade?: string;
+    squareFeet?: number | null;
+    costBasis?: string;
+    laborIndex?: number;
+    totalLow?: number;
+    totalMid?: number;
+    totalHigh?: number;
+    contingencyPct?: number;
+    confidenceScore?: number;
+    methodology?: string[];
+    assumptions?: string[];
+    lineItems?: unknown[];
+  };
 }

@@ -6,12 +6,18 @@ import type {
   AppraisalResponse,
   ProductLane,
   PropertyDetails,
+  QuickAppraisalRequest,
+  QuickAppraisalResponse,
+  QuickAppraisalResult,
+  RehabConditionGrade,
+  RehabEstimate,
 } from './valuationTypes';
 import { appraisalRequestSchema, validateLaneInput } from './valuationValidation';
 import { getMarketContext } from './marketDataService';
 import { generateAppraisal } from './aiAppraisal';
 import { assessRisk, adjustValueForDataQuality } from './riskGuardrails';
 import { validateAndNormalize } from './dataValidation';
+import { estimateRehab } from './rehabEstimator';
 
 /**
  * Valuation Service — main orchestrator for the AI Appraisal pipeline.
@@ -174,7 +180,14 @@ export async function runAppraisal(request: AppraisalRequest): Promise<Appraisal
   // 10. Adjust values for data quality
   const adjustedValue = adjustValueForDataQuality(valueEstimate, marketContext.dataQuality);
 
-  // 11. Build final result
+  // 11. Rehab estimate (only when condition grade is available or deal is a flip)
+  const conditionGrade = resolveConditionGrade(
+    (deal.financials as Record<string, unknown> | null)?.condition,
+    lane,
+  );
+  const rehab: RehabEstimate | null = conditionGrade ? estimateRehab({ property, conditionGrade }) : null;
+
+  // 12. Build final result
   const appraisalId = randomUUID();
   const result: AiAppraisalResult = {
     id: appraisalId,
@@ -186,6 +199,7 @@ export async function runAppraisal(request: AppraisalRequest): Promise<Appraisal
     riskAssessment,
     laneMetrics,
     narrative,
+    rehab,
     confidence: adjustedValue.confidenceScore,
     generatedAt: new Date().toISOString(),
     version: APPRAISAL_VERSION,
@@ -234,6 +248,7 @@ export async function runAppraisal(request: AppraisalRequest): Promise<Appraisal
           },
           subjectProperty: property,
           notesForBorrower: narrative.notesForBorrower,
+          rehab: rehab ?? undefined,
         })),
       },
     });
@@ -241,6 +256,115 @@ export async function runAppraisal(request: AppraisalRequest): Promise<Appraisal
     console.error('[valuationService] Failed to store appraisal result:', err);
     errors.push('Appraisal generated but failed to store on deal.');
   }
+
+  return { success: true, result, errors };
+}
+
+// ─── Quick (address-first) Appraisal ─────────────────────
+
+const VALID_CONDITION_GRADES: RehabConditionGrade[] = ['turnkey', 'cosmetic', 'moderate', 'heavy', 'gut'];
+
+function resolveConditionGrade(raw: unknown, lane?: ProductLane): RehabConditionGrade | null {
+  if (typeof raw === 'string' && (VALID_CONDITION_GRADES as string[]).includes(raw)) {
+    return raw as RehabConditionGrade;
+  }
+  // Default to 'moderate' for flips when not specified — flippers always need a number
+  if (lane === 'flip') return 'moderate';
+  return null;
+}
+
+function laneFromTargetUse(targetUse?: string): ProductLane {
+  switch (targetUse) {
+    case 'flip': return 'flip';
+    case 'rental': return 'dscr';
+    case 'str': return 'str';
+    case 'hold': return 'dscr';
+    default: return 'dscr';
+  }
+}
+
+export async function runQuickAppraisal(request: QuickAppraisalRequest): Promise<QuickAppraisalResponse> {
+  const errors: string[] = [];
+
+  if (!request.address || !request.state) {
+    return { success: false, result: null, errors: ['address and state are required'] };
+  }
+
+  const lane = laneFromTargetUse(request.targetUse);
+
+  // Build a lightweight property record (no Deal needed)
+  const validated = validateAndNormalize({
+    address: request.address,
+    city: request.city,
+    state: request.state,
+    zip: request.zip,
+    propertyType: request.propertyType,
+    units: request.units,
+    squareFeet: request.squareFeet,
+    yearBuilt: request.yearBuilt,
+  });
+
+  const property: PropertyDetails = {
+    address: validated.address,
+    city: validated.city ?? request.city ?? null,
+    state: validated.state,
+    zip: validated.zip,
+    county: null,
+    fips: null,
+    propertyType: validated.propertyType,
+    units: validated.units,
+    bedrooms: request.bedrooms ?? null,
+    bathrooms: request.bathrooms ?? null,
+    squareFeet: validated.squareFeet,
+    yearBuilt: validated.yearBuilt,
+    lotSize: null,
+    condition: request.condition ?? null,
+  };
+
+  // Market context
+  let marketContext;
+  try {
+    marketContext = await getMarketContext({
+      state: property.state ?? request.state,
+      zip: property.zip ?? undefined,
+      propertyType: property.propertyType ?? undefined,
+    });
+  } catch (err) {
+    console.error('[valuationService] Quick: market context failed:', err);
+    return { success: false, result: null, errors: ['Market data lookup failed.'] };
+  }
+  property.county = marketContext.countyName;
+  property.fips = marketContext.countyFips;
+
+  // Valuation
+  let valueEstimate;
+  let narrative;
+  try {
+    const out = await generateAppraisal(lane, property, marketContext, {});
+    valueEstimate = out.valueEstimate;
+    narrative = out.narrative;
+  } catch (err) {
+    console.error('[valuationService] Quick: AI appraisal failed:', err);
+    return { success: false, result: null, errors: ['Valuation generation failed.'] };
+  }
+
+  const riskAssessment = assessRisk({ lane, marketContext, valueEstimate, laneMetrics: {} });
+  const adjustedValue = adjustValueForDataQuality(valueEstimate, marketContext.dataQuality);
+
+  const conditionGrade = resolveConditionGrade(request.condition, lane);
+  const rehab = conditionGrade ? estimateRehab({ property, conditionGrade }) : null;
+
+  const result: QuickAppraisalResult = {
+    property,
+    marketContext,
+    valueEstimate: adjustedValue,
+    rehab,
+    riskAssessment,
+    narrative,
+    confidence: adjustedValue.confidenceScore,
+    generatedAt: new Date().toISOString(),
+    version: APPRAISAL_VERSION,
+  };
 
   return { success: true, result, errors };
 }

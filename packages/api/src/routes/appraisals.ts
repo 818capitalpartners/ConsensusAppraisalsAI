@@ -1,8 +1,54 @@
 import { Router, Request, Response } from 'express';
-import { runAppraisal } from '../services/valuationService';
+import { runAppraisal, runQuickAppraisal } from '../services/valuationService';
 import { ingestComps, ingestSnapshots, getVendor, genericAdapter } from '../services/marketVendors';
+import { estimateRehab } from '../services/rehabEstimator';
+import type { PropertyDetails, RehabConditionGrade } from '../services/valuationTypes';
 
 export const appraisalsRouter = Router();
+
+const VALID_GRADES: RehabConditionGrade[] = ['turnkey', 'cosmetic', 'moderate', 'heavy', 'gut'];
+
+/**
+ * POST /api/appraisals/quick — Address-first underwrite. No Deal record required.
+ * Body: { address, state, zip?, city?, propertyType?, squareFeet?, yearBuilt?,
+ *         units?, bedrooms?, bathrooms?, condition?, targetUse? }
+ */
+appraisalsRouter.post('/quick', async (req: Request, res: Response) => {
+  try {
+    const result = await runQuickAppraisal(req.body ?? {});
+    if (!result.success) {
+      res.status(422).json(result);
+      return;
+    }
+    res.json(result);
+  } catch (err) {
+    console.error('[appraisals] Error running quick appraisal:', err);
+    res.status(500).json({ success: false, error: 'Internal error running quick appraisal' });
+  }
+});
+
+/**
+ * POST /api/appraisals/rehab — Rehab estimate only.
+ * Body: { property: PropertyDetails-shaped object, conditionGrade: RehabConditionGrade }
+ */
+appraisalsRouter.post('/rehab', async (req: Request, res: Response) => {
+  try {
+    const { property, conditionGrade } = req.body ?? {};
+    if (!property || !conditionGrade) {
+      res.status(400).json({ success: false, error: 'property and conditionGrade are required' });
+      return;
+    }
+    if (!VALID_GRADES.includes(conditionGrade)) {
+      res.status(400).json({ success: false, error: `conditionGrade must be one of: ${VALID_GRADES.join(', ')}` });
+      return;
+    }
+    const estimate = estimateRehab({ property: property as PropertyDetails, conditionGrade });
+    res.json({ success: true, estimate });
+  } catch (err) {
+    console.error('[appraisals] Error estimating rehab:', err);
+    res.status(500).json({ success: false, error: 'Internal error estimating rehab' });
+  }
+});
 
 /**
  * POST /api/appraisals/run — Run AI appraisal for a deal.
