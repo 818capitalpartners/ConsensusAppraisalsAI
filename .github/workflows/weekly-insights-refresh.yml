@@ -7,7 +7,7 @@ name: Weekly Insights Refresh
 on:
   schedule:
     # 09:07 ET every Monday (13:07 UTC during ET standard time, 14:07 UTC during ET DST)
-    # Using 13:07 UTC — cron runs in UTC; DST drift is acceptable for a weekly job.
+    # Using 13:07 UTC; cron runs in UTC; DST drift is acceptable for a weekly job.
     - cron: '7 13 * * 1'
   workflow_dispatch: {}  # allow manual trigger from GitHub Actions UI
 
@@ -20,6 +20,8 @@ jobs:
     steps:
       - name: Checkout repo
         uses: actions/checkout@v4
+        with:
+          token: ${{ secrets.SAML_LINKED_PAT || github.token }}
 
       - name: Set up Python
         uses: actions/setup-python@v5
@@ -37,8 +39,8 @@ jobs:
 
       - name: Commit and push
         run: |
-          git config user.name "818 Capital Weekly Bot"
-          git config user.email "bot@818capitalpartners.com"
+          git config user.name "818capitalpartners"
+          git config user.email "818capitalpartners@gmail.com"
           git add frontend/src/lib/insights-data.ts
           if git diff --cached --quiet; then
             echo "No changes to commit."
