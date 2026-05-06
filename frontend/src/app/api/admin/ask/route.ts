@@ -8,17 +8,22 @@ import { NextRequest, NextResponse } from "next/server";
  *   - Inherits the Basic Auth gate from middleware.ts (matcher includes /api/admin/*)
  *   - Lets us swap the backend host without redeploying the page
  *
- * Required env: BACKEND_URL (e.g. https://818-capital-backend.up.railway.app)
+ * Env: BACKEND_URL preferred (server-only). Falls back to NEXT_PUBLIC_API_URL,
+ * which DEPLOY.md already configures, so no extra setup is needed.
  */
 
 export const runtime = "nodejs";
 export const maxDuration = 60;
 
 export async function POST(req: NextRequest) {
-  const backend = (process.env.BACKEND_URL || "").replace(/\/$/, "");
+  const backend = (
+    process.env.BACKEND_URL ||
+    process.env.NEXT_PUBLIC_API_URL ||
+    ""
+  ).replace(/\/$/, "");
   if (!backend) {
     return NextResponse.json(
-      { error: "BACKEND_URL not configured" },
+      { error: "Backend URL not configured (set BACKEND_URL or NEXT_PUBLIC_API_URL)" },
       { status: 503 },
     );
   }
