@@ -4,19 +4,19 @@ import { NextRequest, NextResponse } from 'next/server';
  * Auth gate for internal admin routes.
  *
  * Currently protects:
- *   /command-center/*   — internal deal pipeline dashboard
+ *   /command-center/*   - internal deal pipeline dashboard
  *
  * How it works:
  *   - HTTP Basic Auth challenge (browser pops native password dialog)
  *   - Credentials checked against env vars set in Vercel:
  *       COMMAND_CENTER_USER      (defaults to "ravi")
- *       COMMAND_CENTER_PASSWORD  (REQUIRED — fails closed if missing)
+ *       COMMAND_CENTER_PASSWORD  (REQUIRED - fails closed if missing)
  *   - 401 returned with WWW-Authenticate header on any mismatch
  *   - X-Robots-Tag: noindex on the protected response so even leaked URLs
  *     do not enter search indexes
  *
  * To rotate the password: update the env var in Vercel project settings
- * → Settings → Environment Variables → redeploy. Browser-cached creds
+ * -> Settings -> Environment Variables -> redeploy. Browser-cached creds
  * become invalid on next request.
  *
  * Note: this protects the *page route*. Static JS chunks under /_next/
@@ -28,7 +28,37 @@ import { NextRequest, NextResponse } from 'next/server';
 
 const PROTECTED_PATHS = ['/command-center', '/api/admin'];
 
+const PROPERTY_IMAGE_REPLACEMENTS: Record<string, string> = {
+  // Replace generic aspirational house imagery with more grounded real-property visuals.
+  'photo-1605276374104-dee2a0ed3cd6': 'photo-1460317442991-0ec209397118',
+  'photo-1572120360610-d971b9d7767c': 'photo-1504307651254-35680f356dfd',
+  'photo-1600596542815-ffad4c1539a9': 'photo-1499793983690-e29da59ef1c2',
+  'photo-1570129477492-45c003edd2be': 'photo-1545324418-cc1a3fa10c00',
+  'photo-1564013799919-ab600027ffc6': 'photo-1499793983690-e29da59ef1c2',
+  'photo-1613490493576-7fde63acd811': 'photo-1460317442991-0ec209397118',
+};
+
+function rewritePropertyImage(req: NextRequest) {
+  if (req.nextUrl.pathname !== '/_next/image') return null;
+
+  const sourceUrl = req.nextUrl.searchParams.get('url');
+  if (!sourceUrl) return null;
+
+  const replacement = Object.entries(PROPERTY_IMAGE_REPLACEMENTS).find(([currentId]) =>
+    sourceUrl.includes(currentId)
+  );
+  if (!replacement) return null;
+
+  const [currentId, replacementId] = replacement;
+  const nextUrl = req.nextUrl.clone();
+  nextUrl.searchParams.set('url', sourceUrl.replace(currentId, replacementId));
+  return NextResponse.rewrite(nextUrl);
+}
+
 export function middleware(req: NextRequest) {
+  const propertyImageRewrite = rewritePropertyImage(req);
+  if (propertyImageRewrite) return propertyImageRewrite;
+
   const { pathname } = req.nextUrl;
 
   // Only gate paths in PROTECTED_PATHS
@@ -38,7 +68,7 @@ export function middleware(req: NextRequest) {
   const expectedUser = process.env.COMMAND_CENTER_USER || 'ravi';
   const expectedPass = process.env.COMMAND_CENTER_PASSWORD;
 
-  // Fail closed if password not configured — better to lock yourself
+  // Fail closed if password not configured - better to lock yourself
   // out than to ship an open admin route.
   if (!expectedPass) {
     return new NextResponse(
@@ -78,7 +108,5 @@ export function middleware(req: NextRequest) {
 }
 
 export const config = {
-  // Only run on the protected paths — keeps middleware overhead off
-  // every other request to the site.
-  matcher: ['/command-center/:path*', '/api/admin/:path*'],
+  matcher: ['/_next/image', '/command-center/:path*', '/api/admin/:path*'],
 };
