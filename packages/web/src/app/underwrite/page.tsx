@@ -41,6 +41,39 @@ interface RehabEstimate {
   assumptions: string[];
 }
 
+interface ApproachResult {
+  kind: 'sales_comparison' | 'market_band' | 'income';
+  label: string;
+  range: ValueRange;
+  confidence: number;
+  weight: number;
+  reasoning: string;
+  available: boolean;
+}
+
+interface AdjustedComp {
+  compId: string;
+  address: string;
+  city: string | null;
+  zip: string | null;
+  salePrice: number;
+  saleDate: string;
+  squareFeet: number | null;
+  pricePerSqFt: number | null;
+  bedrooms: number | null;
+  bathrooms: number | null;
+  yearBuilt: number | null;
+  source: string | null;
+  recencyMonths: number;
+  locationMatch: 'zip' | 'city' | 'county';
+  adjustments: { size: number; age: number; beds: number; baths: number; condition: number };
+  adjustmentTotal: number;
+  adjustedValue: number;
+  similarityScore: number;
+  weight: number;
+  reasoning: string[];
+}
+
 interface QuickAppraisalResult {
   property: {
     address: string | null;
@@ -73,6 +106,8 @@ interface QuickAppraisalResult {
     confidenceScore: number;
     methodology: string[];
   };
+  approaches: ApproachResult[];
+  selectedComps: AdjustedComp[];
   rehab: RehabEstimate | null;
   riskAssessment: {
     overallRisk: 'low' | 'moderate' | 'high';
@@ -279,6 +314,8 @@ function Results({ result }: { result: QuickAppraisalResult }) {
   const market = result.marketContext;
   const rehab = result.rehab;
   const risk = result.riskAssessment;
+  const approaches = result.approaches ?? [];
+  const selectedComps = result.selectedComps ?? [];
 
   return (
     <section className="mt-10 grid grid-cols-1 lg:grid-cols-3 gap-6">
@@ -307,11 +344,13 @@ function Results({ result }: { result: QuickAppraisalResult }) {
             </div>
           )}
           <div className="mt-4 flex flex-wrap gap-2">
-            {v.methodology.map((m, i) => (
+            {v.methodology.slice(0, 4).map((m, i) => (
               <span key={i} className="text-xs bg-slate-800 text-slate-300 px-2.5 py-1 rounded-full">{m}</span>
             ))}
           </div>
         </div>
+
+        {approaches.length > 0 && <ApproachesPanel approaches={approaches} />}
 
         {rehab && <RehabPanel rehab={rehab} />}
 
@@ -387,31 +426,147 @@ function Results({ result }: { result: QuickAppraisalResult }) {
           )}
         </div>
 
-        <div className="rounded-2xl bg-slate-900/60 border border-slate-800 p-6">
-          <h2 className="text-sm uppercase tracking-wider text-slate-400 mb-3">
-            Comps ({market.comparableSales.length})
-          </h2>
-          {market.comparableSales.length === 0 ? (
-            <p className="text-sm text-slate-500">No comps in range. Range widened, confidence reduced.</p>
-          ) : (
-            <ul className="space-y-3">
-              {market.comparableSales.slice(0, 6).map((c, i) => (
-                <li key={i} className="text-sm border-b border-slate-800 last:border-b-0 pb-2 last:pb-0">
-                  <div className="flex justify-between items-baseline">
-                    <span className="text-white truncate pr-2">{c.address}</span>
-                    <span className="text-emerald-300 font-semibold whitespace-nowrap">{fmtMoney(c.salePrice)}</span>
-                  </div>
-                  <div className="flex justify-between text-xs text-slate-500 mt-0.5">
-                    <span>{c.saleDate}{c.squareFeet ? ` · ${c.squareFeet} sqft` : ''}{c.pricePerSqFt ? ` · $${c.pricePerSqFt.toFixed(0)}/sf` : ''}</span>
-                    {c.source && <span>{c.source}</span>}
-                  </div>
-                </li>
-              ))}
-            </ul>
-          )}
-        </div>
+        <AdjustedCompsPanel comps={selectedComps} fallback={market.comparableSales} />
       </div>
     </section>
+  );
+}
+
+function ApproachesPanel({ approaches }: { approaches: ApproachResult[] }) {
+  return (
+    <div className="rounded-2xl bg-slate-900/60 border border-slate-800 p-6">
+      <h2 className="text-sm uppercase tracking-wider text-slate-400 mb-3">Valuation methods</h2>
+      <p className="text-xs text-slate-500 mb-4">
+        Each method runs deterministically. Reconciled value above is a confidence-weighted blend.
+      </p>
+      <ul className="space-y-3">
+        {approaches.map((a) => (
+          <li
+            key={a.kind}
+            className={`rounded-lg border p-3 ${a.available ? 'border-slate-800 bg-slate-950/40' : 'border-slate-800/50 bg-slate-950/20 opacity-60'}`}
+          >
+            <div className="flex justify-between items-baseline gap-3">
+              <span className="text-sm font-medium text-white">{a.label}</span>
+              {a.available ? (
+                <span className="text-xs text-slate-400 whitespace-nowrap">
+                  {a.confidence.toFixed(0)}% conf · weight {(a.weight * 100).toFixed(0)}%
+                </span>
+              ) : (
+                <span className="text-xs text-slate-500 whitespace-nowrap">unavailable</span>
+              )}
+            </div>
+            {a.available && (
+              <div className="mt-1 flex items-baseline gap-2">
+                <span className="text-lg font-bold text-emerald-300">{fmtMoney(a.range.mid)}</span>
+                <span className="text-xs text-slate-500">
+                  {fmtMoney(a.range.low)} – {fmtMoney(a.range.high)}
+                </span>
+              </div>
+            )}
+            <p className="text-xs text-slate-500 mt-1">{a.reasoning}</p>
+          </li>
+        ))}
+      </ul>
+    </div>
+  );
+}
+
+function AdjustedCompsPanel({
+  comps,
+  fallback,
+}: {
+  comps: AdjustedComp[];
+  fallback: QuickAppraisalResult['marketContext']['comparableSales'];
+}) {
+  if (comps.length === 0) {
+    return (
+      <div className="rounded-2xl bg-slate-900/60 border border-slate-800 p-6">
+        <h2 className="text-sm uppercase tracking-wider text-slate-400 mb-3">
+          Comps ({fallback.length})
+        </h2>
+        {fallback.length === 0 ? (
+          <p className="text-sm text-slate-500">No comps in range. Range widened, confidence reduced.</p>
+        ) : (
+          <ul className="space-y-3">
+            {fallback.slice(0, 6).map((c, i) => (
+              <li key={i} className="text-sm border-b border-slate-800 last:border-b-0 pb-2 last:pb-0">
+                <div className="flex justify-between items-baseline">
+                  <span className="text-white truncate pr-2">{c.address}</span>
+                  <span className="text-emerald-300 font-semibold whitespace-nowrap">{fmtMoney(c.salePrice)}</span>
+                </div>
+                <div className="flex justify-between text-xs text-slate-500 mt-0.5">
+                  <span>{c.saleDate}{c.squareFeet ? ` · ${c.squareFeet} sqft` : ''}{c.pricePerSqFt ? ` · $${c.pricePerSqFt.toFixed(0)}/sf` : ''}</span>
+                  {c.source && <span>{c.source}</span>}
+                </div>
+              </li>
+            ))}
+          </ul>
+        )}
+      </div>
+    );
+  }
+
+  return (
+    <div className="rounded-2xl bg-slate-900/60 border border-slate-800 p-6">
+      <h2 className="text-sm uppercase tracking-wider text-slate-400 mb-3">
+        Adjusted comps ({comps.length})
+      </h2>
+      <p className="text-xs text-slate-500 mb-4">
+        Ranked by similarity score. Each comp is adjusted for size, age, beds, baths, and condition before averaging.
+      </p>
+      <ul className="space-y-2">
+        {comps.map((c) => (
+          <details key={c.compId} className="bg-slate-950/40 rounded-lg border border-slate-800">
+            <summary className="cursor-pointer px-3 py-2 list-none">
+              <div className="flex justify-between items-baseline gap-2">
+                <span className="text-sm text-white truncate pr-2">{c.address}</span>
+                <span className="text-xs text-slate-400 whitespace-nowrap">
+                  sim {c.similarityScore}
+                </span>
+              </div>
+              <div className="flex justify-between text-xs mt-0.5">
+                <span className="text-slate-500">
+                  Sold {fmtMoney(c.salePrice)} on {c.saleDate}
+                </span>
+                <span className="text-emerald-300 font-medium whitespace-nowrap">
+                  Adj → {fmtMoney(c.adjustedValue)}
+                </span>
+              </div>
+            </summary>
+            <div className="px-3 pb-3 text-xs text-slate-400 space-y-1.5 border-t border-slate-800 pt-2 mt-1">
+              <div className="flex justify-between">
+                <span>Match</span>
+                <span className="text-slate-300">{c.locationMatch} · {c.recencyMonths.toFixed(1)}mo ago</span>
+              </div>
+              {c.squareFeet != null && (
+                <div className="flex justify-between">
+                  <span>Comp</span>
+                  <span className="text-slate-300">
+                    {c.squareFeet} sqft{c.bedrooms != null ? ` · ${c.bedrooms}bd` : ''}
+                    {c.bathrooms != null ? `/${c.bathrooms.toFixed(1)}ba` : ''}
+                    {c.yearBuilt != null ? ` · ${c.yearBuilt}` : ''}
+                  </span>
+                </div>
+              )}
+              <div className="flex justify-between">
+                <span>Net adjustment</span>
+                <span className={c.adjustmentTotal >= 0 ? 'text-emerald-400' : 'text-amber-400'}>
+                  {c.adjustmentTotal >= 0 ? '+' : ''}{fmtMoney(c.adjustmentTotal)}
+                </span>
+              </div>
+              {c.reasoning.length > 0 && (
+                <ul className="pt-1 space-y-0.5">
+                  {c.reasoning.map((r, i) => (
+                    <li key={i} className="text-slate-500">• {r}</li>
+                  ))}
+                </ul>
+              )}
+              {c.source && <div className="text-slate-600 pt-1">Source: {c.source}</div>}
+            </div>
+          </details>
+        ))}
+      </ul>
+    </div>
   );
 }
 
