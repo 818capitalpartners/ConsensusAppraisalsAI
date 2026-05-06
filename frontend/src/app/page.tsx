@@ -103,11 +103,11 @@ export default function HomePage() {
                     <span className="text-sm font-sans font-bold text-accent">$825,000</span>
                   </div>
                 </div>
-                {/* Bottom left - fixer upper */}
+                {/* Bottom left - fix and flip scenario */}
                 <div className="relative h-48 rounded-2xl overflow-hidden shadow-lg">
-                  <Image src="https://images.unsplash.com/photo-1572120360610-d971b9d7767c?w=400&h=350&fit=crop" alt="Older single-family home — fix and flip candidate" fill className="object-cover" />
+                  <Image src="https://images.unsplash.com/photo-1572120360610-d971b9d7767c?w=400&h=350&fit=crop" alt="Older single-family home suitable for a fix and flip loan scenario" fill className="object-cover" />
                   <div className="absolute bottom-3 left-3 bg-white/95 backdrop-blur rounded-full px-3 py-1 shadow-md">
-                    <span className="text-xs font-body text-navy-500">Fix &amp; Flip, Miami / </span>
+                    <span className="text-xs font-body text-navy-500">Purchase + Rehab / </span>
                     <span className="text-sm font-sans font-bold text-accent">$285,000</span>
                   </div>
                 </div>
