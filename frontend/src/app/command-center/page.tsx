@@ -60,7 +60,7 @@ function extractText(data: { content?: { type: string; text?: string }[] }) {
     .join("\n");
 }
 
-const TABS = ["Pipeline", "Intake", "Outreach", "Packages", "Automations", "Cleanup"] as const;
+const TABS = ["Pipeline", "Intake", "Outreach", "Packages", "Automations", "Cleanup", "Ask David"] as const;
 type Tab = (typeof TABS)[number];
 
 // Deal shape returned from Monday.com (via Claude+MCP)
@@ -975,6 +975,306 @@ function CleanupTab() {
   );
 }
 
+// ── Ask David Tab (multi-agent supervisor) ───────────────────
+type AgentTraceStep = {
+  agent: string;
+  tool: string;
+  args?: Record<string, unknown>;
+  result?: unknown;
+  error?: string | null;
+  duration_ms?: number;
+};
+
+type AgentResponse = {
+  question: string;
+  answer: string;
+  plan: { rationale: string; steps: { agent: string; tool: string; args: Record<string, unknown> }[] };
+  trace: AgentTraceStep[];
+  judge: { score: number; issues: string[]; requires_human_review: boolean; rationale: string };
+  requires_human_review: boolean;
+  notified_slack: boolean;
+};
+
+function AskDavidTab() {
+  const [question, setQuestion] = useState("");
+  const [loading, setLoading] = useState(false);
+  const [error, setError] = useState<string | null>(null);
+  const [response, setResponse] = useState<AgentResponse | null>(null);
+  const [showDetails, setShowDetails] = useState(false);
+
+  const submit = async () => {
+    const q = question.trim();
+    if (q.length < 3) {
+      setError("Type a question first.");
+      return;
+    }
+    setLoading(true);
+    setError(null);
+    setResponse(null);
+    try {
+      const res = await fetch("/api/admin/ask", {
+        method: "POST",
+        headers: { "Content-Type": "application/json" },
+        body: JSON.stringify({ question: q }),
+      });
+      const json = await res.json();
+      if (!res.ok) {
+        setError(json.error || json.detail || `Request failed: ${res.status}`);
+      } else {
+        setResponse(json as AgentResponse);
+      }
+    } catch (e) {
+      setError(`Network error: ${(e as Error).message || "unknown"}`);
+    }
+    setLoading(false);
+  };
+
+  const examples = [
+    "How many green deals are in the pipeline by lane?",
+    "Find DSCR lenders in TX for a 720 FICO borrower asking for $450k",
+    "Show me yellow flip deals from the last 30 days",
+    "Which lenders take multifamily loans under $1M?",
+  ];
+
+  const judgeColor = (score: number) =>
+    score >= 90 ? BRAND.green : score >= 70 ? BRAND.blue : score >= 40 ? BRAND.orange : BRAND.red;
+
+  return (
+    <div>
+      <div style={{ marginBottom: 16 }}>
+        <h2 style={{ color: BRAND.navy, fontSize: 18, fontWeight: 700, margin: 0 }}>Ask David</h2>
+        <div style={{ fontSize: 12, color: BRAND.muted, marginTop: 4 }}>
+          Multi-agent supervisor over deals, lenders, and pipeline analytics. Supervisor → retrieval/structured/analytics subagents → LLM judge → human review.
+        </div>
+      </div>
+
+      <div style={{ background: BRAND.card, border: `1px solid ${BRAND.border}`, borderRadius: 8, padding: 14, marginBottom: 14 }}>
+        <textarea
+          value={question}
+          onChange={(e) => setQuestion(e.target.value)}
+          rows={3}
+          placeholder="Ask anything about the deal pipeline, borrowers, or lenders…"
+          onKeyDown={(e) => {
+            if ((e.metaKey || e.ctrlKey) && e.key === "Enter") submit();
+          }}
+          style={{
+            width: "100%",
+            padding: "10px 12px",
+            border: `1px solid ${BRAND.border}`,
+            borderRadius: 6,
+            fontSize: 13,
+            color: BRAND.text,
+            boxSizing: "border-box",
+            resize: "vertical",
+            fontFamily: "inherit",
+          }}
+        />
+        <div style={{ display: "flex", justifyContent: "space-between", alignItems: "center", marginTop: 10, gap: 8, flexWrap: "wrap" }}>
+          <div style={{ fontSize: 11, color: BRAND.muted }}>⌘/Ctrl + Enter to submit</div>
+          <button
+            onClick={submit}
+            disabled={loading}
+            style={{
+              background: loading ? BRAND.muted : BRAND.blue,
+              color: "#fff",
+              border: "none",
+              borderRadius: 6,
+              padding: "8px 20px",
+              fontSize: 13,
+              fontWeight: 600,
+              cursor: loading ? "default" : "pointer",
+            }}
+          >
+            {loading ? "Thinking…" : "Ask"}
+          </button>
+        </div>
+      </div>
+
+      {!response && !loading && !error && (
+        <div style={{ display: "flex", flexDirection: "column", gap: 6, marginBottom: 14 }}>
+          <div style={{ fontSize: 11, color: BRAND.muted, fontWeight: 600, textTransform: "uppercase", letterSpacing: 0.5 }}>Try</div>
+          {examples.map((ex) => (
+            <button
+              key={ex}
+              onClick={() => setQuestion(ex)}
+              style={{
+                textAlign: "left",
+                background: BRAND.lightBlue,
+                border: `1px solid ${BRAND.border}`,
+                borderRadius: 6,
+                padding: "8px 12px",
+                fontSize: 12,
+                color: BRAND.text,
+                cursor: "pointer",
+              }}
+            >
+              {ex}
+            </button>
+          ))}
+        </div>
+      )}
+
+      {error && (
+        <div style={{ color: BRAND.red, marginBottom: 12, fontSize: 13, background: "#fee2e2", padding: "10px 14px", borderRadius: 6 }}>
+          {error}
+        </div>
+      )}
+
+      {response && (
+        <div>
+          {response.requires_human_review && (
+            <div
+              style={{
+                background: "#fef3c7",
+                border: "1px solid #fcd34d",
+                borderRadius: 6,
+                padding: "10px 14px",
+                fontSize: 12,
+                color: "#92400e",
+                marginBottom: 12,
+                display: "flex",
+                alignItems: "center",
+                gap: 8,
+              }}
+            >
+              <span style={{ fontSize: 16 }}>⚠️</span>
+              <div>
+                <b>Pending human review.</b> The judge flagged this answer ({response.judge.score}/100). Don&apos;t use it as-is.
+                {response.notified_slack ? " Slack has been notified." : ""}
+              </div>
+            </div>
+          )}
+
+          <div
+            style={{
+              background: BRAND.card,
+              border: `1px solid ${BRAND.border}`,
+              borderLeft: `3px solid ${judgeColor(response.judge.score)}`,
+              borderRadius: 8,
+              padding: "14px 16px",
+              marginBottom: 12,
+            }}
+          >
+            <div style={{ display: "flex", justifyContent: "space-between", alignItems: "center", marginBottom: 8 }}>
+              <div style={{ fontSize: 11, color: BRAND.muted, fontWeight: 600, textTransform: "uppercase", letterSpacing: 0.5 }}>Answer</div>
+              <span
+                style={{
+                  fontSize: 11,
+                  fontWeight: 700,
+                  padding: "3px 10px",
+                  borderRadius: 20,
+                  background: response.judge.score >= 70 ? "#dcfce7" : "#fef3c7",
+                  color: response.judge.score >= 70 ? "#166534" : "#92400e",
+                }}
+              >
+                Judge: {response.judge.score}/100
+              </span>
+            </div>
+            <div style={{ fontSize: 14, lineHeight: 1.55, color: BRAND.text, whiteSpace: "pre-wrap" }}>{response.answer}</div>
+          </div>
+
+          <button
+            onClick={() => setShowDetails((s) => !s)}
+            style={{
+              background: "transparent",
+              border: `1px solid ${BRAND.border}`,
+              borderRadius: 6,
+              padding: "6px 14px",
+              fontSize: 12,
+              color: BRAND.muted,
+              cursor: "pointer",
+              marginBottom: showDetails ? 12 : 0,
+            }}
+          >
+            {showDetails ? "▲ Hide trace" : "▼ Show plan, trace, and judge details"}
+          </button>
+
+          {showDetails && (
+            <div style={{ display: "flex", flexDirection: "column", gap: 10 }}>
+              <div style={{ background: BRAND.card, border: `1px solid ${BRAND.border}`, borderRadius: 8, padding: 12 }}>
+                <div style={{ fontSize: 11, color: BRAND.muted, fontWeight: 600, textTransform: "uppercase", marginBottom: 6 }}>Supervisor plan</div>
+                <div style={{ fontSize: 12, color: BRAND.text, marginBottom: 8, fontStyle: "italic" }}>{response.plan.rationale || "(no rationale)"}</div>
+                <ol style={{ margin: 0, paddingLeft: 18, fontSize: 12, color: BRAND.text }}>
+                  {response.plan.steps.map((s, i) => (
+                    <li key={i} style={{ marginBottom: 4 }}>
+                      <code style={{ background: BRAND.lightBlue, padding: "1px 6px", borderRadius: 3, fontSize: 11 }}>
+                        {s.agent}.{s.tool}
+                      </code>{" "}
+                      <span style={{ color: BRAND.muted, fontSize: 11 }}>{JSON.stringify(s.args)}</span>
+                    </li>
+                  ))}
+                </ol>
+              </div>
+
+              <div style={{ background: BRAND.card, border: `1px solid ${BRAND.border}`, borderRadius: 8, padding: 12 }}>
+                <div style={{ fontSize: 11, color: BRAND.muted, fontWeight: 600, textTransform: "uppercase", marginBottom: 6 }}>Trace</div>
+                {response.trace.map((step, i) => (
+                  <details
+                    key={i}
+                    style={{
+                      borderTop: i === 0 ? "none" : `1px solid ${BRAND.border}`,
+                      padding: "6px 0",
+                      fontSize: 12,
+                    }}
+                  >
+                    <summary style={{ cursor: "pointer", color: step.error ? BRAND.red : BRAND.text }}>
+                      <code style={{ background: BRAND.lightBlue, padding: "1px 6px", borderRadius: 3, fontSize: 11 }}>
+                        {i + 1}. {step.agent}.{step.tool}
+                      </code>{" "}
+                      <span style={{ color: BRAND.muted, fontSize: 11 }}>
+                        {step.duration_ms ? `${step.duration_ms}ms` : ""}
+                        {step.error ? ` · error: ${step.error}` : ""}
+                      </span>
+                    </summary>
+                    <pre
+                      style={{
+                        marginTop: 6,
+                        background: "#f8fafc",
+                        border: `1px solid ${BRAND.border}`,
+                        borderRadius: 4,
+                        padding: 8,
+                        fontSize: 11,
+                        overflow: "auto",
+                        maxHeight: 280,
+                        color: BRAND.text,
+                      }}
+                    >
+                      {JSON.stringify({ args: step.args, result: step.result }, null, 2)}
+                    </pre>
+                  </details>
+                ))}
+              </div>
+
+              <div style={{ background: BRAND.card, border: `1px solid ${BRAND.border}`, borderRadius: 8, padding: 12 }}>
+                <div style={{ fontSize: 11, color: BRAND.muted, fontWeight: 600, textTransform: "uppercase", marginBottom: 6 }}>Judge verdict</div>
+                <div style={{ fontSize: 12, color: BRAND.text, marginBottom: 6 }}>
+                  <b>Score:</b> {response.judge.score}/100 ·{" "}
+                  <b>Human review:</b> {response.judge.requires_human_review ? "yes" : "no"}
+                </div>
+                {response.judge.rationale && (
+                  <div style={{ fontSize: 12, color: BRAND.text, marginBottom: 6 }}>
+                    <b>Rationale:</b> {response.judge.rationale}
+                  </div>
+                )}
+                {response.judge.issues.length > 0 && (
+                  <div style={{ fontSize: 12, color: BRAND.text }}>
+                    <b>Issues:</b>
+                    <ul style={{ margin: "4px 0 0 0", paddingLeft: 18 }}>
+                      {response.judge.issues.map((iss, idx) => (
+                        <li key={idx}>{iss}</li>
+                      ))}
+                    </ul>
+                  </div>
+                )}
+              </div>
+            </div>
+          )}
+        </div>
+      )}
+    </div>
+  );
+}
+
 // ── App Shell ─────────────────────────────────────────────────
 export default function CommandCenter() {
   const [tab, setTab] = useState<Tab>("Pipeline");
@@ -1016,6 +1316,11 @@ export default function CommandCenter() {
     Cleanup: (
       <svg width="16" height="16" fill="none" viewBox="0 0 24 24" stroke="currentColor" strokeWidth={2}>
         <path strokeLinecap="round" strokeLinejoin="round" d="M19 7l-.867 12.142A2 2 0 0116.138 21H7.862a2 2 0 01-1.995-1.858L5 7m5 4v6m4-6v6M1 7h22M8 7V4a2 2 0 012-2h4a2 2 0 012 2v3" />
+      </svg>
+    ),
+    "Ask David": (
+      <svg width="16" height="16" fill="none" viewBox="0 0 24 24" stroke="currentColor" strokeWidth={2}>
+        <path strokeLinecap="round" strokeLinejoin="round" d="M8 12h.01M12 12h.01M16 12h.01M21 12c0 4.418-4.03 8-9 8a9.863 9.863 0 01-4.255-.949L3 20l1.395-3.72C3.512 15.042 3 13.574 3 12c0-4.418 4.03-8 9-8s9 3.582 9 8z" />
       </svg>
     ),
   };
@@ -1065,6 +1370,7 @@ export default function CommandCenter() {
         {tab === "Packages" && <PackagesTab />}
         {tab === "Automations" && <AutomationsTab />}
         {tab === "Cleanup" && <CleanupTab />}
+        {tab === "Ask David" && <AskDavidTab />}
       </div>
     </div>
   );
