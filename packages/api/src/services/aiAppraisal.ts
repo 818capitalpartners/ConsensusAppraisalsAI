@@ -6,6 +6,9 @@ import type {
   AppraisalNarrative,
   PropertyDetails,
   ValueRange,
+  ApproachResult,
+  ReconciledValuation,
+  AdjustedCompView,
 } from './valuationTypes';
 
 /**
@@ -296,4 +299,133 @@ export async function generateAppraisal(
     },
     narrative: output.narrative,
   };
+}
+
+// ─── Narrative-only path (math done deterministically) ──
+
+const NARRATIVE_SYSTEM_PROMPT = `You are a senior real estate appraiser at 818 Capital Partners writing the narrative for an appraisal whose math has already been computed deterministically.
+
+Your job is to write the prose explaining the result. Do NOT recompute or change the values. Use the inputs below verbatim.
+
+818 Capital is a DIRECT LENDER. Never reference third-party lenders or "shopping deals."
+
+Output ONLY valid JSON in this shape:
+{
+  "headline": "One sentence summary of value and confidence",
+  "analysis": "2-3 paragraphs that walk through which approach drove the value, what the comps say, and what risks shaped the range",
+  "strengths": ["specific strength tied to data"],
+  "risks": ["specific risk tied to data"],
+  "nextSteps": ["actionable step"],
+  "notesForBorrower": ["borrower-appropriate note"],
+  "notesForCreditCommittee": ["internal credit note"]
+}`;
+
+function buildNarrativePrompt(
+  lane: ProductLane,
+  property: PropertyDetails,
+  market: MarketContext,
+  reconciled: ReconciledValuation,
+  selectedComps: AdjustedCompView[],
+): string {
+  const lines: string[] = [];
+  lines.push(`Subject: ${property.address ?? 'address TBD'}, ${property.city ?? ''} ${property.state ?? ''} ${property.zip ?? ''}`);
+  lines.push(`Lane: ${lane}, type: ${property.propertyType ?? 'unknown'}, sqft: ${property.squareFeet ?? '?'}, beds/baths: ${property.bedrooms ?? '?'}/${property.bathrooms ?? '?'}, condition: ${property.condition ?? 'unknown'}`);
+  lines.push('');
+  lines.push(`Reconciled as-is: $${reconciled.asIs.low?.toLocaleString()} – $${reconciled.asIs.mid?.toLocaleString()} – $${reconciled.asIs.high?.toLocaleString()} (confidence ${reconciled.confidenceScore}/100)`);
+  if (reconciled.stabilized?.mid != null) {
+    lines.push(`Stabilized (ARV): $${reconciled.stabilized.low?.toLocaleString()} – $${reconciled.stabilized.mid?.toLocaleString()} – $${reconciled.stabilized.high?.toLocaleString()}`);
+  }
+  lines.push('');
+  lines.push('Approaches:');
+  for (const a of reconciled.approaches) {
+    if (!a.available) {
+      lines.push(`- ${a.label}: not available (${a.reasoning})`);
+      continue;
+    }
+    lines.push(`- ${a.label}: $${a.range.mid?.toLocaleString()} (${a.confidence}% conf) — ${a.reasoning}`);
+  }
+  lines.push('');
+  lines.push(`Top comps (${selectedComps.length} shown, ranked by similarity):`);
+  for (const c of selectedComps.slice(0, 5)) {
+    lines.push(`- ${c.address} sold $${c.salePrice.toLocaleString()} on ${c.saleDate}; adjusted to $${c.adjustedValue.toLocaleString()} (similarity ${c.similarityScore}/100, ${c.locationMatch} match, ${c.recencyMonths.toFixed(1)}mo ago). Adjustments: ${c.reasoning.join('; ') || 'none material'}.`);
+  }
+  lines.push('');
+  lines.push(`Market: county ${market.countyName ?? '?'}, median price ${market.medianSalePrice ? `$${market.medianSalePrice.toLocaleString()}` : 'N/A'}, median rent ${market.medianRent ? `$${market.medianRent.toLocaleString()}/mo` : 'N/A'}, YoY ${market.yearOverYearAppreciation != null ? `${market.yearOverYearAppreciation.toFixed(1)}%` : 'N/A'}, data quality ${market.dataQuality.score}/100.`);
+  if (market.dataQuality.flags.length > 0) {
+    lines.push(`Data quality flags: ${market.dataQuality.flags.join('; ')}`);
+  }
+  return lines.join('\n');
+}
+
+function templateNarrative(
+  lane: ProductLane,
+  property: PropertyDetails,
+  market: MarketContext,
+  reconciled: ReconciledValuation,
+  selectedComps: AdjustedCompView[],
+): AppraisalNarrative {
+  const mid = reconciled.asIs.mid;
+  const usableApproaches = reconciled.approaches.filter((a) => a.available);
+  const driver = usableApproaches.length > 0 ? usableApproaches[0].label : 'limited data';
+  return {
+    headline: mid
+      ? `${lane.toUpperCase()} subject in ${property.city ?? property.state ?? 'market'} valued at $${mid.toLocaleString()} as-is, ${reconciled.confidenceScore}% confidence.`
+      : `${lane.toUpperCase()} subject in ${property.city ?? property.state ?? 'market'} — insufficient data for a defensible value.`,
+    analysis: `Reconciled valuation driven primarily by ${driver}. ${usableApproaches.length} of ${reconciled.approaches.length} approaches produced a value. Sales comparison weighted ${selectedComps.length} ranked comps by similarity score. Data quality: ${market.dataQuality.score}/100.`,
+    strengths: selectedComps.length >= 3
+      ? [`${selectedComps.length} comparable sales with top similarity ${selectedComps[0]?.similarityScore ?? 0}/100.`]
+      : ['Limited comp set — value range widened to reflect uncertainty.'],
+    risks: market.dataQuality.flags.length > 0 ? market.dataQuality.flags.slice(0, 3) : ['No specific data-quality flags.'],
+    nextSteps: ['Submit for 818 Capital underwriting review.'],
+    notesForBorrower: [
+      `Valuation based on ${selectedComps.length} comparable sales adjusted for size, age, beds/baths, and condition.`,
+    ],
+    notesForCreditCommittee: [
+      `Approaches: ${usableApproaches.map((a) => `${a.label} (${a.confidence}%)`).join(', ')}.`,
+      `Top comp: ${selectedComps[0]?.address ?? 'n/a'} @ similarity ${selectedComps[0]?.similarityScore ?? 0}/100.`,
+    ],
+    aiGenerated: false,
+  };
+}
+
+export async function generateNarrative(
+  lane: ProductLane,
+  property: PropertyDetails,
+  market: MarketContext,
+  reconciled: ReconciledValuation,
+  selectedComps: AdjustedCompView[],
+): Promise<AppraisalNarrative> {
+  const client = getClient();
+  if (!client) {
+    return templateNarrative(lane, property, market, reconciled, selectedComps);
+  }
+
+  try {
+    const response = await client.chat.completions.create({
+      model: 'gpt-4o',
+      temperature: 0.4,
+      max_tokens: 900,
+      messages: [
+        { role: 'system', content: NARRATIVE_SYSTEM_PROMPT },
+        { role: 'user', content: buildNarrativePrompt(lane, property, market, reconciled, selectedComps) },
+      ],
+      response_format: { type: 'json_object' },
+    });
+    const content = response.choices[0]?.message?.content;
+    if (!content) throw new Error('Empty narrative response');
+    const parsed = JSON.parse(content);
+    return {
+      headline: parsed.headline ?? '',
+      analysis: parsed.analysis ?? '',
+      strengths: Array.isArray(parsed.strengths) ? parsed.strengths : [],
+      risks: Array.isArray(parsed.risks) ? parsed.risks : [],
+      nextSteps: Array.isArray(parsed.nextSteps) ? parsed.nextSteps : [],
+      notesForBorrower: Array.isArray(parsed.notesForBorrower) ? parsed.notesForBorrower : [],
+      notesForCreditCommittee: Array.isArray(parsed.notesForCreditCommittee) ? parsed.notesForCreditCommittee : [],
+      aiGenerated: true,
+    };
+  } catch (err) {
+    console.error('[aiAppraisal] Narrative GPT failed, falling back to template:', err);
+    return templateNarrative(lane, property, market, reconciled, selectedComps);
+  }
 }

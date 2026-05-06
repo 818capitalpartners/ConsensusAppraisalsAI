@@ -1,32 +1,171 @@
 import { prisma } from '@818capital/db';
 import { randomUUID } from 'crypto';
 import type {
+  AdjustedCompView,
   AiAppraisalResult,
   AppraisalRequest,
   AppraisalResponse,
+  ApproachResult,
+  AppraisalNarrative,
+  MarketContext,
   ProductLane,
   PropertyDetails,
   QuickAppraisalRequest,
   QuickAppraisalResponse,
   QuickAppraisalResult,
+  ReconciledValuation,
   RehabConditionGrade,
   RehabEstimate,
+  ValueEstimate,
 } from './valuationTypes';
 import { appraisalRequestSchema, validateLaneInput } from './valuationValidation';
 import { getMarketContext } from './marketDataService';
-import { generateAppraisal } from './aiAppraisal';
+import { generateNarrative } from './aiAppraisal';
+import { selectComps, type AdjustedComp } from './compSelection';
+import {
+  salesComparisonApproach,
+  marketBandApproach,
+  incomeApproach,
+  reconcile,
+} from './valuationApproaches';
 import { assessRisk, adjustValueForDataQuality } from './riskGuardrails';
 import { validateAndNormalize } from './dataValidation';
 import { estimateRehab } from './rehabEstimator';
 
 /**
- * Valuation Service — main orchestrator for the AI Appraisal pipeline.
+ * Valuation Service — orchestrator for the AI Appraisal pipeline.
  *
- * Flow: Load Deal → Validate → Get Market Context → Run Valuation →
- *       AI Enhancement → Risk Guardrails → Store Result → Return
+ * Math is deterministic and auditable: pick comps, score similarity, apply
+ * adjustments, run three approaches, reconcile by confidence-weighted average.
+ * AI is invoked only to write narrative — never to compute values.
+ *
+ * Both runAppraisal (deal-based) and runQuickAppraisal (address-first) share
+ * the same core via runValuationPipeline().
  */
 
-const APPRAISAL_VERSION = '1.0.0';
+const APPRAISAL_VERSION = '2.0.0';
+
+const VALID_CONDITION_GRADES: RehabConditionGrade[] = ['turnkey', 'cosmetic', 'moderate', 'heavy', 'gut'];
+
+function resolveConditionGrade(raw: unknown, lane?: ProductLane): RehabConditionGrade | null {
+  if (typeof raw === 'string' && (VALID_CONDITION_GRADES as string[]).includes(raw)) {
+    return raw as RehabConditionGrade;
+  }
+  if (lane === 'flip') return 'moderate';
+  return null;
+}
+
+function laneFromTargetUse(targetUse?: string): ProductLane {
+  switch (targetUse) {
+    case 'flip': return 'flip';
+    case 'rental': return 'dscr';
+    case 'str': return 'str';
+    case 'hold': return 'dscr';
+    default: return 'dscr';
+  }
+}
+
+function adjustedCompToView(c: AdjustedComp): AdjustedCompView {
+  return {
+    compId: c.compId,
+    address: c.address,
+    city: c.city,
+    zip: c.zip,
+    salePrice: c.salePrice,
+    saleDate: c.saleDate,
+    squareFeet: c.squareFeet,
+    pricePerSqFt: c.pricePerSqFt,
+    bedrooms: c.bedrooms,
+    bathrooms: c.bathrooms,
+    yearBuilt: c.yearBuilt,
+    source: c.source,
+    recencyMonths: c.recencyMonths,
+    locationMatch: c.locationMatch,
+    adjustments: c.adjustments,
+    adjustmentTotal: c.adjustmentTotal,
+    adjustedValue: c.adjustedValue,
+    similarityScore: c.similarityScore,
+    weight: c.weight,
+    reasoning: c.reasoning,
+  };
+}
+
+function reconciledToValueEstimate(reconciled: ReconciledValuation): ValueEstimate {
+  return {
+    asIs: reconciled.asIs,
+    stabilized: reconciled.stabilized,
+    confidenceScore: reconciled.confidenceScore,
+    methodology: reconciled.methodology,
+  };
+}
+
+// ─── Shared pipeline ─────────────────────────────────────
+
+interface PipelineInput {
+  lane: ProductLane;
+  property: PropertyDetails;
+  marketContext: MarketContext;
+  rehab: RehabEstimate | null;
+  laneMetrics: Record<string, unknown>;
+}
+
+interface PipelineOutput {
+  valueEstimate: ValueEstimate;
+  approaches: ApproachResult[];
+  selectedComps: AdjustedCompView[];
+  narrative: AppraisalNarrative;
+  reconciled: ReconciledValuation;
+}
+
+async function runValuationPipeline(input: PipelineInput): Promise<PipelineOutput> {
+  const { lane, property, marketContext, rehab, laneMetrics } = input;
+
+  // 1. Comp selection — score and adjust each candidate.
+  const selected = selectComps({
+    subject: property,
+    candidates: marketContext.comparableSales,
+    topN: 8,
+  });
+  const selectedComps = selected.map(adjustedCompToView);
+
+  // 2. Run the three valuation approaches.
+  const sales = salesComparisonApproach(selected);
+  const band = marketBandApproach(marketContext, property);
+  const income = incomeApproach(lane, marketContext, property, {
+    monthlyRent: Number(laneMetrics.monthlyRent ?? laneMetrics.marketRent) || undefined,
+    vacancyPct: Number(laneMetrics.vacancyPct) || undefined,
+    expenseRatio: Number(laneMetrics.expenseRatio) || undefined,
+  });
+  const approaches: ApproachResult[] = [sales, band, income];
+
+  // 3. Reconcile.
+  const reconciledRaw = reconcile(approaches, rehab, lane);
+
+  // 4. Apply data-quality widening on top of reconciliation.
+  const dqAdjusted = adjustValueForDataQuality(
+    reconciledToValueEstimate(reconciledRaw),
+    marketContext.dataQuality,
+  );
+
+  const reconciled: ReconciledValuation = {
+    asIs: dqAdjusted.asIs,
+    stabilized: dqAdjusted.stabilized,
+    confidenceScore: dqAdjusted.confidenceScore,
+    approaches,
+    methodology: dqAdjusted.methodology,
+  };
+
+  // 5. Narrative — AI does prose only.
+  const narrative = await generateNarrative(lane, property, marketContext, reconciled, selectedComps);
+
+  return {
+    valueEstimate: reconciledToValueEstimate(reconciled),
+    approaches,
+    selectedComps,
+    narrative,
+    reconciled,
+  };
+}
 
 // ─── Property Extraction ─────────────────────────────────
 
@@ -57,7 +196,7 @@ function extractProperty(deal: {
     city: validated.city ?? deal.propertyCity,
     state: validated.state,
     zip: validated.zip,
-    county: null, // Filled from market context
+    county: null,
     fips: null,
     propertyType: validated.propertyType,
     units: validated.units,
@@ -70,20 +209,32 @@ function extractProperty(deal: {
   };
 }
 
-// ─── Lane Metrics Extraction ─────────────────────────────
-
-function extractLaneMetrics(lane: string, financials: unknown): Record<string, unknown> {
+function extractLaneMetrics(_lane: string, financials: unknown): Record<string, unknown> {
   const fin = (financials as Record<string, unknown>) ?? {};
-  // Return all financials as lane metrics — triageService already computed them
   return { ...fin };
 }
 
-// ─── Main Orchestrator ───────────────────────────────────
+function emptyMarketContext(flag: string): MarketContext {
+  return {
+    countyFips: null,
+    countyName: null,
+    medianSalePrice: null,
+    medianPricePerSqFt: null,
+    medianRent: null,
+    medianDaysOnMarket: null,
+    inventoryMonths: null,
+    yearOverYearAppreciation: null,
+    comparableSales: [],
+    marketBands: [],
+    dataQuality: { compCount: 0, recencyDays: 0, geographicSpread: 'wide', score: 0, flags: [flag] },
+  };
+}
+
+// ─── runAppraisal (deal-based) ───────────────────────────
 
 export async function runAppraisal(request: AppraisalRequest): Promise<AppraisalResponse> {
   const errors: string[] = [];
 
-  // 1. Validate request
   const reqParse = appraisalRequestSchema.safeParse(request);
   if (!reqParse.success) {
     return {
@@ -93,13 +244,9 @@ export async function runAppraisal(request: AppraisalRequest): Promise<Appraisal
     };
   }
 
-  // 2. Load deal
   const deal = await prisma.deal.findUnique({ where: { id: request.dealId } });
-  if (!deal) {
-    return { success: false, result: null, errors: ['Deal not found.'] };
-  }
+  if (!deal) return { success: false, result: null, errors: ['Deal not found.'] };
 
-  // 3. Check for existing appraisal (skip if forceRefresh)
   if (!request.forceRefresh && deal.aiTriageResult) {
     const existing = deal.aiTriageResult as Record<string, unknown>;
     if (existing._appraisalVersion === APPRAISAL_VERSION) {
@@ -116,78 +263,48 @@ export async function runAppraisal(request: AppraisalRequest): Promise<Appraisal
     return { success: false, result: null, errors: [`Unsupported product lane: ${lane}`] };
   }
 
-  // 4. Validate lane-specific financials
   const laneValidation = validateLaneInput(lane, deal.financials);
   if (!laneValidation.success) {
-    // Non-blocking — proceed with warnings
     errors.push(...(laneValidation.errors ?? []).map((e) => `Input warning: ${e}`));
   }
 
-  // 5. Extract property details
   const property = extractProperty(deal);
 
-  // 6. Get market context
-  let marketContext;
+  let marketContext: MarketContext;
   try {
-    const purchasePrice = Number((deal.financials as Record<string, unknown>)?.purchasePrice) || undefined;
     marketContext = await getMarketContext({
       state: property.state ?? deal.propertyState ?? '',
       zip: property.zip ?? deal.propertyZip ?? undefined,
       propertyType: property.propertyType ?? undefined,
-      subjectPrice: purchasePrice,
+      subjectPrice: Number((deal.financials as Record<string, unknown>)?.purchasePrice) || undefined,
     });
   } catch (err) {
     console.error('[valuationService] Market context fetch failed:', err);
-    // Proceed with empty market context
-    marketContext = {
-      countyFips: null,
-      countyName: null,
-      medianSalePrice: null,
-      medianPricePerSqFt: null,
-      medianRent: null,
-      medianDaysOnMarket: null,
-      inventoryMonths: null,
-      yearOverYearAppreciation: null,
-      comparableSales: [],
-      marketBands: [],
-      dataQuality: { compCount: 0, recencyDays: 0, geographicSpread: 'wide' as const, score: 0, flags: ['Market data unavailable.'] },
-    };
-    errors.push('Market data could not be retrieved — valuation based on deal inputs only.');
+    marketContext = emptyMarketContext('Market data unavailable.');
+    errors.push('Market data could not be retrieved — valuation widened.');
   }
 
-  // Fill county info from market context
   property.county = marketContext.countyName;
   property.fips = marketContext.countyFips;
 
-  // 7. Extract lane metrics
   const laneMetrics = extractLaneMetrics(lane, deal.financials);
 
-  // 8. Run AI-enhanced appraisal
-  let valueEstimate;
-  let narrative;
-  try {
-    const appraisalResult = await generateAppraisal(lane, property, marketContext, laneMetrics);
-    valueEstimate = appraisalResult.valueEstimate;
-    narrative = appraisalResult.narrative;
-  } catch (err) {
-    console.error('[valuationService] AI appraisal failed:', err);
-    return { success: false, result: null, errors: ['AI appraisal generation failed.'] };
-  }
-
-  // 9. Apply risk guardrails
-  const riskAssessment = assessRisk({ lane, marketContext, valueEstimate, laneMetrics });
-
-  // 10. Adjust values for data quality
-  const adjustedValue = adjustValueForDataQuality(valueEstimate, marketContext.dataQuality);
-
-  // 11. Rehab estimate (only when condition grade is available or deal is a flip)
   const conditionGrade = resolveConditionGrade(
     (deal.financials as Record<string, unknown> | null)?.condition,
     lane,
   );
   const rehab: RehabEstimate | null = conditionGrade ? estimateRehab({ property, conditionGrade }) : null;
 
-  // 12. Build final result
+  let pipeline: PipelineOutput;
+  try {
+    pipeline = await runValuationPipeline({ lane, property, marketContext, rehab, laneMetrics });
+  } catch (err) {
+    console.error('[valuationService] Pipeline failed:', err);
+    return { success: false, result: null, errors: ['Valuation pipeline failed.'] };
+  }
+
+  const riskAssessment = assessRisk({ lane, marketContext, valueEstimate: pipeline.valueEstimate, laneMetrics });
+
   const appraisalId = randomUUID();
   const result: AiAppraisalResult = {
     id: appraisalId,
@@ -195,17 +312,18 @@ export async function runAppraisal(request: AppraisalRequest): Promise<Appraisal
     lane,
     property,
     marketContext,
-    valueEstimate: adjustedValue,
+    valueEstimate: pipeline.valueEstimate,
+    approaches: pipeline.approaches,
+    selectedComps: pipeline.selectedComps,
     riskAssessment,
     laneMetrics,
-    narrative,
+    narrative: pipeline.narrative,
     rehab,
-    confidence: adjustedValue.confidenceScore,
+    confidence: pipeline.valueEstimate.confidenceScore,
     generatedAt: new Date().toISOString(),
     version: APPRAISAL_VERSION,
   };
 
-  // 12. Store result on deal
   try {
     await prisma.deal.update({
       where: { id: deal.id },
@@ -215,25 +333,29 @@ export async function runAppraisal(request: AppraisalRequest): Promise<Appraisal
           _appraisalVersion: APPRAISAL_VERSION,
           _appraisalId: appraisalId,
           valuation: {
-            asIs: adjustedValue.asIs,
-            stabilized: adjustedValue.stabilized,
+            asIs: pipeline.valueEstimate.asIs,
+            stabilized: pipeline.valueEstimate.stabilized,
             keyMetrics: laneMetrics,
             confidence: {
-              overall: adjustedValue.confidenceScore,
-              asIs: adjustedValue.confidenceScore,
-              stabilized: adjustedValue.stabilized ? adjustedValue.confidenceScore * 0.9 : null,
+              overall: pipeline.valueEstimate.confidenceScore,
+              asIs: pipeline.valueEstimate.confidenceScore,
+              stabilized: pipeline.valueEstimate.stabilized
+                ? pipeline.valueEstimate.confidenceScore * 0.9
+                : null,
             },
-            methodsUsed: adjustedValue.methodology,
-            commentary: [narrative.analysis],
+            methodsUsed: pipeline.valueEstimate.methodology,
+            commentary: [pipeline.narrative.analysis],
           },
+          approaches: pipeline.approaches,
+          selectedComps: pipeline.selectedComps,
           comps: {
-            sales: marketContext.comparableSales.slice(0, 5),
+            sales: pipeline.selectedComps.slice(0, 5),
             rent: [],
           },
           riskSummary: {
             flags: riskAssessment.flags.map((f) => ({
               code: f.code,
-              label: f.message.split(' \u2014 ')[0],
+              label: f.message.split(' — ')[0],
               severity: f.severity === 'critical' ? 'high' : f.severity === 'warning' ? 'moderate' : 'low',
               description: f.message,
               requiresHumanReview: f.requiresHumanReview,
@@ -244,10 +366,10 @@ export async function runAppraisal(request: AppraisalRequest): Promise<Appraisal
           },
           audit: {
             modelRunId: appraisalId,
-            notesForCreditCommittee: narrative.notesForCreditCommittee,
+            notesForCreditCommittee: pipeline.narrative.notesForCreditCommittee,
           },
           subjectProperty: property,
-          notesForBorrower: narrative.notesForBorrower,
+          notesForBorrower: pipeline.narrative.notesForBorrower,
           rehab: rehab ?? undefined,
         })),
       },
@@ -260,28 +382,7 @@ export async function runAppraisal(request: AppraisalRequest): Promise<Appraisal
   return { success: true, result, errors };
 }
 
-// ─── Quick (address-first) Appraisal ─────────────────────
-
-const VALID_CONDITION_GRADES: RehabConditionGrade[] = ['turnkey', 'cosmetic', 'moderate', 'heavy', 'gut'];
-
-function resolveConditionGrade(raw: unknown, lane?: ProductLane): RehabConditionGrade | null {
-  if (typeof raw === 'string' && (VALID_CONDITION_GRADES as string[]).includes(raw)) {
-    return raw as RehabConditionGrade;
-  }
-  // Default to 'moderate' for flips when not specified — flippers always need a number
-  if (lane === 'flip') return 'moderate';
-  return null;
-}
-
-function laneFromTargetUse(targetUse?: string): ProductLane {
-  switch (targetUse) {
-    case 'flip': return 'flip';
-    case 'rental': return 'dscr';
-    case 'str': return 'str';
-    case 'hold': return 'dscr';
-    default: return 'dscr';
-  }
-}
+// ─── runQuickAppraisal (address-first) ───────────────────
 
 export async function runQuickAppraisal(request: QuickAppraisalRequest): Promise<QuickAppraisalResponse> {
   const errors: string[] = [];
@@ -292,7 +393,6 @@ export async function runQuickAppraisal(request: QuickAppraisalRequest): Promise
 
   const lane = laneFromTargetUse(request.targetUse);
 
-  // Build a lightweight property record (no Deal needed)
   const validated = validateAndNormalize({
     address: request.address,
     city: request.city,
@@ -321,8 +421,7 @@ export async function runQuickAppraisal(request: QuickAppraisalRequest): Promise
     condition: request.condition ?? null,
   };
 
-  // Market context
-  let marketContext;
+  let marketContext: MarketContext;
   try {
     marketContext = await getMarketContext({
       state: property.state ?? request.state,
@@ -336,32 +435,40 @@ export async function runQuickAppraisal(request: QuickAppraisalRequest): Promise
   property.county = marketContext.countyName;
   property.fips = marketContext.countyFips;
 
-  // Valuation
-  let valueEstimate;
-  let narrative;
-  try {
-    const out = await generateAppraisal(lane, property, marketContext, {});
-    valueEstimate = out.valueEstimate;
-    narrative = out.narrative;
-  } catch (err) {
-    console.error('[valuationService] Quick: AI appraisal failed:', err);
-    return { success: false, result: null, errors: ['Valuation generation failed.'] };
-  }
-
-  const riskAssessment = assessRisk({ lane, marketContext, valueEstimate, laneMetrics: {} });
-  const adjustedValue = adjustValueForDataQuality(valueEstimate, marketContext.dataQuality);
-
   const conditionGrade = resolveConditionGrade(request.condition, lane);
   const rehab = conditionGrade ? estimateRehab({ property, conditionGrade }) : null;
+
+  let pipeline: PipelineOutput;
+  try {
+    pipeline = await runValuationPipeline({
+      lane,
+      property,
+      marketContext,
+      rehab,
+      laneMetrics: {},
+    });
+  } catch (err) {
+    console.error('[valuationService] Quick: pipeline failed:', err);
+    return { success: false, result: null, errors: ['Valuation pipeline failed.'] };
+  }
+
+  const riskAssessment = assessRisk({
+    lane,
+    marketContext,
+    valueEstimate: pipeline.valueEstimate,
+    laneMetrics: {},
+  });
 
   const result: QuickAppraisalResult = {
     property,
     marketContext,
-    valueEstimate: adjustedValue,
+    valueEstimate: pipeline.valueEstimate,
+    approaches: pipeline.approaches,
+    selectedComps: pipeline.selectedComps,
     rehab,
     riskAssessment,
-    narrative,
-    confidence: adjustedValue.confidenceScore,
+    narrative: pipeline.narrative,
+    confidence: pipeline.valueEstimate.confidenceScore,
     generatedAt: new Date().toISOString(),
     version: APPRAISAL_VERSION,
   };
