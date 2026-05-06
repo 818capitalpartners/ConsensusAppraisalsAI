@@ -3,7 +3,7 @@ name: Agent - Daily Dashboard
 # Every weekday at 7:03 AM ET (11:03 UTC). Computes Red/Yellow/Green
 # health across active pipeline, drafts 3 actions per Red deal, 1 per
 # Yellow, writes the dashboard markdown to docs/daily-dashboard/.
-# Per spec 6.
+# Per spec section 6.
 
 on:
   schedule:
