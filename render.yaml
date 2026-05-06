@@ -7,7 +7,7 @@ services:
     repo: https://github.com/818capitalpartners/ConsensusAppraisalsAI.git
     branch: main
     rootDir: .
-    buildCommand: npm install && npm run db:generate && npm run db:push && npm run build --workspace @818capital/api
+    buildCommand: npm install && npm run db:generate && npm run db:push && npm run db:seed && npm run build --workspace @818capital/api
     startCommand: npm run start --workspace @818capital/api
     healthCheckPath: /api/health
     envVars:
@@ -32,7 +32,7 @@ services:
       - key: ESP_FROM_EMAIL
         sync: false
       - key: CORS_ORIGIN
-        sync: false
+        value: https://consensus-appraisals-web.onrender.com
       - key: LENDER_APPRAISAL_MODEL_VERSION
         value: render-initial
       - key: LENDER_APPRAISAL_DATA_VERSION
@@ -52,7 +52,7 @@ services:
       - key: NODE_ENV
         value: production
       - key: NEXT_PUBLIC_API_URL
-        sync: false
+        value: https://consensus-appraisals-api.onrender.com
       - key: NEXT_PUBLIC_GA4_ID
         sync: false
       - key: NEXT_PUBLIC_GTM_ID

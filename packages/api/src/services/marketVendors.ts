@@ -1,4 +1,4 @@
-import { prisma } from '@818capital/db';
+import { Prisma, prisma } from '@818capital/db';
 
 /**
  * Market Vendor Adapters — vendor-agnostic interface for ingesting external data.
@@ -144,7 +144,7 @@ export async function ingestComps(
         sourceId: r.sourceId ?? null,
         latitude: r.latitude ?? null,
         longitude: r.longitude ?? null,
-        rawPayload: r as unknown as Record<string, unknown>,
+        rawPayload: r as unknown as Prisma.InputJsonValue,
       },
     });
     inserted++;
@@ -178,7 +178,7 @@ export async function ingestSnapshots(
         yoyAppreciation: r.yoyAppreciation ?? null,
         activeListings: r.activeListings ?? null,
         closedSales: r.closedSales ?? null,
-        rawPayload: r as unknown as Record<string, unknown>,
+        rawPayload: r as unknown as Prisma.InputJsonValue,
         source: adapter.name,
       },
     });
