@@ -1,82 +1,85 @@
 import { NextRequest, NextResponse } from 'next/server';
+import { updateSupabaseSession } from './lib/supabase/middleware';
 
 /**
- * Auth gate for internal admin routes.
+ * Single middleware combining two concerns:
  *
- * Currently protects:
- *   /command-center/*   - internal deal pipeline dashboard
+ * 1. HTTP Basic Auth gate for /command-center and /api/admin (admin tool).
+ *    Credentials in Vercel env: COMMAND_CENTER_USER, COMMAND_CENTER_PASSWORD.
  *
- * How it works:
- *   - HTTP Basic Auth challenge (browser pops native password dialog)
- *   - Credentials checked against env vars set in Vercel:
- *       COMMAND_CENTER_USER      (defaults to "ravi")
- *       COMMAND_CENTER_PASSWORD  (REQUIRED - fails closed if missing)
- *   - 401 returned with WWW-Authenticate header on any mismatch
- *   - X-Robots-Tag: noindex on the protected response so even leaked URLs
- *     do not enter search indexes
+ * 2. Supabase session cookie refresh for /portal and /auth (borrower/admin
+ *    portal). Without this, sessions expire silently after an hour.
  *
- * To rotate the password: update the env var in Vercel project settings
- * -> Settings -> Environment Variables -> redeploy. Browser-cached creds
- * become invalid on next request.
- *
- * Note: this protects the *page route*. Static JS chunks under /_next/
- * are still cacheable by URL but contain only React component code,
- * not live API data. For full hardening, move /command-center page
- * to fetch its data from an authenticated /api/* route instead of
- * having it baked into the client bundle.
+ * Order matters: Basic Auth runs first because it short-circuits with 401
+ * before we ever look at Supabase cookies.
  */
 
-const PROTECTED_PATHS = ['/command-center', '/api/admin'];
+const BASIC_AUTH_PATHS = ['/command-center', '/api/admin'];
 
-export function middleware(req: NextRequest) {
+export async function middleware(req: NextRequest) {
   const { pathname } = req.nextUrl;
 
-  // Only gate paths in PROTECTED_PATHS
-  const isProtected = PROTECTED_PATHS.some(p => pathname === p || pathname.startsWith(p + '/'));
-  if (!isProtected) return NextResponse.next();
+  // --- 1. Basic Auth gate ---
+  const needsBasicAuth = BASIC_AUTH_PATHS.some(
+    p => pathname === p || pathname.startsWith(p + '/'),
+  );
 
-  const expectedUser = process.env.COMMAND_CENTER_USER || 'ravi';
-  const expectedPass = process.env.COMMAND_CENTER_PASSWORD;
+  if (needsBasicAuth) {
+    const expectedUser = process.env.COMMAND_CENTER_USER || 'ravi';
+    const expectedPass = process.env.COMMAND_CENTER_PASSWORD;
 
-  // Fail closed if password not configured - better to lock yourself
-  // out than to ship an open admin route.
-  if (!expectedPass) {
-    return new NextResponse(
-      'Auth not configured. Set COMMAND_CENTER_PASSWORD env var in Vercel.',
-      { status: 503, headers: { 'X-Robots-Tag': 'noindex, nofollow' } }
-    );
-  }
+    if (!expectedPass) {
+      return new NextResponse(
+        'Auth not configured. Set COMMAND_CENTER_PASSWORD env var in Vercel.',
+        { status: 503, headers: { 'X-Robots-Tag': 'noindex, nofollow' } },
+      );
+    }
 
-  const auth = req.headers.get('authorization');
-  if (auth) {
-    const [scheme, encoded] = auth.split(' ');
-    if (scheme === 'Basic' && encoded) {
-      try {
-        const decoded = atob(encoded);
-        const sep = decoded.indexOf(':');
-        if (sep > -1) {
-          const user = decoded.slice(0, sep);
-          const pass = decoded.slice(sep + 1);
-          if (user === expectedUser && pass === expectedPass) {
-            return NextResponse.next();
+    const auth = req.headers.get('authorization');
+    let ok = false;
+    if (auth) {
+      const [scheme, encoded] = auth.split(' ');
+      if (scheme === 'Basic' && encoded) {
+        try {
+          const decoded = atob(encoded);
+          const sep = decoded.indexOf(':');
+          if (sep > -1) {
+            const user = decoded.slice(0, sep);
+            const pass = decoded.slice(sep + 1);
+            if (user === expectedUser && pass === expectedPass) ok = true;
           }
+        } catch {
+          // fall through to 401
         }
-      } catch {
-        // fall through to 401
       }
     }
+
+    if (!ok) {
+      return new NextResponse('Authentication required', {
+        status: 401,
+        headers: {
+          'WWW-Authenticate': 'Basic realm="818 Command Center", charset="UTF-8"',
+          'X-Robots-Tag': 'noindex, nofollow',
+          'Cache-Control': 'no-store',
+        },
+      });
+    }
+    return NextResponse.next();
   }
 
-  return new NextResponse('Authentication required', {
-    status: 401,
-    headers: {
-      'WWW-Authenticate': 'Basic realm="818 Command Center", charset="UTF-8"',
-      'X-Robots-Tag': 'noindex, nofollow',
-      'Cache-Control': 'no-store',
-    },
-  });
+  // --- 2. Supabase session refresh for portal + auth routes ---
+  if (pathname.startsWith('/portal') || pathname.startsWith('/auth')) {
+    return updateSupabaseSession(req);
+  }
+
+  return NextResponse.next();
 }
 
 export const config = {
-  matcher: ['/command-center/:path*', '/api/admin/:path*'],
+  matcher: [
+    '/command-center/:path*',
+    '/api/admin/:path*',
+    '/portal/:path*',
+    '/auth/:path*',
+  ],
 };
