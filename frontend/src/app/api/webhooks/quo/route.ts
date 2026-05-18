@@ -53,6 +53,13 @@ type Decision = {
 
 const MIN_CALL_DURATION_SEC = 30;
 
+// TCPA / carrier-mandated opt-out keywords. Match on first word, case-insensitive,
+// allowing for punctuation. OpenPhone auto-handles its own STOP-list internally,
+// but we ALSO persist to our DB so quo-send.ts can pre-filter outbound.
+const STOP_KEYWORDS = /^\s*(stop|stopall|unsubscribe|cancel|end|quit|opt[\s-]?out|remove)\b/i;
+// START / "yes" re-opts in. Carriers require this to work.
+const START_KEYWORDS = /^\s*(start|unstop|yes|subscribe|opt[\s-]?in)\b/i;
+
 function classifyEventType(quoType: string, direction: string | undefined, duration: number | undefined): string {
   const isCall = quoType.startsWith("call");
   const isMsg = quoType.startsWith("message");
@@ -250,6 +257,31 @@ export async function POST(req: NextRequest) {
     return NextResponse.json({ ok: false, error: "contact_upsert_failed" }, { status: 500 });
   }
   const contactId = upsertResp.data.id;
+
+  // ---- 5.5. SMS opt-out / opt-in keyword handling ----
+  // Runs BEFORE AI extraction so we don't burn tokens on STOP replies. We still
+  // log the interaction below (full audit). OpenPhone handles its own STOP
+  // auto-reply for A2P-registered numbers, so we don't send a confirmation —
+  // we just persist the state in our DB for quo-send.ts to pre-filter.
+  if (eventType === "sms_in" && body.trim()) {
+    if (STOP_KEYWORDS.test(body)) {
+      const keyword = body.trim().split(/\s+/)[0].toUpperCase().slice(0, 32);
+      await sbUpdate("contacts", `id=eq.${contactId}`, {
+        sms_opt_out_at: now,
+        sms_opt_out_keyword: keyword,
+      });
+      console.log(`[quo-webhook] opt-out: ${callerPhone} (${keyword})`);
+    } else if (START_KEYWORDS.test(body)) {
+      // Re-opt-in: only valid if they previously opted in. Clear opt-out, but
+      // don't backfill opt-in — that would let anyone texting START get added
+      // to our list cold. They have to have given consent originally.
+      await sbUpdate("contacts", `id=eq.${contactId}`, {
+        sms_opt_out_at: null,
+        sms_opt_out_keyword: null,
+      });
+      console.log(`[quo-webhook] opt-in restored: ${callerPhone}`);
+    }
+  }
 
   // ---- 6. Run Claude extraction (only for events with usable content) ----
   let aiExtracted: Awaited<ReturnType<typeof extractWithClaude>> = null;
