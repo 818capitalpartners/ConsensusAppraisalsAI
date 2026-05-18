@@ -10,39 +10,42 @@ const FUNDED_DEALS: FundedDeal[] = [
   {
     id: 2, city: 'Burleson', state: 'TX', propertyType: 'SFR', loanType: 'Fix & Flip',
     program: 'Bridge — 90% LTC / 100% Rehab', ltv: '90% LTC / 100% Rehab', rate: 'N/A', dealValue: '$265,000',
-    image: 'https://images.unsplash.com/photo-1560448204-e02f11c3d0e2?w=800&q=80',
+    // 220 SE Robert St — Burleson TX F&F, Martin Pascual
+    image: '/property-images/PROMPT-37_220-SE-Robert-St.png',
     analysis: `Maximum leverage: 90% of acquisition plus 100% of rehab financed. Borrower brings minimal cash to close — ideal for scaling a flip portfolio.\n\nBurleson (DFW suburb) benefits from metro spillover demand. Projected net profit: $35K–$55K. ROI on cash invested: 50–80%.`,
   },
   {
     id: 3, city: 'Fort Worth', state: 'TX', propertyType: 'SFR', loanType: 'Fix & Flip',
     program: 'Bridge — 90% LTC / 100% Rehab', ltv: '90% LTC / 100% Rehab', rate: 'N/A', dealValue: '$310,000',
-    image: 'https://images.unsplash.com/photo-1598228723793-52759bba239c?w=800&q=80',
+    // 4763 Westcreek Dr — Fort Worth TX F&F
+    image: '/property-images/PROMPT-36_4763-Westcreek-Dr.png',
     analysis: `Another DFW-market flip with maximum financing. 90% LTC plus full rehab coverage means the borrower can execute multiple simultaneous projects.\n\nFort Worth's median home prices remain below DFW averages, offering larger ARV spreads. Projected ROI: 40–65% on invested capital.`,
   },
   {
     id: 4, city: 'Washington', state: 'DC', propertyType: 'SFR', loanType: 'Fix & Flip',
     program: '12-Mo Bridge IO — 90% LTC / 100% Rehab', ltv: '90% LTC / 100% Rehab', rate: '9.5%', dealValue: '$525,000',
     // 3505 24th St NE — 1925 brick bungalow, Woodridge neighborhood
-    image: 'https://images.unsplash.com/photo-1568605114967-8130f3a36994?w=800&q=80',
+    image: '/property-images/PROMPT-01_3505-24th-St_AFTER.png',
     analysis: `DC metro flip with premium ARV potential. At 9.5% IO with 90% LTC and full rehab funding, the borrower minimizes upfront cash while accessing a high-value market.\n\nDC's median home prices ($600K+) mean even modest renovations can generate $60K–$100K+ in profit. Projected ROI: 30–45%.`,
   },
   {
     id: 5, city: 'Silver Spring', state: 'MD', propertyType: 'SFR', loanType: 'Fix & Flip',
     program: '12-Mo Bridge IO — 90% LTC / 100% Rehab', ltv: '90% LTC / 100% Rehab', rate: '9.5%', dealValue: '$415,000',
-    image: 'https://images.unsplash.com/photo-1605276374104-dee2a0ed3cd6?w=800&q=80',
+    image: '/property-images/PROMPT-03_13429-Fairland_AFTER.png',
     analysis: `Silver Spring — DC suburb with strong demand from government and private-sector workers. 90% LTC with 100% rehab means the borrower deploys minimal equity.\n\nMontgomery County's high median income supports premium renovated-home pricing. Cash-on-cash ROI: 35–55%.`,
   },
   {
     id: 6, city: 'Washington', state: 'DC', propertyType: 'SFR', loanType: 'Fix & Flip',
     program: '12-Mo Bridge IO — 90% LTC / 100% Rehab', ltv: '90% LTC / 100% Rehab', rate: '9.5%', dealValue: '$490,000',
     // 6932 Chestnut Ave — DC residential, different property from #4
-    image: 'https://images.unsplash.com/photo-1600047509807-ba8f99d2cdde?w=800&q=80',
+    image: '/property-images/PROMPT-04_6932-Chestnut_AFTER.png',
     analysis: `Second DC-area flip — repeat borrower scaling in the same market. Proven comps and contractor relationships reduce execution risk.\n\nRepeat deals improve margins. Projected profit: $55K–$90K. IO structure keeps monthly carry under $4K. Cumulative ROI across DC deals: 70–100%+.`,
   },
   {
     id: 7, city: 'St. Petersburg', state: 'FL', propertyType: '4-Unit Multifamily', loanType: 'DSCR Cash-Out',
     program: '30-Yr DSCR IO — Cash-Out Refi', ltv: '60%', rate: 'N/A', dealValue: '$720,000',
-    image: 'https://images.unsplash.com/photo-1574362848149-11496d93a7c7?w=800&q=80',
+    // 5050 1st Ave S — St. Petersburg FL 4-Unit (real funded deal)
+    image: '/property-images/PROMPT-12_5050-1st-Ave-S.png',
     analysis: `Cash-out refi on a 4-unit at 60% LTV — conservative leverage with strong equity retention. IO period maximizes cash flow.\n\nFour units provide income diversification. St. Pete's rental market growing 5–7% YoY. Projected cash-on-cash with IO: 10–14%.`,
   },
   {
@@ -55,19 +58,21 @@ const FUNDED_DEALS: FundedDeal[] = [
     id: 9, city: 'Nashville', state: 'TN', propertyType: 'SFR — Short-Term Rental', loanType: 'DSCR Cash-Out',
     program: '30-Yr DSCR — 75% C/O / 80% R&T', ltv: '75%', rate: 'N/A', dealValue: '$445,000',
     // 1531 Douglas Ave — East Nashville craftsman bungalow
-    image: 'https://images.unsplash.com/photo-1576941089067-2de3c901e126?w=800&q=80',
+    image: '/property-images/PROMPT-24_Nashville-STR.png',
     analysis: `Nashville STR with cash-out refi at 75% LTV. Music City's tourism economy ($7B+ annually) creates consistent short-term rental demand.\n\nBorrower extracts equity for portfolio expansion while STR income covers debt service. Cash-on-cash return after refi: 11–16%.`,
   },
   {
     id: 10, city: 'Fort Myers', state: 'FL', propertyType: '33-Unit Multifamily', loanType: 'DSCR / Bridge',
     program: 'Agency Bridge — 80% of Cost Basis', ltv: '80% of cost basis', rate: 'N/A', dealValue: '$4,200,000',
-    image: 'https://images.unsplash.com/photo-1460317442991-0ec209397118?w=800&q=80',
+    // 2771 Royal Palm Ave — Fort Myers 33-unit multifamily
+    image: '/property-images/PROMPT-30_2771-Royal-Palm-Ave.png',
     analysis: `33-unit multifamily — institutional-grade asset at 80% of cost basis via agency bridge. Stabilize, then convert to permanent agency debt.\n\nFort Myers' population growth (top 5 nationally) drives strong rental demand. Projected stabilized NOI: $280K–$340K. Total ROI: 100–150% over 5 years.`,
   },
   {
     id: 11, city: 'White Settlement', state: 'TX', propertyType: 'Commercial / Industrial Flex', loanType: 'Commercial Refi',
     program: 'Life Co / CMBS', ltv: 'N/A', rate: '5.26–5.66%', dealValue: '$1,850,000',
-    image: 'https://images.unsplash.com/photo-1565610222536-ef125c59da2e?w=800&q=80',
+    // Industrial/flex building exterior w/ overhead loading doors — White Settlement TX commercial/industrial
+    image: 'https://images.unsplash.com/photo-1730215159668-1d8bb50c7c92?w=800&q=80',
     analysis: `Commercial retail refi via Life Company or CMBS — the lowest rates in commercial lending. At 5.26–5.66%, the borrower locks in institutional-grade pricing.\n\nLife Co/CMBS terms offer 10–25 year fixed-rate stability. DFW retail corridor. Projected cash-on-cash: 10–14%.`,
   },
   {
@@ -88,27 +93,28 @@ const FUNDED_DEALS: FundedDeal[] = [
     id: 14, city: 'Seneca Falls', state: 'NY', propertyType: '2-Unit', loanType: 'DSCR Cash-Out',
     program: '30-Yr DSCR — Cash-Out Refi', ltv: '75%', rate: 'N/A', dealValue: '$185,000',
     // 218 Fall St — cozy older home surrounded by autumn foliage, upstate NY
-    image: 'https://images.unsplash.com/photo-1761258635423-2a5f6cca1a3a?w=800&q=80',
+    image: '/property-images/PROMPT-19_218-Fall-St.png',
     analysis: `2-unit duplex cash-out refi in upstate NY's Finger Lakes region. At 75% LTV, the borrower extracts equity while maintaining solid coverage.\n\nDual-unit income provides built-in vacancy protection. Projected cash-on-cash after refi: 10–15%. Classic BRRRR execution.`,
   },
   {
     id: 15, city: 'Garfield', state: 'NJ', propertyType: '2-Unit', loanType: 'DSCR Purchase',
     program: '30-Yr DSCR — Purchase', ltv: '80%', rate: 'N/A', dealValue: '$560,000',
-    image: 'https://images.unsplash.com/photo-1560185127-6ed189bf02f4?w=800&q=80',
+    // Wood-frame 2-family homes w/ side-by-side porches on a wooded NJ commuter street — Garfield NJ 2-unit
+    image: 'https://images.unsplash.com/photo-1716686135669-f342dc43c423?w=800&q=80',
     analysis: `North Jersey duplex purchase at 80% LTV — strong leverage in a high-rent market. Bergen County's proximity to NYC drives premium rents of $1,800–$2,400/unit.\n\nProjected cash-on-cash: 7–10%. NYC commuter demand ensures low vacancy. 5-year equity build: 35–50%.`,
   },
   {
     id: 16, city: 'Seneca Falls', state: 'NY', propertyType: '3-Unit', loanType: 'DSCR Purchase',
     program: '30-Yr DSCR — Purchase', ltv: '70%', rate: 'N/A', dealValue: '$225,000',
-    // 223-225 Fall St — brick house with snow, winter upstate NY
-    image: 'https://images.unsplash.com/photo-1705981378604-2b9c17732f8c?w=800&q=80',
+    // 31 Blakely Pl — Seneca Falls NY 3-unit
+    image: '/property-images/PROMPT-18_31-Blakely-Pl.png',
     analysis: `3-unit triplex purchase at 70% LTV — conservative leverage with three income streams. More units per property = better expense ratios and vacancy protection.\n\nThree units at $900–$1,100/mo each provide $2,700–$3,300 gross monthly. DSCR: 1.4–1.7x. Cash-on-cash: 11–16%.`,
   },
   {
     id: 17, city: 'Grandview', state: 'MO', propertyType: 'SFR', loanType: 'DSCR R&T',
     program: '30-Yr DSCR — Rate & Term', ltv: '80%', rate: 'N/A', dealValue: '$165,000',
     // 8001 E 130th Ct — Kansas City suburb ranch
-    image: 'https://images.unsplash.com/photo-1600607687939-ce8a6c25118c?w=800&q=80',
+    image: '/property-images/PROMPT-13_8001-E-130th-Ct.png',
     analysis: `Kansas City metro SFR — rate & term refi at 80% LTV optimizes existing debt structure. 30-year fixed rate locked in.\n\nGrandview's affordable entry points with growing rental demand. Cash-on-cash return: 8–12%. R&T refi likely reduces monthly payments immediately.`,
   },
   {
@@ -121,14 +127,16 @@ const FUNDED_DEALS: FundedDeal[] = [
     id: 19, city: 'Woodstock', state: 'NY', propertyType: '2-Unit', loanType: 'DSCR Purchase',
     program: '30-Yr DSCR — Purchase', ltv: '60%', rate: 'N/A', dealValue: '$425,000',
     // Woodstock — old Cape Cod beach cottage style, modest
-    image: 'https://images.unsplash.com/photo-1729109024236-7cd9e9170978?w=800&q=80',
+    // Modern black-stained wooded cabin in forest clearing at dusk — Hudson Valley / Catskills 2-unit
+    image: 'https://images.unsplash.com/photo-1724931420584-d360afc3e1f8?w=800&q=80',
     analysis: `Woodstock duplex at 60% LTV — conservative leverage in a desirable Hudson Valley market. Heavy equity position means lower payments and stronger cash flow.\n\nWoodstock's tourism economy supports both long-term and STR strategies. Cash-on-cash: 6–9% traditional, or 10–15% with one STR unit.`,
   },
   {
     id: 20, city: 'Woodstock', state: 'NY', propertyType: '2-Unit', loanType: 'DSCR Purchase',
     program: '30-Yr DSCR — Purchase', ltv: '75%', rate: 'N/A', dealValue: '$390,000',
     // Woodstock — woodland house with natural surroundings
-    image: 'https://images.unsplash.com/photo-1631149784540-d0f6be3b8c7f?w=800&q=80',
+    // Blue wood-frame 2-unit w/ rear deck + exterior stairs — second Woodstock NY 2-unit
+    image: 'https://images.unsplash.com/photo-1675583084392-9e7dbe30f3b6?w=800&q=80',
     analysis: `Second Woodstock duplex — higher leverage at 75% LTV preserves capital for additional deals. Combined portfolio averages ~68% LTV.\n\nScaling in the same market reduces management friction. Blended cash-on-cash: 8–12%. Hudson Valley popularity with remote workers supports rent growth.`,
   },
   {
@@ -148,7 +156,8 @@ const FUNDED_DEALS: FundedDeal[] = [
     id: 23, city: 'Los Fresnos', state: 'TX', propertyType: 'SFR', loanType: 'DSCR',
     program: '30-Yr DSCR', ltv: 'N/A', rate: 'N/A', dealValue: '$175,000',
     // Los Fresnos TX — small ranch house on green field, single story
-    image: 'https://images.unsplash.com/photo-1710627748327-68039e03b8d2?w=800&q=80',
+    // Red-sided single-story ranch w/ white trim + split-rail fence — Los Fresnos TX small-town SFR
+    image: 'https://images.unsplash.com/photo-1774655762504-5f3a07999cd7?w=800&q=80',
     analysis: `Rio Grande Valley SFR — one of the most affordable markets in Texas with strong rental demand from border trade and healthcare employment.\n\nLow acquisition costs and rents of $1,100–$1,400 create excellent rent-to-price ratios. DSCR: 1.3–1.5x. Cash-on-cash: 10–15%.`,
   },
   {
@@ -174,14 +183,15 @@ const FUNDED_DEALS: FundedDeal[] = [
     id: 27, city: 'Syosset', state: 'NY', propertyType: '2-Family', loanType: 'DSCR Purchase',
     program: '30-Yr DSCR — Purchase', ltv: '60%', rate: 'N/A', dealValue: '$825,000',
     // Syosset — modest suburban house with cars in driveway, Long Island
-    image: 'https://images.unsplash.com/photo-1702908591032-a08a7739222c?w=800&q=80',
+    // Gray 2-story suburban home w/ gables + wrap porch + red maple — Syosset Long Island 2-family
+    image: 'https://images.unsplash.com/photo-1762374974129-f9266d9c4efc?w=800&q=80',
     analysis: `Long Island 2-family in Nassau County — one of the most supply-constrained rental markets in the Northeast. Syosset's top-rated schools and LIRR access drive premium demand.\n\nAt 60% LTV, significant equity protection. Dual-unit income of $3,000–$4,500/mo combined. Cash-on-cash: 6–9%.`,
   },
   {
     id: 28, city: 'Washington', state: 'DC', propertyType: 'SFR', loanType: 'Fix & Flip',
     program: '12-Mo Bridge IO — Heavy Rehab', ltv: '90% LTC / 100% Rehab', rate: 'N/A', dealValue: '$978,000',
     // 1614 Decatur St NW — Federal-style red brick DC rowhouse with columned entry (Petworth/16th St Heights)
-    image: 'https://images.unsplash.com/photo-1564336510711-dcb3df5eefe9?w=800&q=80',
+    image: '/property-images/PROMPT-02_3521-16th-St_AFTER.png',
     analysis: `Decatur Street rowhouse flip in the Petworth / 16th Street Heights corridor — one of DC's fastest-appreciating inner submarkets. Metro-accessible neighborhoods inside the Diamond have seen sustained 5–8% YoY gains.\n\nFull interest-only bridge with 90% acquisition plus 100% rehab draws lets the sponsor recycle capital across concurrent DC flips. Target ARV spread of $200K+ on a 4–6 month renovation. Projected net profit: $120K–$180K. ROI on invested capital: 55–85%.`,
   },
   {
@@ -195,7 +205,7 @@ const FUNDED_DEALS: FundedDeal[] = [
     id: 30, city: 'Washington', state: 'DC', propertyType: 'Condo', loanType: 'Fix & Flip',
     program: '12-Mo Bridge IO — Condo Reposition', ltv: '80% LTC / 100% Rehab', rate: 'N/A', dealValue: '$385,000',
     // 700 7th St SW — DC mid-rise red brick condo with ground-floor retail (Navy Yard/14th St corridor aesthetic)
-    image: 'https://images.unsplash.com/photo-1722492559309-8f235c08975d?w=800&q=80',
+    image: '/property-images/PROMPT-05_700-7th-St_AFTER.png',
     analysis: `Downtown DC condo reposition — walkable to Navy Yard, L'Enfant Plaza, and the Wharf. Institutional-grade building in one of the strongest walk-score submarkets in the metro.\n\nCondo-specific bridge underwriting accounts for HOA financials, reserve adequacy, and insurance walls. Renovated 1-bed units resell to federal workers and young professionals at $550K–$700K. 12-month IO matched to a lean cosmetic rehab (kitchens, baths, floors, paint). Projected net profit: $55K–$85K. ROI on invested capital: 40–65%.`,
   },
   {

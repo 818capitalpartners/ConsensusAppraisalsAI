@@ -23,10 +23,14 @@ const PROGRAM_TIERS = [
 ];
 
 const TOP_MARKETS = [
+  // Dallas skyline (verified)
   { market: 'Dallas-Fort Worth', units: '28K+', occ: '92%', growth: '+4.1%', image: 'https://images.unsplash.com/photo-1545194445-dddb8f4487c6?w=400&q=80' },
-  { market: 'Phoenix', units: '22K+', occ: '94%', growth: '+3.8%', image: 'https://images.unsplash.com/photo-1558645836-e44122a743ee?w=400&q=80' },
-  { market: 'Atlanta', units: '19K+', occ: '93%', growth: '+3.5%', image: 'https://images.unsplash.com/photo-1486406146926-c627a92ad1ab?w=400&q=80' },
-  { market: 'Nashville', units: '12K+', occ: '91%', growth: '+4.7%', image: 'https://images.unsplash.com/photo-1560518883-ce09059eeffa?w=400&q=80' },
+  // Phoenix downtown skyline at sunset (verified)
+  { market: 'Phoenix', units: '22K+', occ: '94%', growth: '+3.8%', image: 'https://images.unsplash.com/photo-1729041534038-fdc1f9cf3d3a?w=400&q=80' },
+  // Atlanta cityscape at sunset (verified)
+  { market: 'Atlanta', units: '19K+', occ: '93%', growth: '+3.5%', image: 'https://images.unsplash.com/photo-1663601460253-aba72eea6edf?w=400&q=80' },
+  // Nashville downtown skyline / Cumberland River (verified)
+  { market: 'Nashville', units: '12K+', occ: '91%', growth: '+4.7%', image: 'https://images.unsplash.com/photo-1608258598684-3118606cfdaa?w=400&q=80' },
 ];
 
 function TrendIcon({ trend }: { trend: string }) {
