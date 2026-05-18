@@ -1,8 +1,41 @@
 import { NextRequest, NextResponse } from 'next/server';
 import { priceLoan, PricingResult } from '@/lib/pricing-engine';
 import { captureLead, type LeadInput } from '@/lib/leads';
+import { sbUpsert } from '@/lib/supabase';
+import { normalizePhone } from '@/lib/quo-webhook';
 
 export const runtime = 'nodejs';
+
+/**
+ * Persist SMS opt-in consent against the contacts table. Best-effort —
+ * failures here must NEVER block the deal submission. TCPA audit requires
+ * a timestamp + source + IP at the moment of opt-in.
+ */
+async function recordSmsConsent(args: {
+  phone: string | undefined;
+  ip: string | undefined;
+  source: string;
+}): Promise<void> {
+  const phone = normalizePhone(args.phone);
+  if (!phone) return;
+  try {
+    await sbUpsert(
+      'contacts',
+      {
+        phone,
+        sms_opted_in_at: new Date().toISOString(),
+        sms_opt_in_source: args.source,
+        sms_opt_in_ip: args.ip || null,
+        // Clear any prior opt-out — express re-consent overrides STOP history.
+        sms_opt_out_at: null,
+        sms_opt_out_keyword: null,
+      },
+      'phone',
+    );
+  } catch (e) {
+    console.error('[deals] recordSmsConsent failed:', (e as Error).message);
+  }
+}
 
 // ── Types ────────────────────────────────────────────────────────────────────
 
@@ -349,6 +382,7 @@ export async function POST(req: NextRequest) {
     const body = await req.json();
     const person: PersonInput = body.person;
     const deal: DealInput = body.deal;
+    const consent: { sms?: boolean } | undefined = body.consent;
 
     if (!person?.first_name || !person?.last_name || !person?.email) {
       return NextResponse.json(
@@ -469,6 +503,19 @@ export async function POST(req: NextRequest) {
     captureLead(leadInput).catch((err) =>
       console.error('[deals] captureLead failed', err),
     );
+
+    // Record SMS opt-in if the borrower checked the box. Also fire-and-forget —
+    // a Supabase outage must not block deal submission. The IP comes from
+    // x-forwarded-for (Vercel populates this) for audit-grade consent proof.
+    if (consent?.sms === true) {
+      const ip = (req.headers.get('x-forwarded-for') || '').split(',')[0]?.trim() ||
+                 req.headers.get('x-real-ip') || undefined;
+      recordSmsConsent({
+        phone: person.phone,
+        ip,
+        source: deal.channel === 'apply_page' ? 'apply_form' : (deal.channel || 'apply_form'),
+      }).catch(() => { /* already logged inside */ });
+    }
 
     return NextResponse.json(
       {

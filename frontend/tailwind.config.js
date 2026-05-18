@@ -24,6 +24,28 @@ module.exports = {
         },
         success: '#1A8754',
         warning: '#D4A017',
+        // Warm variant (from brand/tokens — used on /apply, portal, deck cover).
+        // Keep these separate from navy/accent so existing pages stay strict.
+        gold: '#B08A3E',
+        'gold-soft': '#F7F4EA',
+        'gold-line': '#EFD99A',
+        'warm-bg': '#F5F3EE',
+        'warm-ink': '#1C2B3A',
+        ok: '#1E8449',
+        err: '#C0392B',
+      },
+      letterSpacing: {
+        caps: '0.06em',
+        wide1: '0.08em',
+        wide2: '0.14em',
+        wide3: '0.22em',
+      },
+      borderRadius: {
+        soft: '3px',
+        flat: '2px',
+      },
+      boxShadow: {
+        whisper: '0 1px 2px rgba(31, 78, 120, 0.08), 0 2px 6px rgba(31, 78, 120, 0.06)',
       },
       fontFamily: {
         sans: ['Montserrat', 'system-ui', 'sans-serif'],

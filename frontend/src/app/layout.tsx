@@ -174,6 +174,7 @@ const RESOURCE_LINKS = [
   { href: '/blog', label: 'Blog' },
   { href: '/insights', label: 'Industry Insights' },
   { href: '/resources', label: 'Calculators & Tools' },
+  { href: '/privacy', label: 'Privacy' },
 ];
 
 const SOCIALS = [
