@@ -23,20 +23,20 @@ const FUNDED_DEALS: FundedDeal[] = [
     id: 4, city: 'Washington', state: 'DC', propertyType: 'SFR', loanType: 'Fix & Flip',
     program: '12-Mo Bridge IO — 90% LTC / 100% Rehab', ltv: '90% LTC / 100% Rehab', rate: '9.5%', dealValue: '$525,000',
     // 3505 24th St NE — 1925 brick bungalow, Woodridge neighborhood
-    image: 'https://images.unsplash.com/photo-1568605114967-8130f3a36994?w=800&q=80',
+    image: '/property-images/PROMPT-01_3505-24th-St_AFTER.png',
     analysis: `DC metro flip with premium ARV potential. At 9.5% IO with 90% LTC and full rehab funding, the borrower minimizes upfront cash while accessing a high-value market.\n\nDC's median home prices ($600K+) mean even modest renovations can generate $60K–$100K+ in profit. Projected ROI: 30–45%.`,
   },
   {
     id: 5, city: 'Silver Spring', state: 'MD', propertyType: 'SFR', loanType: 'Fix & Flip',
     program: '12-Mo Bridge IO — 90% LTC / 100% Rehab', ltv: '90% LTC / 100% Rehab', rate: '9.5%', dealValue: '$415,000',
-    image: 'https://images.unsplash.com/photo-1605276374104-dee2a0ed3cd6?w=800&q=80',
+    image: '/property-images/PROMPT-03_13429-Fairland_AFTER.png',
     analysis: `Silver Spring — DC suburb with strong demand from government and private-sector workers. 90% LTC with 100% rehab means the borrower deploys minimal equity.\n\nMontgomery County's high median income supports premium renovated-home pricing. Cash-on-cash ROI: 35–55%.`,
   },
   {
     id: 6, city: 'Washington', state: 'DC', propertyType: 'SFR', loanType: 'Fix & Flip',
     program: '12-Mo Bridge IO — 90% LTC / 100% Rehab', ltv: '90% LTC / 100% Rehab', rate: '9.5%', dealValue: '$490,000',
     // 6932 Chestnut Ave — DC residential, different property from #4
-    image: 'https://images.unsplash.com/photo-1600047509807-ba8f99d2cdde?w=800&q=80',
+    image: '/property-images/PROMPT-04_6932-Chestnut_AFTER.png',
     analysis: `Second DC-area flip — repeat borrower scaling in the same market. Proven comps and contractor relationships reduce execution risk.\n\nRepeat deals improve margins. Projected profit: $55K–$90K. IO structure keeps monthly carry under $4K. Cumulative ROI across DC deals: 70–100%+.`,
   },
   {
@@ -55,7 +55,7 @@ const FUNDED_DEALS: FundedDeal[] = [
     id: 9, city: 'Nashville', state: 'TN', propertyType: 'SFR — Short-Term Rental', loanType: 'DSCR Cash-Out',
     program: '30-Yr DSCR — 75% C/O / 80% R&T', ltv: '75%', rate: 'N/A', dealValue: '$445,000',
     // 1531 Douglas Ave — East Nashville craftsman bungalow
-    image: 'https://images.unsplash.com/photo-1576941089067-2de3c901e126?w=800&q=80',
+    image: '/property-images/PROMPT-24_Nashville-STR.png',
     analysis: `Nashville STR with cash-out refi at 75% LTV. Music City's tourism economy ($7B+ annually) creates consistent short-term rental demand.\n\nBorrower extracts equity for portfolio expansion while STR income covers debt service. Cash-on-cash return after refi: 11–16%.`,
   },
   {
@@ -88,7 +88,7 @@ const FUNDED_DEALS: FundedDeal[] = [
     id: 14, city: 'Seneca Falls', state: 'NY', propertyType: '2-Unit', loanType: 'DSCR Cash-Out',
     program: '30-Yr DSCR — Cash-Out Refi', ltv: '75%', rate: 'N/A', dealValue: '$185,000',
     // 218 Fall St — cozy older home surrounded by autumn foliage, upstate NY
-    image: 'https://images.unsplash.com/photo-1761258635423-2a5f6cca1a3a?w=800&q=80',
+    image: '/property-images/PROMPT-19_218-Fall-St.png',
     analysis: `2-unit duplex cash-out refi in upstate NY's Finger Lakes region. At 75% LTV, the borrower extracts equity while maintaining solid coverage.\n\nDual-unit income provides built-in vacancy protection. Projected cash-on-cash after refi: 10–15%. Classic BRRRR execution.`,
   },
   {
@@ -108,7 +108,7 @@ const FUNDED_DEALS: FundedDeal[] = [
     id: 17, city: 'Grandview', state: 'MO', propertyType: 'SFR', loanType: 'DSCR R&T',
     program: '30-Yr DSCR — Rate & Term', ltv: '80%', rate: 'N/A', dealValue: '$165,000',
     // 8001 E 130th Ct — Kansas City suburb ranch
-    image: 'https://images.unsplash.com/photo-1600607687939-ce8a6c25118c?w=800&q=80',
+    image: '/property-images/PROMPT-13_8001-E-130th-Ct.png',
     analysis: `Kansas City metro SFR — rate & term refi at 80% LTV optimizes existing debt structure. 30-year fixed rate locked in.\n\nGrandview's affordable entry points with growing rental demand. Cash-on-cash return: 8–12%. R&T refi likely reduces monthly payments immediately.`,
   },
   {
@@ -181,7 +181,7 @@ const FUNDED_DEALS: FundedDeal[] = [
     id: 28, city: 'Washington', state: 'DC', propertyType: 'SFR', loanType: 'Fix & Flip',
     program: '12-Mo Bridge IO — Heavy Rehab', ltv: '90% LTC / 100% Rehab', rate: 'N/A', dealValue: '$978,000',
     // 1614 Decatur St NW — Federal-style red brick DC rowhouse with columned entry (Petworth/16th St Heights)
-    image: 'https://images.unsplash.com/photo-1564336510711-dcb3df5eefe9?w=800&q=80',
+    image: '/property-images/PROMPT-02_3521-16th-St_AFTER.png',
     analysis: `Decatur Street rowhouse flip in the Petworth / 16th Street Heights corridor — one of DC's fastest-appreciating inner submarkets. Metro-accessible neighborhoods inside the Diamond have seen sustained 5–8% YoY gains.\n\nFull interest-only bridge with 90% acquisition plus 100% rehab draws lets the sponsor recycle capital across concurrent DC flips. Target ARV spread of $200K+ on a 4–6 month renovation. Projected net profit: $120K–$180K. ROI on invested capital: 55–85%.`,
   },
   {
@@ -195,7 +195,7 @@ const FUNDED_DEALS: FundedDeal[] = [
     id: 30, city: 'Washington', state: 'DC', propertyType: 'Condo', loanType: 'Fix & Flip',
     program: '12-Mo Bridge IO — Condo Reposition', ltv: '80% LTC / 100% Rehab', rate: 'N/A', dealValue: '$385,000',
     // 700 7th St SW — DC mid-rise red brick condo with ground-floor retail (Navy Yard/14th St corridor aesthetic)
-    image: 'https://images.unsplash.com/photo-1722492559309-8f235c08975d?w=800&q=80',
+    image: '/property-images/PROMPT-05_700-7th-St_AFTER.png',
     analysis: `Downtown DC condo reposition — walkable to Navy Yard, L'Enfant Plaza, and the Wharf. Institutional-grade building in one of the strongest walk-score submarkets in the metro.\n\nCondo-specific bridge underwriting accounts for HOA financials, reserve adequacy, and insurance walls. Renovated 1-bed units resell to federal workers and young professionals at $550K–$700K. 12-month IO matched to a lean cosmetic rehab (kitchens, baths, floors, paint). Projected net profit: $55K–$85K. ROI on invested capital: 40–65%.`,
   },
   {
