@@ -9,19 +9,22 @@ const RECENT_SCENARIOS: FundedDeal[] = [
   {
     id: 101, city: 'Washington', state: 'DC', propertyType: 'SFR Rowhouse', loanType: 'Fix & Flip',
     program: '12-Mo Bridge IO — 90% LTC / 100% Rehab', ltv: '90% LTC / 100% Rehab', rate: 'N/A', dealValue: '$650,000',
-    image: 'https://images.unsplash.com/photo-1554995207-c18c203602cb?w=800&q=80',
+    // DC red-brick rowhouses w/ cherry blossoms — Mt. Pleasant / 16th St NW vernacular
+    image: 'https://images.unsplash.com/photo-1608595530288-81a15e2eb88a?w=800&q=80',
     analysis: `Mt. Pleasant / 16th Street NW corridor — three-story brick rowhouse in one of DC's most consistent appreciation submarkets. Metro-accessible inner neighborhoods inside the Diamond have run 5–8% YoY for the better part of a decade.\n\n12-month IO bridge with 90% LTC plus 100% rehab funding lets the sponsor run a tight 5–6 month renovation without parking cash. Projected ARV spread of $150K–$220K. Net profit target: $90K–$140K. Cash-on-cash ROI: 50–80%.`,
   },
   {
     id: 102, city: 'Weston', state: 'CT', propertyType: 'SFR Colonial', loanType: 'Fix & Flip',
     program: '12-Mo Bridge IO — 90% LTC / 100% Rehab', ltv: '90% LTC / 100% Rehab', rate: 'N/A', dealValue: '$925,000',
-    image: 'https://images.unsplash.com/photo-1542621334-a254cf47733d?w=800&q=80',
+    // White New England 2-story Colonial w/ dark shutters — Weston CT vernacular
+    image: 'https://images.unsplash.com/photo-1594348352429-159508d48c57?w=800&q=80',
     analysis: `Upscale 3,000–3,500 sqft Colonial in affluent Fairfield County. Weston's NY-commuter demand and top-tier school district drive renovated home pricing $1.4M+.\n\nIO bridge keeps carry tight through a 6–8 month repositioning of the cedar-shake exterior and dated interior. Sponsor brings construction track record. Projected net profit: $150K–$220K. Cash-on-cash ROI: 40–60%.`,
   },
   {
     id: 103, city: 'New Marlborough', state: 'MA', propertyType: 'Lake Cottage SFR', loanType: 'Fix & Flip',
     program: '12-Mo Bridge IO — Heavy Rehab', ltv: '85% LTC / 100% Rehab', rate: 'N/A', dealValue: '$285,000',
-    image: 'https://images.unsplash.com/photo-1518780664697-55e3ad937233?w=800&q=80',
+    // Rustic wood lake cottage w/ red roof on New England forest shore — Berkshires / Lake Buel
+    image: 'https://images.unsplash.com/photo-1699415621478-e2b2f7a1427b?w=800&q=80',
     analysis: `872 sqft Berkshires lake cottage on Lake Buel. Small footprint, large lot, waterfront access — the trifecta for restored second-home buyers and high-end STR investors out of Boston and NYC.\n\nLight structural plus full cosmetic rehab. Comp set of restored Berkshires cottages clears $550K–$700K. Projected net profit: $80K–$130K. ROI on invested capital: 60–95%.`,
   },
   {
@@ -48,7 +51,8 @@ const RECENT_SCENARIOS: FundedDeal[] = [
   {
     id: 107, city: 'Lakefront', state: 'AZ', propertyType: 'Newer-Build SFR', loanType: 'Fix & Flip',
     program: '12-Mo Bridge — Light Cosmetic', ltv: '80% LTC', rate: 'N/A', dealValue: '$475,000',
-    image: 'https://images.unsplash.com/photo-1605236453806-6ff36851218e?w=800&q=80',
+    // Single-story southwestern stucco home w/ tile roof + palms + desert landscaping — AZ suburban SFR
+    image: 'https://images.unsplash.com/photo-1622059796766-f2b1f9d2d119?w=800&q=80',
     analysis: `Newer-build 2010s two-story stucco home backing directly onto a small neighborhood lake. Minor garage drywall fire damage — the entire rehab is essentially cosmetic plus a single restoration line item.\n\nPremium lakefront lot in a suburban AZ market drives ARV. Fast 60–90 day project. Projected net profit: $45K–$70K. Cash-on-cash ROI: 50–75%.`,
   },
 
@@ -63,13 +67,15 @@ const RECENT_SCENARIOS: FundedDeal[] = [
   {
     id: 109, city: 'Cleveland', state: 'OH', propertyType: '2-Unit Duplex', loanType: 'DSCR Purchase',
     program: '30-Yr DSCR — Purchase', ltv: '75%', rate: 'N/A', dealValue: '$139,000',
-    image: 'https://images.unsplash.com/photo-1599423300746-b62533397364?w=800&q=80',
+    // Green wood-frame Midwest duplex w/ two front doors — Cleveland OH vernacular
+    image: 'https://images.unsplash.com/photo-1712251850184-54c652a58b22?w=800&q=80',
     analysis: `Classic early-1900s Cleveland duplex — Hough/Glenville-adjacent block. One unit Section 8 leased, the other market-rate.\n\nSection 8 income stability plus market-rate upside on the other unit produces a blended DSCR near 1.6x. Cleveland's low entry basis and Section 8 floor make it one of the most defensible cash-flow markets in the country. Cash-on-cash return: 13–18%.`,
   },
   {
     id: 110, city: 'Canton', state: 'OH', propertyType: '2-Unit Duplex', loanType: 'DSCR Purchase',
     program: '30-Yr DSCR — Purchase', ltv: '75%', rate: 'N/A', dealValue: '$135,000',
-    image: 'https://images.unsplash.com/photo-1502672023488-70e25813eb80?w=800&q=80',
+    // Brown wood-frame 2-family w/ full-width porch + US flag — Rust Belt Canton OH vernacular
+    image: 'https://images.unsplash.com/photo-1646394809642-da8a8f5630ae?w=800&q=80',
     analysis: `Older 1920s-era two-story wood-frame duplex in working-class Canton, OH. Low cost basis with dual income streams.\n\nRust Belt duplexes pencil because the price-to-rent ratios stay favorable even as the rest of the country compresses. Blended DSCR ~1.4x. Cash-on-cash return: 10–14%. Buy-and-hold with eventual refi upside.`,
   },
   {
@@ -116,19 +122,22 @@ const RECENT_SCENARIOS: FundedDeal[] = [
   {
     id: 117, city: 'Naples', state: 'FL', propertyType: '2-Unit Duplex', loanType: 'DSCR Cash-Out Refi',
     program: '30-Yr DSCR — Cash-Out', ltv: '70%', rate: 'N/A', dealValue: '$1,000,000',
-    image: 'https://images.unsplash.com/photo-1567361808960-dec9cb578182?w=800&q=80',
+    // Yellow Florida bungalow w/ red door, Spanish-moss live oak + palms — Naples FL vernacular
+    image: 'https://images.unsplash.com/photo-1561831710-3a8abd9657cf?w=800&q=80',
     analysis: `Naples duplex generating $5,900/mo combined — premium Southwest Florida rental income. Cash-out refi at 70% LTV unlocks equity for portfolio expansion.\n\nNaples rental demand stays sticky year-round despite hurricane and insurance pressure — second-home and seasonal-tenant economics underpin pricing. Coverage above 1.4x. Cash-on-cash post-refi: 7–10%.`,
   },
   {
     id: 118, city: 'Naples', state: 'FL', propertyType: '2-Unit Duplex', loanType: 'DSCR Cash-Out Refi',
     program: '30-Yr DSCR — Cash-Out', ltv: '70%', rate: 'N/A', dealValue: '$725,000',
-    image: 'https://images.unsplash.com/photo-1448630360428-65456885c650?w=800&q=80',
+    // Beige 2-story Florida home w/ second-floor balcony + palms — Naples FL suburban subdivision
+    image: 'https://images.unsplash.com/photo-1757007157463-86e683f4e7bf?w=800&q=80',
     analysis: `Suburban inland Naples duplex collecting $4,500/mo on a ~$725K basis. Steady DSCR coverage at 70% LTV in a market where most Florida lenders have tightened.\n\nPortfolio borrower scaling a Naples duplex stack — repeatable structure across three concurrent refis. Cash-on-cash post-refi: 8–11%.`,
   },
   {
     id: 119, city: 'Naples', state: 'FL', propertyType: '2-Unit Duplex', loanType: 'DSCR Cash-Out Refi',
     program: '30-Yr DSCR — Cash-Out', ltv: '70%', rate: 'N/A', dealValue: '$750,000',
-    image: 'https://images.unsplash.com/photo-1574691250077-03a929faece5?w=800&q=80',
+    // Gray 2-story Florida craftsman w/ palms framing entry — Naples FL older rental compound
+    image: 'https://images.unsplash.com/photo-1693837851506-93d3d01d4f44?w=800&q=80',
     analysis: `Older Naples rental compound generating $5,500/mo combined. Strong yield-to-basis in a submarket dominated by single-family stock — duplexes here trade at a structural premium.\n\nDSCR financing on the as-is income with a clear upside path if the sponsor decides to renovate either unit to STR-grade. Cash-on-cash post-refi: 8–11%.`,
   },
 
@@ -143,13 +152,15 @@ const RECENT_SCENARIOS: FundedDeal[] = [
   {
     id: 121, city: 'Washington', state: 'DC', propertyType: '9-Unit Multifamily', loanType: 'Multifamily Acquisition',
     program: 'Bridge — Value-Add Stabilization', ltv: '75% LTC', rate: 'N/A', dealValue: '$2,100,000',
-    image: 'https://images.unsplash.com/photo-1502005229762-cf1b2da7c5d6?w=800&q=80',
+    // 4-story modern multifamily residential building — DC Anacostia 9-unit MF stand-in
+    image: 'https://images.unsplash.com/photo-1515263487990-61b07816b324?w=800&q=80',
     analysis: `9-unit value-add acquisition in the Anacostia submarket. Bridge structure carries the asset through unit-by-unit reposition and rent-roll lift before a permanent agency refi.\n\nAnacostia has the strongest YoY rent growth in DC's emerging submarkets. Stabilized exit at 6.5–7.0% cap supports a 25–40% equity multiple over a 24–30 month hold.`,
   },
   {
     id: 122, city: 'Fort Worth', state: 'TX', propertyType: 'Commercial Flex / Industrial', loanType: 'Commercial Bridge',
     program: 'Small-Balance Commercial Bridge', ltv: '70%', rate: 'N/A', dealValue: '$1,450,000',
-    image: 'https://images.unsplash.com/photo-1551836022-deb4988cc6c0?w=800&q=80',
+    // Multi-tenant flex/industrial building w/ storefront entries — Fort Worth TX commercial corridor
+    image: 'https://images.unsplash.com/photo-1656120199083-eff40d26bd0c?w=800&q=80',
     analysis: `Two-suite multi-tenant industrial / flex acquisition on the south Fort Worth commercial corridor. Flex-industrial is one of the most resilient asset classes through this cycle — short-term lease structures, sticky tenants, low capex.\n\nBridge execution provides speed advantage over CMBS while the sponsor stabilizes tenancy. Going-in cap rate 8.5–9.5%; stabilized exit at 7.5–8.0% supports a clean refi path.`,
   },
 
@@ -171,13 +182,15 @@ const RECENT_SCENARIOS: FundedDeal[] = [
   {
     id: 125, city: 'Fort Worth', state: 'TX', propertyType: 'Ground-Up SFR', loanType: 'Construction',
     program: 'Construction Loan — Funded, In Build', ltv: '80% LTC', rate: 'N/A', dealValue: '$325,000',
-    image: 'https://images.unsplash.com/photo-1429497419816-9ca5cfb4571a?w=800&q=80',
+    // Single-family home under construction w/ exposed framing + scaffolding — Fort Worth TX ground-up SFR
+    image: 'https://images.unsplash.com/photo-1639953803381-e9c3f3a38253?w=800&q=80',
     analysis: `Ground-up SFR construction in suburban Fort Worth — funded and currently vertical. Sponsor running multiple concurrent TX SFR construction loans.\n\nDFW infill new construction supports a clean exit at $425K–$475K. Construction draw structure tracks milestone completion. Projected net profit: $50K–$80K. ROI on invested capital: 35–55%.`,
   },
   {
     id: 126, city: 'Burleson', state: 'TX', propertyType: 'Ground-Up SFR', loanType: 'Construction',
     program: 'Construction Loan — Active Build', ltv: '80% LTC', rate: 'N/A', dealValue: '$295,000',
-    image: 'https://images.unsplash.com/photo-1581094271901-8022df4466f9?w=800&q=80',
+    // New-build single-story TX suburban home w/ covered porch + fresh sod — Burleson TX ground-up SFR
+    image: 'https://images.unsplash.com/photo-1773427614314-6bd0b6115a40?w=800&q=80',
     analysis: `Small-town Burleson TX SFR construction — DFW spillover market with steady end-buyer demand for new infill product. Construction loan structured at 80% LTC with milestone-based draws.\n\nBurleson new construction comps clear $385K–$420K. Same sponsor running the Fort Worth construction loan above. Projected net profit: $45K–$70K. ROI on invested capital: 35–55%.`,
   },
 ];

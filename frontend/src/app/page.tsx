@@ -11,28 +11,29 @@ const LANES = [
     desc: 'Qualify on rental income alone. No tax returns, no W-2s. 1-4 units, portfolios, and STR properties.',
     href: '/dscr-loans',
     stats: 'Up to 80% LTV',
-    image: 'https://images.unsplash.com/photo-1605276374104-dee2a0ed3cd6?w=600&h=400&fit=crop',
+    // 5050 1st Ave S — St. Petersburg FL 4-Unit DSCR Cash-Out (real funded deal)
+    image: '/property-images/PROMPT-12_5050-1st-Ave-S.png',
   },
   {
     title: 'Fix & Flip',
     desc: 'Short-term bridge financing for rehab projects. Purchase + renovation in one loan with draw schedules.',
     href: '/fix-and-flip',
     stats: 'Up to 90% LTC',
-    image: 'https://images.unsplash.com/photo-1572120360610-d971b9d7767c?w=600&h=400&fit=crop',
+    image: '/property-images/PROMPT-02_3521-16th-St_AFTER.png',
   },
   {
     title: 'STR Loans',
     desc: 'Short-term rental financing using Airbnb and VRBO income. We normalize your revenue for DSCR.',
     href: '/str-loans',
     stats: 'STR income accepted',
-    image: 'https://images.unsplash.com/photo-1600596542815-ffad4c1539a9?w=600&h=400&fit=crop',
+    image: '/property-images/PROMPT-25_265-Arroyo-Pinon.png',
   },
   {
     title: 'Multifamily',
     desc: '5+ unit apartments, mixed-use, and small commercial. Full underwriting with Sponsor Brief analysis.',
     href: '/multifamily',
     stats: '$500K - $10M+',
-    image: 'https://images.unsplash.com/photo-1460317442991-0ec209397118?w=600&h=400&fit=crop',
+    image: '/property-images/PROMPT-30_2771-Royal-Palm-Ave.png',
   },
 ];
 
@@ -95,28 +96,28 @@ export default function HomePage() {
             {/* Right: Property images with loan badges */}
             <div className="relative hidden md:block">
               <div className="grid grid-cols-2 gap-4">
-                {/* Top - Long Island rental */}
+                {/* Top - Sedona AZ STR DSCR R&T refi takeout */}
                 <div className="relative col-span-2 h-56 rounded-2xl overflow-hidden shadow-lg">
-                  <Image src="https://images.unsplash.com/photo-1605276374104-dee2a0ed3cd6?w=700&h=400&fit=crop" alt="Long Island rental investment property" fill className="object-cover" priority />
+                  <Image src="/property-images/PROMPT-25_265-Arroyo-Pinon.png" alt="Sedona Arizona short-term rental — DSCR rate-and-term refinance" fill className="object-cover" priority />
                   <div className="absolute bottom-4 left-4 bg-white/95 backdrop-blur rounded-full px-4 py-1.5 shadow-md">
-                    <span className="text-xs font-body text-navy-500">DSCR Rental, Long Island / </span>
-                    <span className="text-sm font-sans font-bold text-accent">$825,000</span>
+                    <span className="text-xs font-body text-navy-500">STR DSCR R&amp;T, Sedona AZ / </span>
+                    <span className="text-sm font-sans font-bold text-accent">$810,000</span>
                   </div>
                 </div>
-                {/* Bottom left - fix and flip scenario */}
+                {/* Bottom left - Decatur St NW DC fix and flip */}
                 <div className="relative h-48 rounded-2xl overflow-hidden shadow-lg">
-                  <Image src="https://images.unsplash.com/photo-1572120360610-d971b9d7767c?w=400&h=350&fit=crop" alt="Older single-family home suitable for a fix and flip loan scenario" fill className="object-cover" />
+                  <Image src="/property-images/PROMPT-02_3521-16th-St_AFTER.png" alt="Decatur Street NW Washington DC rowhouse fix and flip" fill className="object-cover" />
                   <div className="absolute bottom-3 left-3 bg-white/95 backdrop-blur rounded-full px-3 py-1 shadow-md">
-                    <span className="text-xs font-body text-navy-500">Purchase + Rehab / </span>
-                    <span className="text-sm font-sans font-bold text-accent">$285,000</span>
+                    <span className="text-xs font-body text-navy-500">Fix &amp; Flip, Decatur St NW, Washington DC / </span>
+                    <span className="text-sm font-sans font-bold text-accent">$978,000</span>
                   </div>
                 </div>
-                {/* Bottom right - STR with pool */}
+                {/* Bottom right - 600 S Cherry Lane Fort Worth TX commercial / industrial */}
                 <div className="relative h-48 rounded-2xl overflow-hidden shadow-lg">
-                  <Image src="https://images.unsplash.com/photo-1600596542815-ffad4c1539a9?w=400&h=350&fit=crop" alt="Airbnb vacation rental with pool" fill className="object-cover" />
+                  <Image src="/property-images/PROMPT-33_600-S-Cherry-Lane.png" alt="600 South Cherry Lane Fort Worth Texas commercial industrial property" fill className="object-cover" />
                   <div className="absolute bottom-3 left-3 bg-white/95 backdrop-blur rounded-full px-3 py-1 shadow-md">
-                    <span className="text-xs font-body text-navy-500">STR, Scottsdale / </span>
-                    <span className="text-sm font-sans font-bold text-accent">$615,000</span>
+                    <span className="text-xs font-body text-navy-500">Commercial / Industrial, Fort Worth TX / </span>
+                    <span className="text-sm font-sans font-bold text-accent">$978,000</span>
                   </div>
                 </div>
               </div>
