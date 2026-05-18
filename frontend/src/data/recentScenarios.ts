@@ -27,19 +27,22 @@ const RECENT_SCENARIOS: FundedDeal[] = [
   {
     id: 104, city: 'Arlington', state: 'TX', propertyType: 'Estate SFR', loanType: 'Fix & Flip',
     program: '12-Mo Bridge IO — 85% LTC / 100% Rehab', ltv: '85% LTC / 100% Rehab', rate: 'N/A', dealValue: '$815,000',
-    image: 'https://images.unsplash.com/photo-1568605114967-8130f3a36994?w=800&q=80',
+    // 1434 Crownhill — Arlington TX estate flip
+    image: '/property-images/PROMPT-08_1434-Crownhill_AFTER.png',
     analysis: `5BR/5BA / 5,545 sqft estate on an elevated lot with canal and treetop views. Mid-1970s build in an established West Arlington subdivision — strong DFW estate-tier demand from corporate relocations.\n\nDeep cosmetic + selective structural reposition. Renovated estate-tier DFW comps run $1.1M–$1.4M. IO structure matches the 6–8 month timeline. Projected net profit: $180K–$280K. Cash-on-cash ROI: 35–55%.`,
   },
   {
     id: 105, city: 'Colleyville', state: 'TX', propertyType: 'Upscale SFR', loanType: 'Fix & Flip',
     program: '12-Mo Bridge IO — 90% LTC / 100% Rehab', ltv: '90% LTC / 100% Rehab', rate: 'N/A', dealValue: '$770,000',
-    image: 'https://images.unsplash.com/photo-1558618666-fcd25c85cd64?w=800&q=80',
+    // 5005 Summerbrook — Colleyville TX upscale flip
+    image: '/property-images/PROMPT-09_5005-Summerbrook_AFTER.png',
     analysis: `Affluent Tarrant County DFW suburb — Colleyville's top-rated schools and proximity to DFW airport drive sustained buyer demand for renovated 4-bed homes.\n\n3,500–4,500 sqft 1990s traditional getting a modern transitional refresh. Sponsor has multiple completed DFW flips. Projected net profit: $130K–$190K. Cash-on-cash ROI: 45–70%.`,
   },
   {
     id: 106, city: 'Tucson', state: 'AZ', propertyType: 'Sonoran Desert SFR', loanType: 'Fix & Flip',
     program: '12-Mo Bridge IO — 85% LTC / 100% Rehab', ltv: '85% LTC / 100% Rehab', rate: 'N/A', dealValue: '$355,000',
-    image: 'https://images.unsplash.com/photo-1623298317883-6b70254edf31?w=800&q=80',
+    // 10251 E Speedway — East Tucson Sonoran desert SFR
+    image: '/property-images/PROMPT-10_10251-E-Speedway_AFTER.png',
     analysis: `East Tucson SFR with Catalina Mountain backdrop. Sonoran Desert-style reposition — converting a dated 1980s stucco home into a modern Southwest contemporary with xeriscape landscaping.\n\nTucson's affordable entry vs. Phoenix plus inbound migration from California supports steady appreciation. Renovated comps in similar Tucson submarkets clear $450K–$525K. Projected net profit: $55K–$85K. Cash-on-cash ROI: 35–55%.`,
   },
   {
@@ -53,7 +56,8 @@ const RECENT_SCENARIOS: FundedDeal[] = [
   {
     id: 108, city: 'Raytown', state: 'MO', propertyType: 'Mid-Century SFR', loanType: 'DSCR Rental',
     program: '30-Yr DSCR — Purchase', ltv: '80%', rate: 'N/A', dealValue: '$150,000',
-    image: 'https://images.unsplash.com/photo-1591474200742-8e512e6f98f8?w=800&q=80',
+    // 8963 E 52nd Terrace — Raytown MO mid-century SFR
+    image: '/property-images/PROMPT-14_8963-E-52-Terrace.png',
     analysis: `Kansas City suburb brick-front ranch — the heart of the Midwest cash-flow lane. Rents of $1,200–$1,500 against $150K acquisition produce a DSCR comfortably above 1.4x.\n\nMissouri's landlord-friendly statutes reduce eviction friction. Cash-on-cash return: 10–14%. The kind of deal scaled investors stack 10–20 deep.`,
   },
   {
@@ -71,19 +75,22 @@ const RECENT_SCENARIOS: FundedDeal[] = [
   {
     id: 111, city: 'Belleville', state: 'IL', propertyType: '2-Unit Duplex', loanType: 'DSCR Cash-Out Refi',
     program: '30-Yr DSCR — Cash-Out', ltv: '75%', rate: 'N/A', dealValue: '$165,000',
-    image: 'https://images.unsplash.com/photo-1493809842364-78817add7ffb?w=800&q=80',
+    // 210-212 N 41st St — Belleville IL 2-unit duplex
+    image: '/property-images/PROMPT-20_210-212-N-41st-St.png',
     analysis: `St. Louis Metro East 2-unit collecting $2,225/mo combined. Cash-out refi at 75% LTV pulls equity for the next acquisition while keeping coverage above 1.3x.\n\nMetro East benefits from St. Louis-spillover demand without St. Louis property tax burden. Cash-on-cash post-refi: 9–13%.`,
   },
   {
     id: 112, city: 'St. Joseph', state: 'MO', propertyType: '2-Unit Duplex', loanType: 'DSCR Cash-Out Refi',
     program: '30-Yr DSCR — Cash-Out', ltv: '75%', rate: 'N/A', dealValue: '$155,000',
-    image: 'https://images.unsplash.com/photo-1480796927426-f609979314bd?w=800&q=80',
+    // 1216-1218 N 11th St — St. Joseph MO 2-unit duplex
+    image: '/property-images/PROMPT-21_1216-1218-N-11th-St.png',
     analysis: `Historic St. Joseph MO duplex generating $1,950/mo. Refi capture of trapped equity. NW Missouri's low cost basis supports outsized rent-to-price ratios.\n\nDSCR coverage strong even at 75% LTV. Cash-on-cash return: 9–13%. Stable Section 8 tenant base in the submarket.`,
   },
   {
     id: 113, city: 'St. Joseph', state: 'MO', propertyType: '2-Unit Duplex', loanType: 'DSCR Cash-Out Refi',
     program: '30-Yr DSCR — Cash-Out (Challenging Underwrite)', ltv: '70%', rate: 'N/A', dealValue: '$140,000',
-    image: 'https://images.unsplash.com/photo-1542718610-a1d656d1884c?w=800&q=80',
+    // 1605-1607 N 10th St — St. Joseph MO companion duplex
+    image: '/property-images/PROMPT-22_1605-1607-N-10th-St.png',
     analysis: `Companion duplex in the same St. Joseph submarket — challenging underwrite due to thin rent margins and older condition. We structured at 70% LTV instead of 75% to keep coverage above 1.2x.\n\nThe kind of deal most lenders pass on cold. Tighter LTV + a borrower with proven Section 8 management track record made this one fundable. Cash-on-cash return after refi: 8–11%.`,
   },
   {
@@ -95,13 +102,15 @@ const RECENT_SCENARIOS: FundedDeal[] = [
   {
     id: 115, city: 'Sedona', state: 'AZ', propertyType: 'STR SFR', loanType: 'DSCR Bridge',
     program: '24-Mo Bridge — STR-Qualified', ltv: '70%', rate: 'N/A', dealValue: '$1,052,000',
-    image: 'https://images.unsplash.com/photo-1611516491426-03025e6043c8?w=800&q=80',
+    // 265 Arroyo Pinon — Sedona AZ STR SFR
+    image: '/property-images/PROMPT-25_265-Arroyo-Pinon.png',
     analysis: `Red rock country STR — 3BR/3BA / 2,174 sqft, 1974 build, $1.052M appraised. Sedona STR market commands $400–$650/night peak season with strong year-round occupancy.\n\nBridge financing carries the asset through STR seasoning until conventional DSCR qualifies on operating history. Projected gross yield: 14–20%. Net cash-on-cash: 9–14%.`,
   },
   {
     id: 116, city: 'Village of Oak Creek', state: 'AZ', propertyType: 'Resort SFR', loanType: 'Bridge / Sale Exit',
     program: '12-Mo Bridge — Sale-Exit Strategy', ltv: '65%', rate: 'N/A', dealValue: '$1,100,000',
-    image: 'https://images.unsplash.com/photo-1613490493576-7fde63acd811?w=800&q=80',
+    // 75 Fox Trail Loop — Village of Oak Creek AZ resort SFR
+    image: '/property-images/PROMPT-26_75-Fox-Trail-Loop.png',
     analysis: `2,890 sqft SFR built 2003 in the Village of Oak Creek — golf-community-feel area with the Sedona red rock backdrop. Sponsor's exit is a market sale within 12 months.\n\nConservative 65% LTV on a sale-exit bridge accommodates seasonal Sedona market timing. Comp set supports a clear resale path at $1.3M–$1.5M. The play is patient capital plus the right listing window.`,
   },
   {
@@ -127,7 +136,8 @@ const RECENT_SCENARIOS: FundedDeal[] = [
   {
     id: 120, city: 'Silver Spring', state: 'MD', propertyType: '26-Unit Multifamily', loanType: 'Multifamily Cash-Out Refi',
     program: 'Agency / Bank Bridge — Cash-Out Refi', ltv: '70%', rate: 'N/A', dealValue: '$5,200,000',
-    image: 'https://images.unsplash.com/photo-1583847268964-b28dc8f51f92?w=800&q=80',
+    // 108-110 Schuyler Rd — Silver Spring MD 26-unit multifamily
+    image: '/property-images/PROMPT-31_108-110-Schuyler-Rd.png',
     analysis: `26-unit post-war brick apartment building, mixed 2BR/3BR/4BR mix, 100% occupied. Built 1949 in Montgomery County MD — one of the most supply-constrained rental markets in the DC metro.\n\nCash-out refi captures stabilized equity. Trapped-cash play for a sponsor scaling into a second multifamily acquisition. Going-in cap rate 6.5–7.0%; coverage well above 1.25x.`,
   },
   {
@@ -147,13 +157,15 @@ const RECENT_SCENARIOS: FundedDeal[] = [
   {
     id: 123, city: 'Scottsdale', state: 'AZ', propertyType: 'Luxury Ground-Up SFR', loanType: 'Construction',
     program: 'Ground-Up Construction — 80% LTC', ltv: '80% LTC', rate: 'N/A', dealValue: 'ARV $4,500,000',
-    image: 'https://images.unsplash.com/photo-1600585154340-be6161a56a0c?w=800&q=80',
+    // 4808 N 69th St — Scottsdale AZ luxury ground-up
+    image: '/property-images/PROMPT-34_4808-N-69th-St_COMPLETED.png',
     analysis: `Luxury ground-up new build near the Paradise Valley border — plans approved, permits in hand, ARV $4.5M. Scottsdale's high-end SFR market remains one of the strongest pricing tiers in the Southwest.\n\nGround-up construction at 80% LTC funds land plus vertical build draws. Experienced sponsor with multiple completed AZ luxury new builds. Projected net profit: $600K–$900K. ROI on invested capital: 30–45%.`,
   },
   {
     id: 124, city: 'Phoenix', state: 'AZ', propertyType: 'Luxury Ground-Up SFR', loanType: 'Construction',
     program: 'Ground-Up Construction — 80% LTC', ltv: '80% LTC', rate: 'N/A', dealValue: 'ARV $4,500,000',
-    image: 'https://images.unsplash.com/photo-1465101046530-73398c7f28ca?w=800&q=80',
+    // 5501 E Cherry Lynn — Phoenix Arcadia luxury ground-up
+    image: '/property-images/PROMPT-35_5501-E-Cherry-Lynn_COMPLETED.png',
     analysis: `Arcadia (Phoenix 85018) luxury ground-up — one of the most desirable Phoenix submarkets, mountain-adjacent, walkable to high-end retail and dining. Plans + permits in place, ARV $4.5M.\n\nArcadia new construction trades at the top of the Phoenix luxury comp set. Construction draw schedule matched to milestone inspections. Projected net profit: $550K–$850K. ROI on invested capital: 30–45%.`,
   },
   {
