@@ -10,13 +10,15 @@ const FUNDED_DEALS: FundedDeal[] = [
   {
     id: 2, city: 'Burleson', state: 'TX', propertyType: 'SFR', loanType: 'Fix & Flip',
     program: 'Bridge — 90% LTC / 100% Rehab', ltv: '90% LTC / 100% Rehab', rate: 'N/A', dealValue: '$265,000',
-    image: 'https://images.unsplash.com/photo-1560448204-e02f11c3d0e2?w=800&q=80',
+    // 220 SE Robert St — Burleson TX F&F, Martin Pascual
+    image: '/property-images/PROMPT-37_220-SE-Robert-St.png',
     analysis: `Maximum leverage: 90% of acquisition plus 100% of rehab financed. Borrower brings minimal cash to close — ideal for scaling a flip portfolio.\n\nBurleson (DFW suburb) benefits from metro spillover demand. Projected net profit: $35K–$55K. ROI on cash invested: 50–80%.`,
   },
   {
     id: 3, city: 'Fort Worth', state: 'TX', propertyType: 'SFR', loanType: 'Fix & Flip',
     program: 'Bridge — 90% LTC / 100% Rehab', ltv: '90% LTC / 100% Rehab', rate: 'N/A', dealValue: '$310,000',
-    image: 'https://images.unsplash.com/photo-1598228723793-52759bba239c?w=800&q=80',
+    // 4763 Westcreek Dr — Fort Worth TX F&F
+    image: '/property-images/PROMPT-36_4763-Westcreek-Dr.png',
     analysis: `Another DFW-market flip with maximum financing. 90% LTC plus full rehab coverage means the borrower can execute multiple simultaneous projects.\n\nFort Worth's median home prices remain below DFW averages, offering larger ARV spreads. Projected ROI: 40–65% on invested capital.`,
   },
   {
@@ -61,7 +63,8 @@ const FUNDED_DEALS: FundedDeal[] = [
   {
     id: 10, city: 'Fort Myers', state: 'FL', propertyType: '33-Unit Multifamily', loanType: 'DSCR / Bridge',
     program: 'Agency Bridge — 80% of Cost Basis', ltv: '80% of cost basis', rate: 'N/A', dealValue: '$4,200,000',
-    image: 'https://images.unsplash.com/photo-1460317442991-0ec209397118?w=800&q=80',
+    // 2771 Royal Palm Ave — Fort Myers 33-unit multifamily
+    image: '/property-images/PROMPT-30_2771-Royal-Palm-Ave.png',
     analysis: `33-unit multifamily — institutional-grade asset at 80% of cost basis via agency bridge. Stabilize, then convert to permanent agency debt.\n\nFort Myers' population growth (top 5 nationally) drives strong rental demand. Projected stabilized NOI: $280K–$340K. Total ROI: 100–150% over 5 years.`,
   },
   {
@@ -100,8 +103,8 @@ const FUNDED_DEALS: FundedDeal[] = [
   {
     id: 16, city: 'Seneca Falls', state: 'NY', propertyType: '3-Unit', loanType: 'DSCR Purchase',
     program: '30-Yr DSCR — Purchase', ltv: '70%', rate: 'N/A', dealValue: '$225,000',
-    // 223-225 Fall St — brick house with snow, winter upstate NY
-    image: 'https://images.unsplash.com/photo-1705981378604-2b9c17732f8c?w=800&q=80',
+    // 31 Blakely Pl — Seneca Falls NY 3-unit
+    image: '/property-images/PROMPT-18_31-Blakely-Pl.png',
     analysis: `3-unit triplex purchase at 70% LTV — conservative leverage with three income streams. More units per property = better expense ratios and vacancy protection.\n\nThree units at $900–$1,100/mo each provide $2,700–$3,300 gross monthly. DSCR: 1.4–1.7x. Cash-on-cash: 11–16%.`,
   },
   {
