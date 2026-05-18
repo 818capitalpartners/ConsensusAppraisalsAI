@@ -89,7 +89,7 @@ const RECENT_SCENARIOS: FundedDeal[] = [
   {
     id: 114, city: 'Tacoma', state: 'WA', propertyType: 'Craftsman SFR + ADU', loanType: 'DSCR Cash-Out',
     program: '30-Yr DSCR — Cash-Out (Garage-to-ADU Conversion)', ltv: '70%', rate: 'N/A', dealValue: '$495,000',
-    image: 'https://images.unsplash.com/photo-1463620910506-d0458143143e?w=800&q=80',
+    image: '/property-images/PROMPT-23_Tacoma-Craftsman.png',
     analysis: `Pacific Northwest craftsman bungalow with a garage-to-ADU conversion. Two income streams from a single lot in an established Tacoma neighborhood.\n\nADU income materially boosts DSCR — coverage well above 1.4x at 70% LTV. Tacoma's Seattle-spillover demand and WA's tight rental supply support 4–6% YoY rent growth. Cash-on-cash return: 8–11%.`,
   },
   {
