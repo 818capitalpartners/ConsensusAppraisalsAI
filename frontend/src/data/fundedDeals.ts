@@ -44,7 +44,8 @@ const FUNDED_DEALS: FundedDeal[] = [
   {
     id: 7, city: 'St. Petersburg', state: 'FL', propertyType: '4-Unit Multifamily', loanType: 'DSCR Cash-Out',
     program: '30-Yr DSCR IO — Cash-Out Refi', ltv: '60%', rate: 'N/A', dealValue: '$720,000',
-    image: 'https://images.unsplash.com/photo-1574362848149-11496d93a7c7?w=800&q=80',
+    // 5050 1st Ave S — St. Petersburg FL 4-Unit (real funded deal)
+    image: '/property-images/PROMPT-12_5050-1st-Ave-S.png',
     analysis: `Cash-out refi on a 4-unit at 60% LTV — conservative leverage with strong equity retention. IO period maximizes cash flow.\n\nFour units provide income diversification. St. Pete's rental market growing 5–7% YoY. Projected cash-on-cash with IO: 10–14%.`,
   },
   {
@@ -70,7 +71,8 @@ const FUNDED_DEALS: FundedDeal[] = [
   {
     id: 11, city: 'White Settlement', state: 'TX', propertyType: 'Commercial / Industrial Flex', loanType: 'Commercial Refi',
     program: 'Life Co / CMBS', ltv: 'N/A', rate: '5.26–5.66%', dealValue: '$1,850,000',
-    image: 'https://images.unsplash.com/photo-1565610222536-ef125c59da2e?w=800&q=80',
+    // Industrial/flex building exterior w/ overhead loading doors — White Settlement TX commercial/industrial
+    image: 'https://images.unsplash.com/photo-1730215159668-1d8bb50c7c92?w=800&q=80',
     analysis: `Commercial retail refi via Life Company or CMBS — the lowest rates in commercial lending. At 5.26–5.66%, the borrower locks in institutional-grade pricing.\n\nLife Co/CMBS terms offer 10–25 year fixed-rate stability. DFW retail corridor. Projected cash-on-cash: 10–14%.`,
   },
   {
@@ -97,7 +99,8 @@ const FUNDED_DEALS: FundedDeal[] = [
   {
     id: 15, city: 'Garfield', state: 'NJ', propertyType: '2-Unit', loanType: 'DSCR Purchase',
     program: '30-Yr DSCR — Purchase', ltv: '80%', rate: 'N/A', dealValue: '$560,000',
-    image: 'https://images.unsplash.com/photo-1560185127-6ed189bf02f4?w=800&q=80',
+    // Wood-frame 2-family homes w/ side-by-side porches on a wooded NJ commuter street — Garfield NJ 2-unit
+    image: 'https://images.unsplash.com/photo-1716686135669-f342dc43c423?w=800&q=80',
     analysis: `North Jersey duplex purchase at 80% LTV — strong leverage in a high-rent market. Bergen County's proximity to NYC drives premium rents of $1,800–$2,400/unit.\n\nProjected cash-on-cash: 7–10%. NYC commuter demand ensures low vacancy. 5-year equity build: 35–50%.`,
   },
   {
@@ -124,14 +127,16 @@ const FUNDED_DEALS: FundedDeal[] = [
     id: 19, city: 'Woodstock', state: 'NY', propertyType: '2-Unit', loanType: 'DSCR Purchase',
     program: '30-Yr DSCR — Purchase', ltv: '60%', rate: 'N/A', dealValue: '$425,000',
     // Woodstock — old Cape Cod beach cottage style, modest
-    image: 'https://images.unsplash.com/photo-1729109024236-7cd9e9170978?w=800&q=80',
+    // Modern black-stained wooded cabin in forest clearing at dusk — Hudson Valley / Catskills 2-unit
+    image: 'https://images.unsplash.com/photo-1724931420584-d360afc3e1f8?w=800&q=80',
     analysis: `Woodstock duplex at 60% LTV — conservative leverage in a desirable Hudson Valley market. Heavy equity position means lower payments and stronger cash flow.\n\nWoodstock's tourism economy supports both long-term and STR strategies. Cash-on-cash: 6–9% traditional, or 10–15% with one STR unit.`,
   },
   {
     id: 20, city: 'Woodstock', state: 'NY', propertyType: '2-Unit', loanType: 'DSCR Purchase',
     program: '30-Yr DSCR — Purchase', ltv: '75%', rate: 'N/A', dealValue: '$390,000',
     // Woodstock — woodland house with natural surroundings
-    image: 'https://images.unsplash.com/photo-1631149784540-d0f6be3b8c7f?w=800&q=80',
+    // Blue wood-frame 2-unit w/ rear deck + exterior stairs — second Woodstock NY 2-unit
+    image: 'https://images.unsplash.com/photo-1675583084392-9e7dbe30f3b6?w=800&q=80',
     analysis: `Second Woodstock duplex — higher leverage at 75% LTV preserves capital for additional deals. Combined portfolio averages ~68% LTV.\n\nScaling in the same market reduces management friction. Blended cash-on-cash: 8–12%. Hudson Valley popularity with remote workers supports rent growth.`,
   },
   {
@@ -151,7 +156,8 @@ const FUNDED_DEALS: FundedDeal[] = [
     id: 23, city: 'Los Fresnos', state: 'TX', propertyType: 'SFR', loanType: 'DSCR',
     program: '30-Yr DSCR', ltv: 'N/A', rate: 'N/A', dealValue: '$175,000',
     // Los Fresnos TX — small ranch house on green field, single story
-    image: 'https://images.unsplash.com/photo-1710627748327-68039e03b8d2?w=800&q=80',
+    // Red-sided single-story ranch w/ white trim + split-rail fence — Los Fresnos TX small-town SFR
+    image: 'https://images.unsplash.com/photo-1774655762504-5f3a07999cd7?w=800&q=80',
     analysis: `Rio Grande Valley SFR — one of the most affordable markets in Texas with strong rental demand from border trade and healthcare employment.\n\nLow acquisition costs and rents of $1,100–$1,400 create excellent rent-to-price ratios. DSCR: 1.3–1.5x. Cash-on-cash: 10–15%.`,
   },
   {
@@ -177,7 +183,8 @@ const FUNDED_DEALS: FundedDeal[] = [
     id: 27, city: 'Syosset', state: 'NY', propertyType: '2-Family', loanType: 'DSCR Purchase',
     program: '30-Yr DSCR — Purchase', ltv: '60%', rate: 'N/A', dealValue: '$825,000',
     // Syosset — modest suburban house with cars in driveway, Long Island
-    image: 'https://images.unsplash.com/photo-1702908591032-a08a7739222c?w=800&q=80',
+    // Gray 2-story suburban home w/ gables + wrap porch + red maple — Syosset Long Island 2-family
+    image: 'https://images.unsplash.com/photo-1762374974129-f9266d9c4efc?w=800&q=80',
     analysis: `Long Island 2-family in Nassau County — one of the most supply-constrained rental markets in the Northeast. Syosset's top-rated schools and LIRR access drive premium demand.\n\nAt 60% LTV, significant equity protection. Dual-unit income of $3,000–$4,500/mo combined. Cash-on-cash: 6–9%.`,
   },
   {
