@@ -13,12 +13,22 @@ import crypto from "crypto";
 
 const MAX_SKEW_SEC = 600; // 10 min replay window
 
+/**
+ * Verify a Quo webhook signature against one or more candidate secrets.
+ * Returns { ok: true } on first match; on failure returns the most-informative
+ * reason from the candidate list (so secret_not_base64 wins over signature_mismatch
+ * which wins over no_secret_configured).
+ *
+ * Pass an array of secrets when rotating: the new secret first, the old one as
+ * a fallback. Both are tried until one matches.
+ */
 export function verifyQuoSignature(
   signatureHeader: string | null | undefined,
   rawBody: string,
-  secret: string,
-): { ok: true } | { ok: false; reason: string } {
-  if (!secret) return { ok: false, reason: "no_secret_configured" };
+  secret: string | string[],
+): { ok: true; matchedSecretIndex: number } | { ok: false; reason: string } {
+  const secrets = (Array.isArray(secret) ? secret : [secret]).filter((s) => !!s);
+  if (secrets.length === 0) return { ok: false, reason: "no_secret_configured" };
   if (!signatureHeader) return { ok: false, reason: "no_signature_header" };
 
   const parts = signatureHeader.split(";");
@@ -32,23 +42,25 @@ export function verifyQuoSignature(
     return { ok: false, reason: "timestamp_skew_exceeded" };
   }
 
-  let key: Buffer;
-  try {
-    key = Buffer.from(secret, "base64");
-  } catch {
-    return { ok: false, reason: "secret_not_base64" };
-  }
+  let lastReason = "signature_mismatch";
+  for (let i = 0; i < secrets.length; i++) {
+    let key: Buffer;
+    try {
+      key = Buffer.from(secrets[i], "base64");
+    } catch {
+      lastReason = "secret_not_base64";
+      continue;
+    }
 
-  const signedData = `${ts}.${rawBody}`;
-  const expected = crypto.createHmac("sha256", key).update(signedData).digest("base64");
-
-  // Constant-time compare
-  const a = Buffer.from(expected);
-  const b = Buffer.from(sig);
-  if (a.length !== b.length || !crypto.timingSafeEqual(a, b)) {
-    return { ok: false, reason: "signature_mismatch" };
+    const signedData = `${ts}.${rawBody}`;
+    const expected = crypto.createHmac("sha256", key).update(signedData).digest("base64");
+    const a = Buffer.from(expected);
+    const b = Buffer.from(sig);
+    if (a.length === b.length && crypto.timingSafeEqual(a, b)) {
+      return { ok: true, matchedSecretIndex: i };
+    }
   }
-  return { ok: true };
+  return { ok: false, reason: lastReason };
 }
 
 /** Normalize phone numbers to E.164 (+1XXXXXXXXXX). Returns null if input is unparseable. */
