@@ -87,7 +87,7 @@ const organizationSchema = {
       logo: 'https://www.818capitalpartners.com/logo.png',
       image: 'https://www.818capitalpartners.com/logo.png',
       description:
-        'Commercial mortgage brokerage specializing in investor real estate financing — DSCR rentals, fix & flip, short-term rental, and multifamily loans across 48 states.',
+        'Direct investment property lender. We underwrite, fund, and close DSCR rentals, fix & flip, short-term rental, and multifamily loans on our own credit decision — across 48 states, in 14-21 days.',
       foundingDate: '2023',
       founder: { '@id': 'https://www.818capitalpartners.com/about#ravipunn' },
       telephone: '+1-917-993-9194',
