@@ -5,7 +5,16 @@ import { POSTS } from '@/lib/blog-data';
 
 export const metadata: Metadata = {
   title: 'Blog | 818 Capital',
-  description: 'Real estate investment insights, market analysis, and lending education from 818 Capital.',
+  description: 'DSCR, fix & flip, STR, and multifamily lending insights for real estate investors — rate matrices, qualification rules, market reports, and deal playbooks from 818 Capital Partners.',
+};
+
+const breadcrumbSchema = {
+  '@context': 'https://schema.org',
+  '@type': 'BreadcrumbList',
+  itemListElement: [
+    { '@type': 'ListItem', position: 1, name: 'Home', item: 'https://www.818capitalpartners.com/' },
+    { '@type': 'ListItem', position: 2, name: 'Blog', item: 'https://www.818capitalpartners.com/blog' },
+  ],
 };
 
 export default function BlogPage() {
@@ -15,6 +24,7 @@ export default function BlogPage() {
 
   return (
     <>
+      <script type="application/ld+json" dangerouslySetInnerHTML={{ __html: JSON.stringify(breadcrumbSchema) }} />
       <section className="bg-navy-900 py-16">
         <div className="mx-auto max-w-content px-6">
           <h1 className="text-h1 text-white">Blog</h1>

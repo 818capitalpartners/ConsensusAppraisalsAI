@@ -3,6 +3,7 @@ import Link from 'next/link';
 import { notFound } from 'next/navigation';
 import { MARKETS } from '@/data/markets';
 import { LOAN_PROGRAMS } from '@/data/loan-programs';
+import { STATES } from '@/data/states';
 
 type Params = { location: string; loan: string };
 
@@ -107,6 +108,38 @@ export default function MarketLoanPage({ params }: { params: Params }) {
     url: `https://www.818capitalpartners.com/markets/${market.slug}/${program.slug}`,
   };
 
+  type BreadcrumbItem = { '@type': 'ListItem'; position: number; name: string; item: string };
+  const stateHub = STATES.find((s) => s.code === market.state);
+  const breadcrumbItems: BreadcrumbItem[] = [
+    { '@type': 'ListItem', position: 1, name: 'Home', item: 'https://www.818capitalpartners.com/' },
+    { '@type': 'ListItem', position: 2, name: 'Where We Lend', item: 'https://www.818capitalpartners.com/markets' },
+  ];
+  if (stateHub) {
+    breadcrumbItems.push({
+      '@type': 'ListItem',
+      position: 3,
+      name: stateHub.displayName,
+      item: `https://www.818capitalpartners.com/markets/${stateHub.slug}`,
+    });
+  }
+  breadcrumbItems.push({
+    '@type': 'ListItem',
+    position: breadcrumbItems.length + 1,
+    name: `${market.displayName}, ${market.state}`,
+    item: `https://www.818capitalpartners.com/markets/${market.slug}`,
+  });
+  breadcrumbItems.push({
+    '@type': 'ListItem',
+    position: breadcrumbItems.length + 1,
+    name: program.displayName,
+    item: `https://www.818capitalpartners.com/markets/${market.slug}/${program.slug}`,
+  });
+  const breadcrumbSchema = {
+    '@context': 'https://schema.org',
+    '@type': 'BreadcrumbList',
+    itemListElement: breadcrumbItems,
+  };
+
   return (
     <>
       <script
@@ -116,6 +149,10 @@ export default function MarketLoanPage({ params }: { params: Params }) {
       <script
         type="application/ld+json"
         dangerouslySetInnerHTML={{ __html: JSON.stringify(serviceSchema) }}
+      />
+      <script
+        type="application/ld+json"
+        dangerouslySetInnerHTML={{ __html: JSON.stringify(breadcrumbSchema) }}
       />
 
       {/* ── Hero ────────────────────────────────────────── */}

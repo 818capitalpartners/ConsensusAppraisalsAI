@@ -56,6 +56,29 @@ const organizationSchema = {
   '@context': 'https://schema.org',
   '@graph': [
     {
+      '@type': 'Person',
+      '@id': 'https://www.818capitalpartners.com/about#ravipunn',
+      name: 'Ravi Punn',
+      givenName: 'Ravi',
+      familyName: 'Punn',
+      jobTitle: 'Founder & Principal',
+      description:
+        'Serial entrepreneur and real estate developer with 20+ years of hands-on experience across single-family development, rezoning, ground-up construction, investment syndication, and multifamily acquisitions — more than $100M in real estate transactions since 2006. Founded 818 Capital Partners to get the right operators the right capital.',
+      url: 'https://www.818capitalpartners.com/about',
+      image: 'https://www.818capitalpartners.com/team/ravi-punn-opt.jpg',
+      sameAs: ['https://www.linkedin.com/in/ravipunn'],
+      worksFor: { '@id': 'https://www.818capitalpartners.com/#organization' },
+      knowsAbout: [
+        'DSCR loans',
+        'Fix and flip financing',
+        'Multifamily acquisitions',
+        'Real estate development',
+        'Investment property underwriting',
+        'Ground-up construction',
+        'Rezoning and entitlements',
+      ],
+    },
+    {
       '@type': ['Organization', 'FinancialService'],
       '@id': 'https://www.818capitalpartners.com/#organization',
       name: '818 Capital Partners',
@@ -66,6 +89,7 @@ const organizationSchema = {
       description:
         'Commercial mortgage brokerage specializing in investor real estate financing — DSCR rentals, fix & flip, short-term rental, and multifamily loans across 48 states.',
       foundingDate: '2023',
+      founder: { '@id': 'https://www.818capitalpartners.com/about#ravipunn' },
       telephone: '+1-917-993-9194',
       email: 'deals@818capitalpartners.com',
       priceRange: '$$$',
@@ -74,6 +98,11 @@ const organizationSchema = {
         '@type': 'PostalAddress',
         addressCountry: 'US',
         addressRegion: 'NY',
+      },
+      identifier: {
+        '@type': 'PropertyValue',
+        propertyID: 'NMLS',
+        value: '2832335',
       },
       knowsAbout: [
         'DSCR loans',
@@ -88,6 +117,7 @@ const organizationSchema = {
         'https://www.instagram.com/818capital',
         'https://www.facebook.com/818capital',
         'https://x.com/818capital',
+        'https://www.nmlsconsumeraccess.org/EntityDetails.aspx/COMPANY/2832335',
       ],
       hasOfferCatalog: {
         '@type': 'OfferCatalog',

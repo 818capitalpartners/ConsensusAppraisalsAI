@@ -6,6 +6,16 @@ import AppraisalPreCheck from '@/components/AppraisalPreCheck';
 export const metadata: Metadata = {
   title: 'Multifamily Loans | 818 Capital',
   description: '5+ unit apartment buildings and small commercial financing. AI-powered Sponsor Brief underwriting in 24 hours.',
+  alternates: { canonical: 'https://www.818capitalpartners.com/multifamily' },
+};
+
+const breadcrumbSchema = {
+  '@context': 'https://schema.org',
+  '@type': 'BreadcrumbList',
+  itemListElement: [
+    { '@type': 'ListItem', position: 1, name: 'Home', item: 'https://www.818capitalpartners.com/' },
+    { '@type': 'ListItem', position: 2, name: 'Multifamily Loans', item: 'https://www.818capitalpartners.com/multifamily' },
+  ],
 };
 
 const MARKET_STATS = [
@@ -42,6 +52,7 @@ function TrendIcon({ trend }: { trend: string }) {
 export default function MultifamilyPage() {
   return (
     <>
+      <script type="application/ld+json" dangerouslySetInnerHTML={{ __html: JSON.stringify(breadcrumbSchema) }} />
       {/* Hero */}
       <section className="relative min-h-[400px] flex items-center overflow-hidden">
         <Image

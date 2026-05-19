@@ -4,7 +4,17 @@ import FundedDealsSection from '@/components/FundedDealsSection';
 
 export const metadata: Metadata = {
   title: 'Closed Deals | 818 Capital',
-  description: 'Recent transactions funded by 818 Capital across DSCR, Fix & Flip, STR, and Multifamily programs nationwide.',
+  description: '31 recent transactions funded by 818 Capital across DSCR, Fix & Flip, STR, and Multifamily — real properties, real terms, real cities from FL to NY to TX.',
+  alternates: { canonical: 'https://www.818capitalpartners.com/closed-deals' },
+};
+
+const breadcrumbSchema = {
+  '@context': 'https://schema.org',
+  '@type': 'BreadcrumbList',
+  itemListElement: [
+    { '@type': 'ListItem', position: 1, name: 'Home', item: 'https://www.818capitalpartners.com/' },
+    { '@type': 'ListItem', position: 2, name: 'Closed Deals', item: 'https://www.818capitalpartners.com/closed-deals' },
+  ],
 };
 
 const STATS = [
@@ -40,6 +50,7 @@ const HIGHLIGHTS = [
 export default function ClosedDealsPage() {
   return (
     <>
+      <script type="application/ld+json" dangerouslySetInnerHTML={{ __html: JSON.stringify(breadcrumbSchema) }} />
       {/* Hero */}
       <section className="relative overflow-hidden">
         <Image

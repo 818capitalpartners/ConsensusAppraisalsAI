@@ -6,6 +6,16 @@ import DealForm from '@/components/DealForm';
 export const metadata: Metadata = {
   title: 'STR Loans | Short-Term Rental Financing | 818 Capital',
   description: 'Finance your Airbnb or VRBO property using STR income. Our STR Signal tool normalizes your revenue for DSCR qualification.',
+  alternates: { canonical: 'https://www.818capitalpartners.com/str-loans' },
+};
+
+const breadcrumbSchema = {
+  '@context': 'https://schema.org',
+  '@type': 'BreadcrumbList',
+  itemListElement: [
+    { '@type': 'ListItem', position: 1, name: 'Home', item: 'https://www.818capitalpartners.com/' },
+    { '@type': 'ListItem', position: 2, name: 'STR Loans', item: 'https://www.818capitalpartners.com/str-loans' },
+  ],
 };
 
 const STR_TYPES = [
@@ -38,6 +48,7 @@ const MARKETS = [
 export default function STRPage() {
   return (
     <>
+      <script type="application/ld+json" dangerouslySetInnerHTML={{ __html: JSON.stringify(breadcrumbSchema) }} />
       {/* Hero */}
       <section className="relative min-h-[400px] flex items-center overflow-hidden">
         <Image

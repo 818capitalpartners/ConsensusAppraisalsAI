@@ -9,12 +9,12 @@ export interface TeamMember {
 
 export const TEAM: TeamMember[] = [
   {
-    name: 'Ravi Patel',
-    title: 'Founder & CEO',
-    bio: 'Ravi built 818 Capital to fix what he saw broken in investment property lending: slow underwriting, opaque communication, and one-size-fits-all structures. With a background in technology and real estate finance, he combines AI-powered analysis with hands-on deal management to deliver faster, more certain closings for investors nationwide.',
-    headshot: '/team/ravi-patel.jpg',
-    linkedin: 'https://www.linkedin.com/in/818capital/',
-    specialties: ['DSCR', 'Multifamily', 'AI Underwriting'],
+    name: 'Ravi Punn',
+    title: 'Founder & Principal',
+    bio: 'Ravi is a serial entrepreneur and real estate developer with 20+ years across single-family development, rezoning, ground-up construction, investment syndication, and multifamily acquisitions — over $100M in transactions since 2006. He founded 818 Capital Partners after years on the borrower side of the table, building a lending and advisory platform designed to get the right operators the right capital.',
+    headshot: '/team/ravi-punn-opt.jpg',
+    linkedin: 'https://www.linkedin.com/in/ravipunn',
+    specialties: ['DSCR', 'Multifamily', 'Fix & Flip', 'Operator-Lens Underwriting'],
   },
   {
     name: 'Angela Roark',

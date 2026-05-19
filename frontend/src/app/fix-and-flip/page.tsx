@@ -6,11 +6,22 @@ import DealForm from '@/components/DealForm';
 export const metadata: Metadata = {
   title: 'Fix & Flip Loans | 818 Capital',
   description: 'Fast bridge capital for rehab projects. Up to 90% LTC, draw schedules, close in as fast as 10 days.',
+  alternates: { canonical: 'https://www.818capitalpartners.com/fix-and-flip' },
+};
+
+const breadcrumbSchema = {
+  '@context': 'https://schema.org',
+  '@type': 'BreadcrumbList',
+  itemListElement: [
+    { '@type': 'ListItem', position: 1, name: 'Home', item: 'https://www.818capitalpartners.com/' },
+    { '@type': 'ListItem', position: 2, name: 'Fix & Flip Loans', item: 'https://www.818capitalpartners.com/fix-and-flip' },
+  ],
 };
 
 export default function FlipPage() {
   return (
     <>
+      <script type="application/ld+json" dangerouslySetInnerHTML={{ __html: JSON.stringify(breadcrumbSchema) }} />
       <section className="relative min-h-[400px] flex items-center overflow-hidden">
         <Image
           src="https://images.unsplash.com/photo-1572120360610-d971b9d7767c?w=1920&h=600&fit=crop"
