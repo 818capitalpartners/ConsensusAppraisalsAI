@@ -168,21 +168,45 @@ Set is_real_inquiry=true ONLY if the caller is genuinely inquiring about a real 
 
 export async function POST(req: NextRequest) {
   const rawBody = await req.text();
-  const signatureHeader = req.headers.get("openphone-signature");
+  // Quo rebrand kept the openphone-signature header (per their docs as of 2026-05),
+  // but tolerate quo-signature in case they update.
+  const signatureHeader = req.headers.get("openphone-signature") || req.headers.get("quo-signature");
   const baseUrl = req.nextUrl.origin;
 
   // ---- 1. Signature verification ----
-  const verifyResult = verifyQuoSignature(signatureHeader, rawBody, process.env.OPENPHONE_WEBHOOK_SECRET || "");
+  // Try secrets in order: QUO_WEBHOOK_SECRET (preferred, post-rebrand) first,
+  // then OPENPHONE_WEBHOOK_SECRET (legacy). Pass both as a candidate list so
+  // either one matching keeps the webhook live during rotation.
+  const candidateSecrets = [
+    process.env.QUO_WEBHOOK_SECRET,
+    process.env.OPENPHONE_WEBHOOK_SECRET,
+  ].filter((s): s is string => !!s);
+
+  const verifyResult = verifyQuoSignature(signatureHeader, rawBody, candidateSecrets);
   if (!verifyResult.ok) {
-    // Log rejected signatures so we can spot tampering / misconfiguration
+    // Optional emergency escape hatch: if QUO_WEBHOOK_BYPASS_SIGNATURE=1, log the
+    // rejection and STILL skip processing — but return 200 so Quo doesn't disable
+    // the webhook. Use only while rotating secrets.
+    const bypass = process.env.QUO_WEBHOOK_BYPASS_SIGNATURE === "1";
+    const secretConfigured = candidateSecrets.length > 0;
     await sbInsert("webhook_log", {
       source: "quo",
       event_type: "signature_rejected",
       status: "error",
-      error: `signature_failed: ${verifyResult.reason}`,
-      payload: { headers: { signature: signatureHeader }, body_preview: rawBody.slice(0, 500) },
+      error: `signature_failed: ${verifyResult.reason}${secretConfigured ? "" : " (no QUO_WEBHOOK_SECRET or OPENPHONE_WEBHOOK_SECRET env var set)"}`,
+      payload: {
+        headers: { signature: signatureHeader },
+        body_preview: rawBody.slice(0, 500),
+        secret_candidates_tried: candidateSecrets.length,
+        bypass_active: bypass,
+      },
     });
-    return NextResponse.json({ error: "Invalid signature" }, { status: 401 });
+    if (!bypass) {
+      return NextResponse.json({ error: "Invalid signature", reason: verifyResult.reason }, { status: 401 });
+    }
+    // Bypass mode: continue WITHOUT writing anything to contacts/interactions/Monday.
+    // Just confirm receipt so Quo keeps sending while we fix the secret.
+    return NextResponse.json({ ok: true, bypassed_signature: verifyResult.reason });
   }
 
   // ---- 2. Parse + log every webhook FIRST (audit before processing) ----
