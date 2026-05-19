@@ -5,7 +5,16 @@ import USMap from '@/components/USMap';
 
 export const metadata: Metadata = {
   title: 'Where We Lend | 818 Capital',
-  description: 'We finance investment properties across 48 states. See our active markets and local expertise.',
+  description: 'Investor real estate financing across 48 states. DSCR, fix & flip, STR, and multifamily loans in NYC, Miami, Dallas, Phoenix, Atlanta, Nashville, and more — with local-market underwriting.',
+};
+
+const breadcrumbSchema = {
+  '@context': 'https://schema.org',
+  '@type': 'BreadcrumbList',
+  itemListElement: [
+    { '@type': 'ListItem', position: 1, name: 'Home', item: 'https://www.818capitalpartners.com/' },
+    { '@type': 'ListItem', position: 2, name: 'Where We Lend', item: 'https://www.818capitalpartners.com/markets' },
+  ],
 };
 
 const FEATURED_MARKETS = [
@@ -29,6 +38,7 @@ const REGIONS = [
 export default function MarketsPage() {
   return (
     <>
+      <script type="application/ld+json" dangerouslySetInnerHTML={{ __html: JSON.stringify(breadcrumbSchema) }} />
       {/* Hero */}
       <section className="bg-navy-900 py-16">
         <div className="mx-auto max-w-content px-6">

@@ -2,6 +2,7 @@
 
 import { useState } from 'react';
 import Image from 'next/image';
+import Link from 'next/link';
 
 export interface FundedDeal {
   id: number;
@@ -97,11 +98,19 @@ export default function DealCard({ deal }: { deal: FundedDeal }) {
             {deal.analysis}
           </div>
         </div>
-        <div className="flex items-center gap-1.5 text-[10px] text-navy-400 font-body mt-3">
-          <svg className="w-3 h-3" fill="none" viewBox="0 0 24 24" stroke="currentColor" strokeWidth={2}>
-            <path strokeLinecap="round" strokeLinejoin="round" d="M12 9v3.75m9-.75a9 9 0 11-18 0 9 9 0 0118 0zm-9 3.75h.008v.008H12v-.008z" />
-          </svg>
-          Analysis for informational purposes only
+        <div className="flex items-center justify-between gap-3 mt-3">
+          <div className="flex items-center gap-1.5 text-[10px] text-navy-400 font-body">
+            <svg className="w-3 h-3" fill="none" viewBox="0 0 24 24" stroke="currentColor" strokeWidth={2}>
+              <path strokeLinecap="round" strokeLinejoin="round" d="M12 9v3.75m9-.75a9 9 0 11-18 0 9 9 0 0118 0zm-9 3.75h.008v.008H12v-.008z" />
+            </svg>
+            Analysis for informational purposes only
+          </div>
+          <Link
+            href={`/closed-deals/${deal.id}`}
+            className="text-[11px] font-sans font-semibold text-accent-light hover:text-white whitespace-nowrap"
+          >
+            View deal →
+          </Link>
         </div>
       </div>
     </div>

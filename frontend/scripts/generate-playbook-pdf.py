@@ -1255,8 +1255,9 @@ def build_pdf():
         'may differ. 818 Capital Partners does not guarantee any specific loan terms or approval.', style_body))
     story.append(Spacer(1, 12))
     story.append(Paragraph(
-        '818 Capital Partners is a commercial mortgage brokerage. We work with multiple capital partners to find the best fit for '
-        'each deal. We are not a direct lender for all products and programs referenced herein.', style_body))
+        '818 Capital Partners is a direct investment property lender for our core programs (DSCR, Fix & Flip, STR, and Multifamily). '
+        'For certain specialty programs referenced in this document, we may place the loan with an institutional capital partner; we '
+        'disclose this at the term sheet stage. NMLS #2832335.', style_body))
     story.append(Spacer(1, 24))
     story.append(Paragraph('Copyright 2026 818 Capital Partners. All rights reserved.', ParagraphStyle('Copyright', parent=style_body, fontName='Helvetica-Bold', fontSize=9, textColor=NAVY_500)))
 

@@ -8,11 +8,41 @@ import AppraisalPreCheck from '@/components/AppraisalPreCheck';
 export const metadata: Metadata = {
   title: 'DSCR Loans | 818 Capital',
   description: 'Qualify on rental income alone. No tax returns, no W-2s. DSCR loans for 1-4 unit investment properties, portfolios, and STR.',
+  alternates: { canonical: 'https://www.818capitalpartners.com/dscr-loans' },
+};
+
+// FAQ source of truth — rendered in HTML below and emitted as FAQPage JSON-LD.
+const FAQS = [
+  { q: 'What DSCR do I need?', a: 'Most lenders require 1.0+. Some go as low as 0.75 with a higher down payment or rate adjustment. Our AI Scenario Desk tells you exactly where you stand.' },
+  { q: 'Can I use short-term rental income?', a: 'Yes. Several of our lenders accept Airbnb and VRBO income. We normalize it using our STR Signal tool to calculate a conservative DSCR.' },
+  { q: 'How fast can I close?', a: 'Most DSCR loans close in 14–21 days from clear-to-close. The full process is typically 3–4 weeks from application to funding.' },
+  { q: 'Do I need reserves?', a: 'Typically 6–12 months of PITI in reserves. Some lenders accept cross-collateral or gift funds. We\'ll outline exactly what you need.' },
+];
+
+const faqSchema = {
+  '@context': 'https://schema.org',
+  '@type': 'FAQPage',
+  mainEntity: FAQS.map((f) => ({
+    '@type': 'Question',
+    name: f.q,
+    acceptedAnswer: { '@type': 'Answer', text: f.a },
+  })),
+};
+
+const breadcrumbSchema = {
+  '@context': 'https://schema.org',
+  '@type': 'BreadcrumbList',
+  itemListElement: [
+    { '@type': 'ListItem', position: 1, name: 'Home', item: 'https://www.818capitalpartners.com/' },
+    { '@type': 'ListItem', position: 2, name: 'DSCR Loans', item: 'https://www.818capitalpartners.com/dscr-loans' },
+  ],
 };
 
 export default function DSCRPage() {
   return (
     <>
+      <script type="application/ld+json" dangerouslySetInnerHTML={{ __html: JSON.stringify(faqSchema) }} />
+      <script type="application/ld+json" dangerouslySetInnerHTML={{ __html: JSON.stringify(breadcrumbSchema) }} />
       {/* Hero */}
       <section className="relative min-h-[400px] flex items-center overflow-hidden">
         <Image
@@ -186,12 +216,7 @@ export default function DSCRPage() {
         <div className="mx-auto max-w-2xl px-6">
           <h2 className="section-heading text-center mb-10">Frequently Asked Questions</h2>
           <div className="space-y-0 divide-y divide-navy-100">
-            {[
-              { q: 'What DSCR do I need?', a: 'Most lenders require 1.0+. Some go as low as 0.75 with a higher down payment or rate adjustment. Our AI Scenario Desk tells you exactly where you stand.' },
-              { q: 'Can I use short-term rental income?', a: 'Yes. Several of our lenders accept Airbnb and VRBO income. We normalize it using our STR Signal tool to calculate a conservative DSCR.' },
-              { q: 'How fast can I close?', a: 'Most DSCR loans close in 14–21 days from clear-to-close. The full process is typically 3–4 weeks from application to funding.' },
-              { q: 'Do I need reserves?', a: 'Typically 6–12 months of PITI in reserves. Some lenders accept cross-collateral or gift funds. We\'ll outline exactly what you need.' },
-            ].map((faq) => (
+            {FAQS.map((faq) => (
               <div key={faq.q} className="py-6">
                 <h3 className="text-h4 text-navy-900 mb-2">{faq.q}</h3>
                 <p className="text-sm text-navy-500 font-body leading-relaxed">{faq.a}</p>

@@ -12,7 +12,22 @@ export async function generateMetadata({ params }: { params: Promise<{ slug: str
   const { slug } = await params;
   const post = getPostBySlug(slug);
   if (!post) return { title: 'Not Found' };
-  return { title: `${post.title} | 818 Capital`, description: post.excerpt };
+  const url = `https://www.818capitalpartners.com/blog/${slug}`;
+  return {
+    title: `${post.title} | 818 Capital`,
+    description: post.excerpt,
+    alternates: { canonical: url },
+    openGraph: {
+      type: 'article',
+      url,
+      title: post.title,
+      description: post.excerpt,
+      images: [{ url: post.image, alt: post.title }],
+      publishedTime: post.date,
+      authors: ['https://www.818capitalpartners.com/about#ravipunn'],
+    },
+    twitter: { card: 'summary_large_image', title: post.title, description: post.excerpt, images: [post.image] },
+  };
 }
 
 export default async function BlogPostPage({ params }: { params: Promise<{ slug: string }> }) {
@@ -52,8 +67,35 @@ export default async function BlogPostPage({ params }: { params: Promise<{ slug:
 
   const related = POSTS.filter((p) => p.slug !== slug).slice(0, 3);
 
+  const postUrl = `https://www.818capitalpartners.com/blog/${slug}`;
+  const articleSchema = {
+    '@context': 'https://schema.org',
+    '@type': 'Article',
+    headline: post.title,
+    description: post.excerpt,
+    image: [post.image],
+    datePublished: post.date,
+    dateModified: post.date,
+    author: { '@id': 'https://www.818capitalpartners.com/about#ravipunn' },
+    publisher: { '@id': 'https://www.818capitalpartners.com/#organization' },
+    mainEntityOfPage: { '@type': 'WebPage', '@id': postUrl },
+    articleSection: post.category,
+    inLanguage: 'en-US',
+  };
+  const breadcrumbSchema = {
+    '@context': 'https://schema.org',
+    '@type': 'BreadcrumbList',
+    itemListElement: [
+      { '@type': 'ListItem', position: 1, name: 'Home', item: 'https://www.818capitalpartners.com/' },
+      { '@type': 'ListItem', position: 2, name: 'Blog', item: 'https://www.818capitalpartners.com/blog' },
+      { '@type': 'ListItem', position: 3, name: post.title, item: postUrl },
+    ],
+  };
+
   return (
     <>
+      <script type="application/ld+json" dangerouslySetInnerHTML={{ __html: JSON.stringify(articleSchema) }} />
+      <script type="application/ld+json" dangerouslySetInnerHTML={{ __html: JSON.stringify(breadcrumbSchema) }} />
       {/* Hero */}
       <section className="relative min-h-[350px] flex items-end overflow-hidden">
         <Image src={post.image} alt={post.title} fill className="object-cover" priority />

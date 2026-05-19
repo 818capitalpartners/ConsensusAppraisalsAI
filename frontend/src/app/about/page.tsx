@@ -8,6 +8,23 @@ export const metadata: Metadata = {
     'Ravi Punn founded 818 Capital Partners after 20+ years as a real estate operator. We specialize in Fix & Flip, DSCR, Bridge, and Commercial financing with an advisory-first approach.',
 };
 
+const breadcrumbSchema = {
+  '@context': 'https://schema.org',
+  '@type': 'BreadcrumbList',
+  itemListElement: [
+    { '@type': 'ListItem', position: 1, name: 'Home', item: 'https://www.818capitalpartners.com/' },
+    { '@type': 'ListItem', position: 2, name: 'About', item: 'https://www.818capitalpartners.com/about' },
+  ],
+};
+
+const aboutPageSchema = {
+  '@context': 'https://schema.org',
+  '@type': 'AboutPage',
+  url: 'https://www.818capitalpartners.com/about',
+  about: { '@id': 'https://www.818capitalpartners.com/#organization' },
+  mainEntity: { '@id': 'https://www.818capitalpartners.com/about#ravipunn' },
+};
+
 const TOOLS = [
   {
     name: 'Scenario Desk',
@@ -30,6 +47,8 @@ const TOOLS = [
 export default function AboutPage() {
   return (
     <>
+      <script type="application/ld+json" dangerouslySetInnerHTML={{ __html: JSON.stringify(breadcrumbSchema) }} />
+      <script type="application/ld+json" dangerouslySetInnerHTML={{ __html: JSON.stringify(aboutPageSchema) }} />
       {/* Hero */}
       <section className="bg-navy-900 py-20 md:py-28">
         <div className="mx-auto max-w-content px-6 text-center">
