@@ -1,8 +1,13 @@
 'use client';
 
-import { useState, useEffect } from 'react';
+import { useState, useEffect, useRef } from 'react';
 import { useSearchParams } from 'next/navigation';
 import Link from 'next/link';
+
+// localStorage key for autosave. Versioned so we can break-and-clear if the
+// form shape changes incompatibly in the future.
+const AUTOSAVE_KEY = 'apply-form-draft-v1';
+const AUTOSAVE_TTL_MS = 7 * 24 * 60 * 60 * 1000; // 7 days
 
 type Product = 'dscr' | 'flip' | 'str' | 'multifamily';
 
@@ -99,7 +104,30 @@ export default function ApplyForm() {
   const [submitting, setSubmitting] = useState(false);
   const [result, setResult] = useState<TriageResponse['triage'] | null>(null);
   const [error, setError] = useState<string | null>(null);
+  const [restored, setRestored] = useState(false);
+  const [savedAt, setSavedAt] = useState<number | null>(null);
+  const firstInputRef = useRef<HTMLInputElement | HTMLSelectElement | null>(null);
 
+  // Restore autosaved draft on mount (once). 7-day TTL — older drafts are
+  // dropped so stale fields don't surprise a returning visitor weeks later.
+  useEffect(() => {
+    try {
+      const raw = typeof window !== 'undefined' ? window.localStorage.getItem(AUTOSAVE_KEY) : null;
+      if (raw) {
+        const parsed = JSON.parse(raw) as { data: FormData; step: number; ts: number };
+        if (parsed && parsed.ts && Date.now() - parsed.ts < AUTOSAVE_TTL_MS && parsed.data) {
+          setData((d) => ({ ...d, ...parsed.data }));
+          if (parsed.step && parsed.step >= 1 && parsed.step <= 3) setStep(parsed.step);
+          setSavedAt(parsed.ts);
+        } else if (raw) {
+          window.localStorage.removeItem(AUTOSAVE_KEY);
+        }
+      }
+    } catch { /* localStorage may be disabled; silently skip */ }
+    setRestored(true);
+  }, []);
+
+  // URL product param overrides any restored draft on first paint.
   useEffect(() => {
     const product = searchParams.get('product');
     const productMap: Record<string, Product> = { dscr: 'dscr', flip: 'flip', 'fix-and-flip': 'flip', str: 'str', multifamily: 'multifamily' };
@@ -108,11 +136,52 @@ export default function ApplyForm() {
     }
   }, [searchParams]);
 
+  // Debounced autosave — write every change to localStorage 400ms after the
+  // last keystroke so we don't thrash storage and so SHIFT-DELETE bursts coalesce.
+  useEffect(() => {
+    if (!restored) return; // don't save the initial empty state over a real draft
+    const id = setTimeout(() => {
+      try {
+        const ts = Date.now();
+        window.localStorage.setItem(AUTOSAVE_KEY, JSON.stringify({ data, step, ts }));
+        setSavedAt(ts);
+      } catch { /* quota or disabled — silently skip */ }
+    }, 400);
+    return () => clearTimeout(id);
+  }, [data, step, restored]);
+
+  // Auto-focus first field when entering a new step. Mobile users especially
+  // benefit from this — keyboard opens immediately, no extra tap.
+  useEffect(() => {
+    if (!restored) return;
+    const id = setTimeout(() => { firstInputRef.current?.focus(); }, 60);
+    return () => clearTimeout(id);
+  }, [step, restored]);
+
   const update = <K extends keyof FormData>(k: K, v: FormData[K]) => setData((d) => ({ ...d, [k]: v }));
 
-  const step1Valid = data.product && data.propertyState && data.propertyValue && data.loanAmount;
-  const step2Valid = data.firstName && data.lastName && data.experience && data.fico;
-  const step3Valid = data.email && data.phone;
+  // Itemize what's blocking CONTINUE on each step so we can show an inline
+  // hint instead of an inert grey button. Mobile users especially benefit —
+  // a disabled button with no explanation is a leading abandonment cause.
+  const step1Missing: string[] = [];
+  if (!data.product) step1Missing.push('what you’re funding');
+  if (!data.propertyState) step1Missing.push('state');
+  if (!data.propertyValue) step1Missing.push('purchase price');
+  if (!data.loanAmount) step1Missing.push('loan amount');
+
+  const step2Missing: string[] = [];
+  if (!data.firstName) step2Missing.push('first name');
+  if (!data.lastName) step2Missing.push('last name');
+  if (!data.experience) step2Missing.push('experience');
+  if (!data.fico) step2Missing.push('credit range');
+
+  const step3Missing: string[] = [];
+  if (!data.email) step3Missing.push('email');
+  if (!data.phone) step3Missing.push('phone');
+
+  const step1Valid = step1Missing.length === 0;
+  const step2Valid = step2Missing.length === 0;
+  const step3Valid = step3Missing.length === 0;
 
   async function handleSubmit(e: React.FormEvent) {
     e.preventDefault();
@@ -181,6 +250,9 @@ export default function ApplyForm() {
         throw new Error(json.error || `Submit failed: ${res.status}`);
       }
       setResult(json.triage || { lane: data.product, score: 'yellow', narrative: "Thanks — we've got your deal." });
+      // Submission succeeded — clear the autosaved draft so a returning visitor
+      // doesn't reload someone else's deal on a shared device.
+      try { window.localStorage.removeItem(AUTOSAVE_KEY); } catch { /* ok */ }
     } catch (err) {
       setError(err instanceof Error ? err.message : 'Something went wrong. Please call (917) 993-9194.');
     } finally {
@@ -280,47 +352,47 @@ export default function ApplyForm() {
             <div>
               <p className="text-xs font-sans font-semibold uppercase tracking-wide2 text-gold">01 — The deal</p>
               <h2 className="mt-2 text-xl font-sans font-bold text-warm-ink">What are you looking to fund?</h2>
-              <div className="grid grid-cols-2 gap-3 mt-5">
+              <div className="grid grid-cols-1 sm:grid-cols-2 gap-3 mt-5">
                 {PRODUCTS.map((p) => (
                   <button
                     type="button"
                     key={p.value}
                     onClick={() => update('product', p.value)}
-                    className={`text-left p-4 rounded-soft border transition ${
+                    className={`text-left p-5 min-h-[64px] rounded-soft border transition active:scale-[0.98] ${
                       data.product === p.value
                         ? 'border-gold bg-gold-soft/60'
                         : 'border-warm-ink/10 hover:border-warm-ink/30 bg-white'
                     }`}
                   >
-                    <p className="text-sm font-sans font-semibold text-warm-ink">{p.label}</p>
-                    <p className="text-xs text-warm-ink/60 font-body mt-0.5">{p.desc}</p>
+                    <p className="text-base sm:text-sm font-sans font-semibold text-warm-ink">{p.label}</p>
+                    <p className="text-sm sm:text-xs text-warm-ink/60 font-body mt-0.5">{p.desc}</p>
                   </button>
                 ))}
               </div>
             </div>
 
             <FormField label="Property address" hint="Optional — zip + state is enough to start">
-              <input type="text" value={data.propertyAddress} onChange={(e) => update('propertyAddress', e.target.value)} placeholder="123 Main St" className={warmInput} />
+              <input type="text" autoComplete="street-address" value={data.propertyAddress} onChange={(e) => update('propertyAddress', e.target.value)} placeholder="123 Main St" className={warmInput} />
             </FormField>
 
             <div className="grid gap-5 sm:grid-cols-2">
               <FormField label="State" required>
-                <select value={data.propertyState} onChange={(e) => update('propertyState', e.target.value)} className={warmInput} required>
+                <select autoComplete="address-level1" ref={(el) => { if (step === 1 && !data.propertyState) firstInputRef.current = el; }} value={data.propertyState} onChange={(e) => update('propertyState', e.target.value)} className={warmInput} required>
                   <option value="">Select…</option>
                   {US_STATES.map((s) => <option key={s} value={s}>{s}</option>)}
                 </select>
               </FormField>
               <FormField label="ZIP" hint="Optional">
-                <input type="text" inputMode="numeric" value={data.propertyZip} onChange={(e) => update('propertyZip', e.target.value)} placeholder="77024" className={warmInput} />
+                <input type="text" inputMode="numeric" autoComplete="postal-code" pattern="[0-9]{5}" maxLength={5} value={data.propertyZip} onChange={(e) => update('propertyZip', e.target.value)} placeholder="77024" className={warmInput} />
               </FormField>
             </div>
 
             <div className="grid gap-5 sm:grid-cols-2">
               <FormField label="Purchase price or value" required>
-                <input type="text" inputMode="numeric" value={data.propertyValue} onChange={(e) => update('propertyValue', e.target.value)} placeholder="$750,000" className={warmInput} required />
+                <input type="text" inputMode="decimal" value={data.propertyValue} onChange={(e) => update('propertyValue', e.target.value)} placeholder="$750,000" className={warmInput} required />
               </FormField>
               <FormField label="Loan amount needed" required>
-                <input type="text" inputMode="numeric" value={data.loanAmount} onChange={(e) => update('loanAmount', e.target.value)} placeholder="$562,500" className={warmInput} required />
+                <input type="text" inputMode="decimal" value={data.loanAmount} onChange={(e) => update('loanAmount', e.target.value)} placeholder="$562,500" className={warmInput} required />
               </FormField>
             </div>
 
@@ -350,9 +422,12 @@ export default function ApplyForm() {
               </div>
             )}
 
-            <div className="flex justify-end pt-2 border-t border-gold-line/40 mt-8 pt-6">
-              <button type="button" disabled={!step1Valid} onClick={() => setStep(2)} className={warmBtnPrimary}>Continue →</button>
-            </div>
+            <StepFooter
+              missing={step1Missing}
+              disabled={!step1Valid}
+              primaryLabel="Continue →"
+              onPrimary={() => setStep(2)}
+            />
           </div>
         )}
 
@@ -386,10 +461,10 @@ export default function ApplyForm() {
 
             <div className="grid gap-5 sm:grid-cols-2">
               <FormField label="First name" required>
-                <input type="text" value={data.firstName} onChange={(e) => update('firstName', e.target.value)} className={warmInput} required />
+                <input type="text" autoComplete="given-name" ref={(el) => { if (step === 2 && !data.firstName) firstInputRef.current = el; }} value={data.firstName} onChange={(e) => update('firstName', e.target.value)} className={warmInput} required />
               </FormField>
               <FormField label="Last name" required>
-                <input type="text" value={data.lastName} onChange={(e) => update('lastName', e.target.value)} className={warmInput} required />
+                <input type="text" autoComplete="family-name" value={data.lastName} onChange={(e) => update('lastName', e.target.value)} className={warmInput} required />
               </FormField>
             </div>
 
@@ -415,10 +490,13 @@ export default function ApplyForm() {
               </select>
             </FormField>
 
-            <div className="flex items-center justify-between pt-6 mt-8 border-t border-gold-line/40">
-              <button type="button" onClick={() => setStep(1)} className={warmBtnGhost}>← Back</button>
-              <button type="button" disabled={!step2Valid} onClick={() => setStep(3)} className={warmBtnPrimary}>Continue →</button>
-            </div>
+            <StepFooter
+              missing={step2Missing}
+              disabled={!step2Valid}
+              primaryLabel="Continue →"
+              onPrimary={() => setStep(3)}
+              onBack={() => setStep(1)}
+            />
           </div>
         )}
 
@@ -430,11 +508,11 @@ export default function ApplyForm() {
             </div>
 
             <FormField label="Email" required>
-              <input type="email" value={data.email} onChange={(e) => update('email', e.target.value)} placeholder="you@example.com" className={warmInput} required />
+              <input type="email" autoComplete="email" inputMode="email" ref={(el) => { if (step === 3 && !data.email) firstInputRef.current = el; }} value={data.email} onChange={(e) => update('email', e.target.value)} placeholder="you@example.com" className={warmInput} required />
             </FormField>
 
             <FormField label="Phone" required>
-              <input type="tel" value={data.phone} onChange={(e) => update('phone', e.target.value)} placeholder="(555) 123-4567" className={warmInput} required />
+              <input type="tel" autoComplete="tel" inputMode="tel" value={data.phone} onChange={(e) => update('phone', e.target.value)} placeholder="(555) 123-4567" className={warmInput} required />
             </FormField>
 
             <FormField label="Best time to call" hint="Optional">
@@ -479,16 +557,98 @@ export default function ApplyForm() {
               </div>
             )}
 
-            <div className="flex items-center justify-between pt-6 mt-8 border-t border-gold-line/40">
-              <button type="button" onClick={() => setStep(2)} disabled={submitting} className={warmBtnGhost}>← Back</button>
-              <button type="submit" disabled={!step3Valid || submitting} className={warmBtnPrimary}>
-                {submitting ? 'Submitting…' : 'Send to underwriting →'}
-              </button>
-            </div>
+            <StepFooter
+              missing={step3Missing}
+              disabled={!step3Valid || submitting}
+              primaryLabel={submitting ? 'Submitting…' : 'Send to underwriting →'}
+              isSubmit
+              onBack={() => setStep(2)}
+              backDisabled={submitting}
+            />
           </div>
         )}
       </div>
+
+      {/* Resume indicator — visible briefly after restoring a saved draft so
+          the user knows we picked their previous answers back up. */}
+      {restored && savedAt && step === 1 && (data.product || data.propertyState) && (
+        <ResumeChip onClear={() => {
+          try { window.localStorage.removeItem(AUTOSAVE_KEY); } catch { /* ok */ }
+          setData(INITIAL);
+          setStep(1);
+          setSavedAt(null);
+        }} />
+      )}
     </form>
+  );
+}
+
+/**
+ * Step footer with primary + back actions. On mobile (<640px) it sticks to
+ * the bottom of the viewport so the CTA never gets pushed off-screen when
+ * the soft keyboard opens. On desktop it sits inline at the bottom of the
+ * form panel. The missing-fields hint appears above the disabled CTA to
+ * tell the user exactly what's needed instead of leaving them guessing.
+ */
+function StepFooter({
+  missing,
+  disabled,
+  primaryLabel,
+  onPrimary,
+  onBack,
+  backDisabled,
+  isSubmit,
+}: {
+  missing: string[]
+  disabled: boolean
+  primaryLabel: string
+  onPrimary?: () => void
+  onBack?: () => void
+  backDisabled?: boolean
+  isSubmit?: boolean
+}) {
+  const hint = missing.length > 0 ? `Still need: ${missing.join(', ')}` : null;
+  return (
+    <>
+      {/* Spacer so content above doesn't get hidden behind the sticky footer on mobile */}
+      <div aria-hidden className="h-20 sm:h-0" />
+      <div className="fixed sm:static bottom-0 left-0 right-0 sm:bottom-auto z-30 bg-white sm:bg-transparent border-t sm:border-t border-gold-line/40 px-5 sm:px-0 py-4 sm:py-0 sm:pt-6 sm:mt-8 shadow-[0_-8px_24px_-12px_rgba(0,0,0,0.08)] sm:shadow-none">
+        {hint && (
+          <p className="text-xs font-body text-warm-ink/60 mb-2 sm:mb-3" role="status" aria-live="polite">
+            {hint}
+          </p>
+        )}
+        <div className="flex items-center justify-between gap-3">
+          {onBack ? (
+            <button type="button" onClick={onBack} disabled={backDisabled} className="inline-flex items-center text-sm font-body text-warm-ink/60 hover:text-warm-ink transition disabled:opacity-40">← Back</button>
+          ) : <span />}
+          <button
+            type={isSubmit ? 'submit' : 'button'}
+            disabled={disabled}
+            onClick={isSubmit ? undefined : onPrimary}
+            className="inline-flex items-center justify-center rounded-soft bg-warm-ink px-7 py-3.5 text-sm font-sans font-semibold uppercase tracking-caps text-warm-bg transition hover:bg-warm-ink/90 focus:outline-none focus:ring-2 focus:ring-gold/40 disabled:opacity-40 disabled:cursor-not-allowed min-h-[48px]"
+          >
+            {primaryLabel}
+          </button>
+        </div>
+      </div>
+    </>
+  );
+}
+
+/**
+ * Small "we picked up where you left off" chip that appears once on step 1
+ * when we've restored a non-empty draft. Lets the user wipe and start over
+ * if it's a shared device or they meant a different deal.
+ */
+function ResumeChip({ onClear }: { onClear: () => void }) {
+  return (
+    <div className="px-6 md:px-12 pb-4 -mt-2">
+      <div className="inline-flex items-center gap-2 rounded-soft border border-gold-line/60 bg-gold-soft/40 px-3 py-1.5">
+        <span className="text-[11px] font-sans font-semibold uppercase tracking-wide1 text-warm-ink/70">Resumed draft</span>
+        <button type="button" onClick={onClear} className="text-[11px] font-body text-warm-ink/60 underline decoration-gold-line underline-offset-2 hover:text-warm-ink">Start fresh</button>
+      </div>
+    </div>
   );
 }
 
