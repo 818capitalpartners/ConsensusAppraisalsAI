@@ -1,8 +1,45 @@
 # 818 Capital Partners — Full Build Status
 
-**Last Updated:** March 9, 2026
+**Last Updated:** March 9, 2026 (see 2026-07-13 reconciliation note below — this
+document is now 4 months stale and describes a phase the project has since
+pivoted away from)
 **Project Location:** `C:\Projects\818-capital`
 **Goal:** Inbound lead generation platform — 45+ leads/day, ~20 closed loans/month, ~$100M/year originations
+
+---
+
+## ⚠️ 2026-07-13 reconciliation note (read this first)
+
+Everything below this note describes the **Day 1-8 lead-gen-platform build**
+(Mar 7-20). The repo kept moving after that and this file was never updated —
+**`VISION.md` and `GAP-ANALYSIS.md` are the current source of truth**, not this
+file's "Day 8" / "Remaining Tasks" sections. What actually happened since:
+
+- **Rebranding (was "BLOCKING", "NOT YET IMPLEMENTED" below) — appears DONE.**
+  `packages/api/src/services/programMapper.ts` and `programBranding.ts` now
+  exist — the branded-program-name-instead-of-real-lender-name mapping this
+  doc called for. Not independently re-verified line-by-line against the
+  "Specific Lines to Change" list below; spot-check before assuming 100%
+  coverage.
+- **The product pivoted.** Starting `dbafa7b` (2026-05-04, "docs: add vision +
+  gap analysis for Bricked-style scope") the project retargeted from
+  "inbound lead-gen platform" to **Consensus Appraisals AI** — an
+  address-in/appraiser-grade-underwrite-out tool positioned against
+  [Bricked.ai](https://bricked.ai). See `VISION.md` for the one-liner and
+  `GAP-ANALYSIS.md` for capability-by-capability status vs. that target.
+- **New capability added, not described anywhere in this file:**
+  `valuationService`, `compSelection` (appraiser-style comp selection +
+  multi-method reconciliation, `#3`), `rehabEstimator` (line-item, localized
+  labor index), `riskGuardrails`, `aiAppraisal`, `chatService` (unified chat
+  layer), `marketDataService` (county market-data layer) — all under
+  `packages/api/src/services/`. Plus a `/underwrite` address-first page in
+  `packages/web`, GA4 + GSC tracking, and a working Render deployment
+  (`render.yaml`, idempotent seed, cross-service URLs, `#2`).
+- **Net effect:** treat the "Architecture" / "API Endpoints" / "Frontend
+  Pages" sections below as a snapshot of *the lead-gen skeleton the appraisal
+  product was later built on top of*, not the current feature set. For
+  what's actually live, read `GAP-ANALYSIS.md` (✅/🟡/❌ per capability) and
+  `packages/api/src/services/` directly.
 
 ---
 
